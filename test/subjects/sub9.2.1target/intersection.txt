@@ -1,2 +1,0 @@
-method : C.test() : C
-cons : C.<init>()

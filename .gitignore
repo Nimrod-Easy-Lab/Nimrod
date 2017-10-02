@@ -1,6 +1,9 @@
-/filewriter
-/log_coverage.txt
-/TEST-RandoopTest.xml
-/target
-/test/resources/
-/bin/
+tmp/
+*.tmp
+*.bak
+*.swp
+*~.nib
+local.properties
+.settings/
+.loadpath
+.recommenders

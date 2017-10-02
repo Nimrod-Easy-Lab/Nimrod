@@ -1,0 +1,879 @@
+
+import junit.framework.*;
+
+public class RandoopTest6 extends TestCase {
+
+  public static boolean debug = false;
+
+  public void test1() throws Throwable {
+
+    if (debug) System.out.printf("%nRandoopTest6.test1");
+
+
+    ClassId_2 var0 = new ClassId_2();
+    long var1 = var0.methodid_1();
+    long var3 = var0.methodid_2(20L);
+    long var4 = var0.methodid_1();
+    long var6 = var0.methodid_2(100);
+    long var8 = var0.methodid_2(100L);
+    long var10 = var0.methodid_2(100);
+    long var12 = var0.methodid_2(100);
+    long var13 = var0.methodid_1();
+    long var15 = var0.methodid_2(0);
+    long var16 = var0.methodid_1();
+    long var18 = var0.methodid_2(1);
+    long var19 = var0.methodid_1();
+    long var20 = var0.methodid_1();
+    long var22 = var0.methodid_2((-1));
+    
+    // Regression assertion (captures the current behavior of the code)
+    assertTrue(var1 == 20L);
+    
+    // Regression assertion (captures the current behavior of the code)
+    assertTrue(var3 == 20L);
+    
+    // Regression assertion (captures the current behavior of the code)
+    assertTrue(var4 == 20L);
+    
+    // Regression assertion (captures the current behavior of the code)
+    assertTrue(var6 == 100L);
+    
+    // Regression assertion (captures the current behavior of the code)
+    assertTrue(var8 == 100L);
+    
+    // Regression assertion (captures the current behavior of the code)
+    assertTrue(var10 == 100L);
+    
+    // Regression assertion (captures the current behavior of the code)
+    assertTrue(var12 == 100L);
+    
+    // Regression assertion (captures the current behavior of the code)
+    assertTrue(var13 == 20L);
+    
+    // Regression assertion (captures the current behavior of the code)
+    assertTrue(var15 == 0L);
+    
+    // Regression assertion (captures the current behavior of the code)
+    assertTrue(var16 == 20L);
+    
+    // Regression assertion (captures the current behavior of the code)
+    assertTrue(var18 == 1L);
+    
+    // Regression assertion (captures the current behavior of the code)
+    assertTrue(var19 == 20L);
+    
+    // Regression assertion (captures the current behavior of the code)
+    assertTrue(var20 == 20L);
+    
+    // Regression assertion (captures the current behavior of the code)
+    assertTrue(var22 == (-1L));
+
+  }
+
+  public void test2() throws Throwable {
+
+    if (debug) System.out.printf("%nRandoopTest6.test2");
+
+
+    ClassId_2 var0 = new ClassId_2();
+    long var1 = var0.methodid_1();
+    long var3 = var0.methodid_2(20L);
+    long var4 = var0.methodid_1();
+    long var6 = var0.methodid_2(100);
+    long var8 = var0.methodid_2(100L);
+    long var10 = var0.methodid_2(100);
+    long var11 = var0.methodid_0();
+    long var13 = var0.methodid_2(100);
+    long var15 = var0.methodid_2(10);
+    long var16 = var0.methodid_1();
+    long var18 = var0.methodid_2((-7592253339725112179L));
+    long var20 = var0.methodid_2((-35L));
+    long var22 = var0.methodid_2(0);
+    long var24 = var0.methodid_2(0);
+    
+    // Regression assertion (captures the current behavior of the code)
+    assertTrue(var1 == 20L);
+    
+    // Regression assertion (captures the current behavior of the code)
+    assertTrue(var3 == 20L);
+    
+    // Regression assertion (captures the current behavior of the code)
+    assertTrue(var4 == 20L);
+    
+    // Regression assertion (captures the current behavior of the code)
+    assertTrue(var6 == 100L);
+    
+    // Regression assertion (captures the current behavior of the code)
+    assertTrue(var8 == 100L);
+    
+    // Regression assertion (captures the current behavior of the code)
+    assertTrue(var10 == 100L);
+    
+    // Regression assertion (captures the current behavior of the code)
+    assertTrue(var11 == 10L);
+    
+    // Regression assertion (captures the current behavior of the code)
+    assertTrue(var13 == 100L);
+    
+    // Regression assertion (captures the current behavior of the code)
+    assertTrue(var15 == 10L);
+    
+    // Regression assertion (captures the current behavior of the code)
+    assertTrue(var16 == 20L);
+    
+    // Regression assertion (captures the current behavior of the code)
+    assertTrue(var18 == (-7474449858445203641L));
+    
+    // Regression assertion (captures the current behavior of the code)
+    assertTrue(var20 == (-1225L));
+    
+    // Regression assertion (captures the current behavior of the code)
+    assertTrue(var22 == 0L);
+    
+    // Regression assertion (captures the current behavior of the code)
+    assertTrue(var24 == 0L);
+
+  }
+
+  public void test3() throws Throwable {
+
+    if (debug) System.out.printf("%nRandoopTest6.test3");
+
+
+    ClassId_2 var0 = new ClassId_2();
+    long var1 = var0.methodid_1();
+    long var3 = var0.methodid_2(20L);
+    long var4 = var0.methodid_1();
+    long var6 = var0.methodid_2(100);
+    long var8 = var0.methodid_2(35L);
+    long var10 = var0.methodid_2(35L);
+    long var12 = var0.methodid_2(100L);
+    long var13 = var0.methodid_1();
+    long var14 = var0.methodid_0();
+    long var16 = var0.methodid_2((-42875L));
+    long var17 = var0.methodid_1();
+    long var18 = var0.methodid_1();
+    long var20 = var0.methodid_2(0);
+    
+    // Regression assertion (captures the current behavior of the code)
+    assertTrue(var1 == 20L);
+    
+    // Regression assertion (captures the current behavior of the code)
+    assertTrue(var3 == 20L);
+    
+    // Regression assertion (captures the current behavior of the code)
+    assertTrue(var4 == 20L);
+    
+    // Regression assertion (captures the current behavior of the code)
+    assertTrue(var6 == 100L);
+    
+    // Regression assertion (captures the current behavior of the code)
+    assertTrue(var8 == 35L);
+    
+    // Regression assertion (captures the current behavior of the code)
+    assertTrue(var10 == 35L);
+    
+    // Regression assertion (captures the current behavior of the code)
+    assertTrue(var12 == 100L);
+    
+    // Regression assertion (captures the current behavior of the code)
+    assertTrue(var13 == 20L);
+    
+    // Regression assertion (captures the current behavior of the code)
+    assertTrue(var14 == 10L);
+    
+    // Regression assertion (captures the current behavior of the code)
+    assertTrue(var16 == (-1500625L));
+    
+    // Regression assertion (captures the current behavior of the code)
+    assertTrue(var17 == 20L);
+    
+    // Regression assertion (captures the current behavior of the code)
+    assertTrue(var18 == 20L);
+    
+    // Regression assertion (captures the current behavior of the code)
+    assertTrue(var20 == 0L);
+
+  }
+
+  public void test4() throws Throwable {
+
+    if (debug) System.out.printf("%nRandoopTest6.test4");
+
+
+    ClassId_2 var0 = new ClassId_2();
+    long var2 = var0.methodid_2(10);
+    long var3 = var0.methodid_0();
+    long var5 = var0.methodid_2(1);
+    long var6 = var0.methodid_0();
+    long var7 = var0.methodid_0();
+    long var9 = var0.methodid_2(1);
+    long var10 = var0.methodid_0();
+    long var11 = var0.methodid_0();
+    long var13 = var0.methodid_2(0);
+    
+    // Regression assertion (captures the current behavior of the code)
+    assertTrue(var2 == 10L);
+    
+    // Regression assertion (captures the current behavior of the code)
+    assertTrue(var3 == 10L);
+    
+    // Regression assertion (captures the current behavior of the code)
+    assertTrue(var5 == 1L);
+    
+    // Regression assertion (captures the current behavior of the code)
+    assertTrue(var6 == 10L);
+    
+    // Regression assertion (captures the current behavior of the code)
+    assertTrue(var7 == 10L);
+    
+    // Regression assertion (captures the current behavior of the code)
+    assertTrue(var9 == 1L);
+    
+    // Regression assertion (captures the current behavior of the code)
+    assertTrue(var10 == 10L);
+    
+    // Regression assertion (captures the current behavior of the code)
+    assertTrue(var11 == 10L);
+    
+    // Regression assertion (captures the current behavior of the code)
+    assertTrue(var13 == 0L);
+
+  }
+
+  public void test5() throws Throwable {
+
+    if (debug) System.out.printf("%nRandoopTest6.test5");
+
+
+    ClassId_2 var0 = new ClassId_2();
+    long var1 = var0.methodid_1();
+    long var3 = var0.methodid_2(20L);
+    long var4 = var0.methodid_1();
+    long var6 = var0.methodid_2(100);
+    long var8 = var0.methodid_2(35L);
+    long var9 = var0.methodid_1();
+    long var11 = var0.methodid_2((-52521875L));
+    
+    // Regression assertion (captures the current behavior of the code)
+    assertTrue(var1 == 20L);
+    
+    // Regression assertion (captures the current behavior of the code)
+    assertTrue(var3 == 20L);
+    
+    // Regression assertion (captures the current behavior of the code)
+    assertTrue(var4 == 20L);
+    
+    // Regression assertion (captures the current behavior of the code)
+    assertTrue(var6 == 100L);
+    
+    // Regression assertion (captures the current behavior of the code)
+    assertTrue(var8 == 35L);
+    
+    // Regression assertion (captures the current behavior of the code)
+    assertTrue(var9 == 20L);
+    
+    // Regression assertion (captures the current behavior of the code)
+    assertTrue(var11 == (-1838265625L));
+
+  }
+
+  public void test6() throws Throwable {
+
+    if (debug) System.out.printf("%nRandoopTest6.test6");
+
+
+    ClassId_2 var0 = new ClassId_2();
+    long var1 = var0.methodid_1();
+    long var3 = var0.methodid_2(20L);
+    long var4 = var0.methodid_0();
+    long var5 = var0.methodid_0();
+    long var7 = var0.methodid_2(20L);
+    long var9 = var0.methodid_2(10);
+    long var10 = var0.methodid_1();
+    long var11 = var0.methodid_1();
+    long var13 = var0.methodid_2(100);
+    long var14 = var0.methodid_0();
+    
+    // Regression assertion (captures the current behavior of the code)
+    assertTrue(var1 == 20L);
+    
+    // Regression assertion (captures the current behavior of the code)
+    assertTrue(var3 == 20L);
+    
+    // Regression assertion (captures the current behavior of the code)
+    assertTrue(var4 == 10L);
+    
+    // Regression assertion (captures the current behavior of the code)
+    assertTrue(var5 == 10L);
+    
+    // Regression assertion (captures the current behavior of the code)
+    assertTrue(var7 == 20L);
+    
+    // Regression assertion (captures the current behavior of the code)
+    assertTrue(var9 == 10L);
+    
+    // Regression assertion (captures the current behavior of the code)
+    assertTrue(var10 == 20L);
+    
+    // Regression assertion (captures the current behavior of the code)
+    assertTrue(var11 == 20L);
+    
+    // Regression assertion (captures the current behavior of the code)
+    assertTrue(var13 == 100L);
+    
+    // Regression assertion (captures the current behavior of the code)
+    assertTrue(var14 == 10L);
+
+  }
+
+  public void test7() throws Throwable {
+
+    if (debug) System.out.printf("%nRandoopTest6.test7");
+
+
+    ClassId_2 var0 = new ClassId_2();
+    long var1 = var0.methodid_1();
+    long var3 = var0.methodid_2(20L);
+    long var4 = var0.methodid_1();
+    long var6 = var0.methodid_2(100);
+    long var8 = var0.methodid_2(35L);
+    long var10 = var0.methodid_2((-1));
+    long var12 = var0.methodid_2(1);
+    long var14 = var0.methodid_2(10L);
+    long var15 = var0.methodid_0();
+    long var16 = var0.methodid_1();
+    long var17 = var0.methodid_1();
+    long var18 = var0.methodid_0();
+    long var20 = var0.methodid_2(10);
+    long var22 = var0.methodid_2((-1));
+    long var24 = var0.methodid_2(0);
+    long var26 = var0.methodid_2((-1500625L));
+    
+    // Regression assertion (captures the current behavior of the code)
+    assertTrue(var1 == 20L);
+    
+    // Regression assertion (captures the current behavior of the code)
+    assertTrue(var3 == 20L);
+    
+    // Regression assertion (captures the current behavior of the code)
+    assertTrue(var4 == 20L);
+    
+    // Regression assertion (captures the current behavior of the code)
+    assertTrue(var6 == 100L);
+    
+    // Regression assertion (captures the current behavior of the code)
+    assertTrue(var8 == 35L);
+    
+    // Regression assertion (captures the current behavior of the code)
+    assertTrue(var10 == (-1L));
+    
+    // Regression assertion (captures the current behavior of the code)
+    assertTrue(var12 == 1L);
+    
+    // Regression assertion (captures the current behavior of the code)
+    assertTrue(var14 == 350L);
+    
+    // Regression assertion (captures the current behavior of the code)
+    assertTrue(var15 == 10L);
+    
+    // Regression assertion (captures the current behavior of the code)
+    assertTrue(var16 == 20L);
+    
+    // Regression assertion (captures the current behavior of the code)
+    assertTrue(var17 == 20L);
+    
+    // Regression assertion (captures the current behavior of the code)
+    assertTrue(var18 == 10L);
+    
+    // Regression assertion (captures the current behavior of the code)
+    assertTrue(var20 == 10L);
+    
+    // Regression assertion (captures the current behavior of the code)
+    assertTrue(var22 == (-1L));
+    
+    // Regression assertion (captures the current behavior of the code)
+    assertTrue(var24 == 0L);
+    
+    // Regression assertion (captures the current behavior of the code)
+    assertTrue(var26 == (-52521875L));
+
+  }
+
+  public void test8() throws Throwable {
+
+    if (debug) System.out.printf("%nRandoopTest6.test8");
+
+
+    ClassId_2 var0 = new ClassId_2();
+    long var1 = var0.methodid_1();
+    long var3 = var0.methodid_2(20L);
+    long var4 = var0.methodid_1();
+    long var6 = var0.methodid_2(100);
+    long var8 = var0.methodid_2(100L);
+    long var10 = var0.methodid_2(100);
+    long var11 = var0.methodid_0();
+    long var13 = var0.methodid_2(100);
+    long var15 = var0.methodid_2(10);
+    long var16 = var0.methodid_1();
+    long var17 = var0.methodid_0();
+    long var18 = var0.methodid_0();
+    long var20 = var0.methodid_2(1);
+    long var22 = var0.methodid_2(100);
+    
+    // Regression assertion (captures the current behavior of the code)
+    assertTrue(var1 == 20L);
+    
+    // Regression assertion (captures the current behavior of the code)
+    assertTrue(var3 == 20L);
+    
+    // Regression assertion (captures the current behavior of the code)
+    assertTrue(var4 == 20L);
+    
+    // Regression assertion (captures the current behavior of the code)
+    assertTrue(var6 == 100L);
+    
+    // Regression assertion (captures the current behavior of the code)
+    assertTrue(var8 == 100L);
+    
+    // Regression assertion (captures the current behavior of the code)
+    assertTrue(var10 == 100L);
+    
+    // Regression assertion (captures the current behavior of the code)
+    assertTrue(var11 == 10L);
+    
+    // Regression assertion (captures the current behavior of the code)
+    assertTrue(var13 == 100L);
+    
+    // Regression assertion (captures the current behavior of the code)
+    assertTrue(var15 == 10L);
+    
+    // Regression assertion (captures the current behavior of the code)
+    assertTrue(var16 == 20L);
+    
+    // Regression assertion (captures the current behavior of the code)
+    assertTrue(var17 == 10L);
+    
+    // Regression assertion (captures the current behavior of the code)
+    assertTrue(var18 == 10L);
+    
+    // Regression assertion (captures the current behavior of the code)
+    assertTrue(var20 == 1L);
+    
+    // Regression assertion (captures the current behavior of the code)
+    assertTrue(var22 == 100L);
+
+  }
+
+  public void test9() throws Throwable {
+
+    if (debug) System.out.printf("%nRandoopTest6.test9");
+
+
+    ClassId_2 var0 = new ClassId_2();
+    long var1 = var0.methodid_1();
+    long var3 = var0.methodid_2(20L);
+    long var4 = var0.methodid_0();
+    long var6 = var0.methodid_2(0L);
+    long var7 = var0.methodid_1();
+    long var9 = var0.methodid_2(8247111717934116893L);
+    long var10 = var0.methodid_0();
+    long var11 = var0.methodid_0();
+    
+    // Regression assertion (captures the current behavior of the code)
+    assertTrue(var1 == 20L);
+    
+    // Regression assertion (captures the current behavior of the code)
+    assertTrue(var3 == 20L);
+    
+    // Regression assertion (captures the current behavior of the code)
+    assertTrue(var4 == 10L);
+    
+    // Regression assertion (captures the current behavior of the code)
+    assertTrue(var6 == 0L);
+    
+    // Regression assertion (captures the current behavior of the code)
+    assertTrue(var7 == 20L);
+    
+    // Regression assertion (captures the current behavior of the code)
+    assertTrue(var9 == 8247111717934116893L);
+    
+    // Regression assertion (captures the current behavior of the code)
+    assertTrue(var10 == 10L);
+    
+    // Regression assertion (captures the current behavior of the code)
+    assertTrue(var11 == 10L);
+
+  }
+
+  public void test10() throws Throwable {
+
+    if (debug) System.out.printf("%nRandoopTest6.test10");
+
+
+    ClassId_2 var0 = new ClassId_2();
+    long var1 = var0.methodid_1();
+    long var3 = var0.methodid_2(20L);
+    long var4 = var0.methodid_1();
+    long var6 = var0.methodid_2(100);
+    long var8 = var0.methodid_2(100L);
+    long var10 = var0.methodid_2(100);
+    long var12 = var0.methodid_2(100);
+    long var13 = var0.methodid_1();
+    long var14 = var0.methodid_0();
+    long var15 = var0.methodid_1();
+    long var16 = var0.methodid_1();
+    long var18 = var0.methodid_2(10L);
+    long var20 = var0.methodid_2(350L);
+    long var21 = var0.methodid_1();
+    long var23 = var0.methodid_2(0L);
+    long var25 = var0.methodid_2((-2251875390625L));
+    long var27 = var0.methodid_2((-1));
+    
+    // Regression assertion (captures the current behavior of the code)
+    assertTrue(var1 == 20L);
+    
+    // Regression assertion (captures the current behavior of the code)
+    assertTrue(var3 == 20L);
+    
+    // Regression assertion (captures the current behavior of the code)
+    assertTrue(var4 == 20L);
+    
+    // Regression assertion (captures the current behavior of the code)
+    assertTrue(var6 == 100L);
+    
+    // Regression assertion (captures the current behavior of the code)
+    assertTrue(var8 == 100L);
+    
+    // Regression assertion (captures the current behavior of the code)
+    assertTrue(var10 == 100L);
+    
+    // Regression assertion (captures the current behavior of the code)
+    assertTrue(var12 == 100L);
+    
+    // Regression assertion (captures the current behavior of the code)
+    assertTrue(var13 == 20L);
+    
+    // Regression assertion (captures the current behavior of the code)
+    assertTrue(var14 == 10L);
+    
+    // Regression assertion (captures the current behavior of the code)
+    assertTrue(var15 == 20L);
+    
+    // Regression assertion (captures the current behavior of the code)
+    assertTrue(var16 == 20L);
+    
+    // Regression assertion (captures the current behavior of the code)
+    assertTrue(var18 == 350L);
+    
+    // Regression assertion (captures the current behavior of the code)
+    assertTrue(var20 == 350L);
+    
+    // Regression assertion (captures the current behavior of the code)
+    assertTrue(var21 == 20L);
+    
+    // Regression assertion (captures the current behavior of the code)
+    assertTrue(var23 == 0L);
+    
+    // Regression assertion (captures the current behavior of the code)
+    assertTrue(var25 == (-78815638671875L));
+    
+    // Regression assertion (captures the current behavior of the code)
+    assertTrue(var27 == (-1L));
+
+  }
+
+  public void test11() throws Throwable {
+
+    if (debug) System.out.printf("%nRandoopTest6.test11");
+
+
+    ClassId_2 var0 = new ClassId_2();
+    long var1 = var0.methodid_1();
+    long var3 = var0.methodid_2(20L);
+    long var4 = var0.methodid_1();
+    long var6 = var0.methodid_2(100);
+    long var8 = var0.methodid_2(35L);
+    long var10 = var0.methodid_2(1);
+    long var12 = var0.methodid_2(10L);
+    long var13 = var0.methodid_1();
+    long var14 = var0.methodid_1();
+    long var15 = var0.methodid_0();
+    long var16 = var0.methodid_0();
+    
+    // Regression assertion (captures the current behavior of the code)
+    assertTrue(var1 == 20L);
+    
+    // Regression assertion (captures the current behavior of the code)
+    assertTrue(var3 == 20L);
+    
+    // Regression assertion (captures the current behavior of the code)
+    assertTrue(var4 == 20L);
+    
+    // Regression assertion (captures the current behavior of the code)
+    assertTrue(var6 == 100L);
+    
+    // Regression assertion (captures the current behavior of the code)
+    assertTrue(var8 == 35L);
+    
+    // Regression assertion (captures the current behavior of the code)
+    assertTrue(var10 == 1L);
+    
+    // Regression assertion (captures the current behavior of the code)
+    assertTrue(var12 == 350L);
+    
+    // Regression assertion (captures the current behavior of the code)
+    assertTrue(var13 == 20L);
+    
+    // Regression assertion (captures the current behavior of the code)
+    assertTrue(var14 == 20L);
+    
+    // Regression assertion (captures the current behavior of the code)
+    assertTrue(var15 == 10L);
+    
+    // Regression assertion (captures the current behavior of the code)
+    assertTrue(var16 == 10L);
+
+  }
+
+  public void test12() throws Throwable {
+
+    if (debug) System.out.printf("%nRandoopTest6.test12");
+
+
+    ClassId_2 var0 = new ClassId_2();
+    long var1 = var0.methodid_1();
+    long var3 = var0.methodid_2(20L);
+    long var4 = var0.methodid_1();
+    long var6 = var0.methodid_2(100);
+    long var8 = var0.methodid_2(100L);
+    long var9 = var0.methodid_1();
+    long var11 = var0.methodid_2((-1));
+    long var13 = var0.methodid_2(10L);
+    long var14 = var0.methodid_0();
+    long var16 = var0.methodid_2(350L);
+    long var17 = var0.methodid_0();
+    long var19 = var0.methodid_2((-96549157373046875L));
+    
+    // Regression assertion (captures the current behavior of the code)
+    assertTrue(var1 == 20L);
+    
+    // Regression assertion (captures the current behavior of the code)
+    assertTrue(var3 == 20L);
+    
+    // Regression assertion (captures the current behavior of the code)
+    assertTrue(var4 == 20L);
+    
+    // Regression assertion (captures the current behavior of the code)
+    assertTrue(var6 == 100L);
+    
+    // Regression assertion (captures the current behavior of the code)
+    assertTrue(var8 == 100L);
+    
+    // Regression assertion (captures the current behavior of the code)
+    assertTrue(var9 == 20L);
+    
+    // Regression assertion (captures the current behavior of the code)
+    assertTrue(var11 == (-1L));
+    
+    // Regression assertion (captures the current behavior of the code)
+    assertTrue(var13 == 350L);
+    
+    // Regression assertion (captures the current behavior of the code)
+    assertTrue(var14 == 10L);
+    
+    // Regression assertion (captures the current behavior of the code)
+    assertTrue(var16 == 350L);
+    
+    // Regression assertion (captures the current behavior of the code)
+    assertTrue(var17 == 10L);
+    
+    // Regression assertion (captures the current behavior of the code)
+    assertTrue(var19 == (-3379220508056640625L));
+
+  }
+
+  public void test13() throws Throwable {
+
+    if (debug) System.out.printf("%nRandoopTest6.test13");
+
+
+    ClassId_2 var0 = new ClassId_2();
+    long var1 = var0.methodid_1();
+    long var3 = var0.methodid_2(20L);
+    long var4 = var0.methodid_1();
+    long var6 = var0.methodid_2((-1));
+    long var7 = var0.methodid_1();
+    long var9 = var0.methodid_2((-1));
+    long var11 = var0.methodid_2(0);
+    long var12 = var0.methodid_1();
+    long var13 = var0.methodid_1();
+    long var15 = var0.methodid_2(1);
+    long var17 = var0.methodid_2(0);
+    
+    // Regression assertion (captures the current behavior of the code)
+    assertTrue(var1 == 20L);
+    
+    // Regression assertion (captures the current behavior of the code)
+    assertTrue(var3 == 20L);
+    
+    // Regression assertion (captures the current behavior of the code)
+    assertTrue(var4 == 20L);
+    
+    // Regression assertion (captures the current behavior of the code)
+    assertTrue(var6 == (-1L));
+    
+    // Regression assertion (captures the current behavior of the code)
+    assertTrue(var7 == 20L);
+    
+    // Regression assertion (captures the current behavior of the code)
+    assertTrue(var9 == (-1L));
+    
+    // Regression assertion (captures the current behavior of the code)
+    assertTrue(var11 == 0L);
+    
+    // Regression assertion (captures the current behavior of the code)
+    assertTrue(var12 == 20L);
+    
+    // Regression assertion (captures the current behavior of the code)
+    assertTrue(var13 == 20L);
+    
+    // Regression assertion (captures the current behavior of the code)
+    assertTrue(var15 == 1L);
+    
+    // Regression assertion (captures the current behavior of the code)
+    assertTrue(var17 == 0L);
+
+  }
+
+  public void test14() throws Throwable {
+
+    if (debug) System.out.printf("%nRandoopTest6.test14");
+
+
+    ClassId_2 var0 = new ClassId_2();
+    long var1 = var0.methodid_1();
+    long var3 = var0.methodid_2(20L);
+    long var4 = var0.methodid_1();
+    long var6 = var0.methodid_2(100);
+    long var8 = var0.methodid_2(100L);
+    long var10 = var0.methodid_2(100);
+    long var11 = var0.methodid_0();
+    long var13 = var0.methodid_2(100);
+    long var15 = var0.methodid_2(10);
+    long var16 = var0.methodid_1();
+    long var17 = var0.methodid_0();
+    long var19 = var0.methodid_2(0);
+    long var21 = var0.methodid_2(10);
+    long var23 = var0.methodid_2((-7592253339725112179L));
+    long var24 = var0.methodid_1();
+    long var25 = var0.methodid_1();
+    
+    // Regression assertion (captures the current behavior of the code)
+    assertTrue(var1 == 20L);
+    
+    // Regression assertion (captures the current behavior of the code)
+    assertTrue(var3 == 20L);
+    
+    // Regression assertion (captures the current behavior of the code)
+    assertTrue(var4 == 20L);
+    
+    // Regression assertion (captures the current behavior of the code)
+    assertTrue(var6 == 100L);
+    
+    // Regression assertion (captures the current behavior of the code)
+    assertTrue(var8 == 100L);
+    
+    // Regression assertion (captures the current behavior of the code)
+    assertTrue(var10 == 100L);
+    
+    // Regression assertion (captures the current behavior of the code)
+    assertTrue(var11 == 10L);
+    
+    // Regression assertion (captures the current behavior of the code)
+    assertTrue(var13 == 100L);
+    
+    // Regression assertion (captures the current behavior of the code)
+    assertTrue(var15 == 10L);
+    
+    // Regression assertion (captures the current behavior of the code)
+    assertTrue(var16 == 20L);
+    
+    // Regression assertion (captures the current behavior of the code)
+    assertTrue(var17 == 10L);
+    
+    // Regression assertion (captures the current behavior of the code)
+    assertTrue(var19 == 0L);
+    
+    // Regression assertion (captures the current behavior of the code)
+    assertTrue(var21 == 10L);
+    
+    // Regression assertion (captures the current behavior of the code)
+    assertTrue(var23 == (-7474449858445203641L));
+    
+    // Regression assertion (captures the current behavior of the code)
+    assertTrue(var24 == 20L);
+    
+    // Regression assertion (captures the current behavior of the code)
+    assertTrue(var25 == 20L);
+
+  }
+
+  public void test15() throws Throwable {
+
+    if (debug) System.out.printf("%nRandoopTest6.test15");
+
+
+    ClassId_2 var0 = new ClassId_2();
+    long var1 = var0.methodid_1();
+    long var3 = var0.methodid_2(20L);
+    long var4 = var0.methodid_1();
+    long var6 = var0.methodid_2(100);
+    long var8 = var0.methodid_2(35L);
+    long var9 = var0.methodid_0();
+    long var11 = var0.methodid_2(350L);
+    long var12 = var0.methodid_0();
+    long var13 = var0.methodid_1();
+    long var15 = var0.methodid_2((-1));
+    long var17 = var0.methodid_2((-1500625L));
+    long var19 = var0.methodid_2(0);
+    
+    // Regression assertion (captures the current behavior of the code)
+    assertTrue(var1 == 20L);
+    
+    // Regression assertion (captures the current behavior of the code)
+    assertTrue(var3 == 20L);
+    
+    // Regression assertion (captures the current behavior of the code)
+    assertTrue(var4 == 20L);
+    
+    // Regression assertion (captures the current behavior of the code)
+    assertTrue(var6 == 100L);
+    
+    // Regression assertion (captures the current behavior of the code)
+    assertTrue(var8 == 35L);
+    
+    // Regression assertion (captures the current behavior of the code)
+    assertTrue(var9 == 10L);
+    
+    // Regression assertion (captures the current behavior of the code)
+    assertTrue(var11 == 350L);
+    
+    // Regression assertion (captures the current behavior of the code)
+    assertTrue(var12 == 10L);
+    
+    // Regression assertion (captures the current behavior of the code)
+    assertTrue(var13 == 20L);
+    
+    // Regression assertion (captures the current behavior of the code)
+    assertTrue(var15 == (-1L));
+    
+    // Regression assertion (captures the current behavior of the code)
+    assertTrue(var17 == (-52521875L));
+    
+    // Regression assertion (captures the current behavior of the code)
+    assertTrue(var19 == 0L);
+
+  }
+
+}

@@ -14,45 +14,42 @@ public class AntJavaCompiler implements Compiler {
 
 	private String binClasspath = "";
 	private String libClasspath = "";
-//	private String path = System.getProperty("java.home") + "/bin/javac";
-//	private String buildPath;
+	// private String path = System.getProperty("java.home") + "/bin/javac";
+	// private String buildPath;
 	private final String tmpDir;
-	
-	public  AntJavaCompiler(String tmpDir) {
+
+	public AntJavaCompiler(String tmpDir) {
 		this.tmpDir = tmpDir;
-	
+
 	}
 
+	public void compile(String src, String dest) throws FileNotFoundException {
 
-	public void compile(String src, String dest)
-			throws MalformedURLException, FileNotFoundException {
+		// URL buildFile =
+		// AntJavaCompiler.class.getResource("/build_compile.xml");
 
-//		URL buildFile = AntJavaCompiler.class.getResource("/build_compile.xml");
-		
 		String path = System.getProperty("user.dir");
-		 URL buildFile = null;
-			try {
-				buildFile = new File(path
-						+ "/src/" + "build_compile.xml").toURL();
-			} catch (MalformedURLException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
+		URL buildFile = null;
+		try {
+			buildFile = new File(path + "/src/" + "build_compile.xml").toURL();
+		} catch (MalformedURLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 
 		org.apache.tools.ant.Project p = new org.apache.tools.ant.Project();
 
 		DefaultLogger consoleLogger = new DefaultLogger();
-		consoleLogger
-				.setMessageOutputLevel(org.apache.tools.ant.Project.MSG_INFO);
-		FileOutputStream fileOutputStream = new FileOutputStream(tmpDir  + Constants.SEPARATOR +  "log_compile.txt");
+		consoleLogger.setMessageOutputLevel(org.apache.tools.ant.Project.MSG_INFO);
+		FileOutputStream fileOutputStream = new FileOutputStream(tmpDir + Constants.SEPARATOR + "log_compile.txt");
 		PrintStream ps = new PrintStream(fileOutputStream);
-		consoleLogger.setOutputPrintStream(ps);		
+		consoleLogger.setOutputPrintStream(ps);
 		consoleLogger.setErrorPrintStream(ps);
-//		if (buildPath != null) {
-//			buildFile = new File(buildPath).toURI().toURL()	;
-//		}
+		// if (buildPath != null) {
+		// buildFile = new File(buildPath).toURI().toURL() ;
+		// }
 		p.setProperty("binClasspath", binClasspath);
-//		p.setProperty("compiler", path);
+		// p.setProperty("compiler", path);
 
 		if (libClasspath.equals(""))
 			p.setProperty("libClasspath", binClasspath);
@@ -67,11 +64,8 @@ public class AntJavaCompiler implements Compiler {
 		p.addReference("ant.projectHelper", helper);
 		helper.parse(p, buildFile);
 
-		
-			p.executeTarget(p.getDefaultTarget());
-		
+		p.executeTarget(p.getDefaultTarget());
 
-		
 	}
 
 	public String getLibClasspath() {
@@ -90,13 +84,13 @@ public class AntJavaCompiler implements Compiler {
 		this.binClasspath = binClasspath;
 	}
 
-//	public void setCompilerPath(String path) {
-//		this.path = path;
-//	}
+	// public void setCompilerPath(String path) {
+	// this.path = path;
+	// }
 
-//	public void setBuildPath(String buildPath) {
-//		this.buildPath = buildPath;
-//
-//	}
+	// public void setBuildPath(String buildPath) {
+	// this.buildPath = buildPath;
+	//
+	// }
 
 }

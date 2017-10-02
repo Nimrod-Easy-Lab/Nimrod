@@ -1,3 +1,0 @@
-method : B.k(int) : B
-method : B.test() : B
-cons : B.<init>()

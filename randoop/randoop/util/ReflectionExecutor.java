@@ -189,9 +189,10 @@ public final class ReflectionExecutor {
       } catch (NoSuchFieldException nsfe) {
         // Didn't find the suppressedExceptions field.  There is no need
         // to print anything about it, as the problem must be elsewhere.
-      } catch (IllegalAccessException iae) {
-        out.println("This can't happen: IllegalAccessException " + iae);
       }
+    		  //catch (IllegalAccessException iae) {
+        //out.println("This can't happen: IllegalAccessException " + iae);
+      //}
     }
   }
 
