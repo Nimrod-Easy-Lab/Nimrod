@@ -26,3 +26,4 @@ bin/safira/
 bin/toys/
 bin/util/
 *.class
+filewriter
