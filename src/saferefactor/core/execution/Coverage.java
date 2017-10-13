@@ -78,7 +78,7 @@
 //		return returnList;
 //	}
 //	
-//	//returnList ja vem com todos os metodos que exercitam diretamente a mudanÁa
+//	//returnList ja vem com todos os metodos que exercitam diretamente a mudanM-ga
 //	public List<Method> getMethodsExerciseTheChangeForCoverage(List<Method> impactedMethods, 
 //			List<Method> returnList) {
 //		
@@ -86,7 +86,7 @@
 //			boolean ok = false;
 //			for (Method method : impactedMethods) {
 //				if (containsMethod(returnList, method) == null) {
-//					//verifica se "method"é chamado por alguém de returnList, se sim, adiciona a returnList
+//					//verifica se "method"M-^N chamado por alguM-^Nm de returnList, se sim, adiciona a returnList
 //					if (isCalledByTheList(returnList, method)) {
 //						returnList.add(method);
 //						ok = true;
@@ -106,7 +106,7 @@
 //			boolean ok = false;
 //			for (Method method : impactedMethods) {
 //				if (containsMethod(returnList, method) == null) {
-//					//verifica se "method"é chamado por alguém de returnList, se sim, adiciona a returnList
+//					//verifica se "method"M-^N chamado por alguM-^Nm de returnList, se sim, adiciona a returnList
 //					if (isCalledByTheList(tests, method) || isCalledByTheList(returnList, method)) {
 //						returnList.add(method);
 //						ok = true;
@@ -124,7 +124,7 @@
 //		List<Method> returnList = new ArrayList<Method>();
 //			for (Method method : impactedMethods) {
 //				if (containsMethod(returnList, method) == null) {
-//					//verifica se "method"é chamado por alguém de returnList, se sim, adiciona a returnList
+//					//verifica se "method"M-^N chamado por alguM-^Nm de returnList, se sim, adiciona a returnList
 //					if (isCalledByTheList(tests, method)) {
 //						returnList.add(method);
 //					}
@@ -731,7 +731,7 @@
 //				
 //				out.writeLine("TimeLimit: "+timeLimit+" \n");
 //				out.writeLine("Tempo total: "+(time/1000)+"s \n");
-//				out.writeLine("Métodos: "+c.methods+" \n");	
+//				out.writeLine("MM-^Ntodos: "+c.methods+" \n");	
 //				out.writeLine("Testes: "+c.generatedTests+" \n");
 //				out.writeLine("Cobertura: "+coverage.coverage+"% \n");
 //				out.writeLine("Resultado: "+c.isRefactoring+"\n");

@@ -47,10 +47,10 @@ public class Method extends Entity{
 	boolean hasInnerParameter = false;
 	
 	
-	//instruções do metodo
+	//instruM-^MM-^[es do metodo
 	List<Object> text = new ArrayList<Object>();
 	
-	//esse atributo só serve para methodInvoc
+	//esse atributo sM-^W serve para methodInvoc
 	boolean isThis = false;
 	
 	Set<String> allowedClasses = new HashSet<String>();
@@ -117,9 +117,9 @@ public class Method extends Entity{
 							fieldHasInstruction = false;
 							if (field.getFullName().equals(writtenFieldName)) {
 								field.setWritten(true);
-								//só colocar no map se ele for escrito, pois nao vai interessar
+								//sM-^W colocar no map se ele for escrito, pois nao vai interessar
 								//saber que um field lido mudou
-								// o objetivo é colocar o field como impactado se ele mudar a escrita
+								// o objetivo M-^N colocar o field como impactado se ele mudar a escrita
 									String fieldInst = mapInvoc.get(field.getFullName());
 									if (fieldInst != null) {
 										mapInvoc.put(field.getFullName(), fieldInst + instruction);
@@ -136,7 +136,7 @@ public class Method extends Entity{
 					writtenFieldName = "";
 				}
 				}catch(Exception e){  
-//		            System.out.println("NÃO é numero");  
+//		            System.out.println("NM-LO M-^N numero");  
 		        } 
 			} else {
 				instruction += inst;

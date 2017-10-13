@@ -365,7 +365,7 @@ public class ClassNode extends ClassVisitor {
     	
     	for (MethodNode method : methods) {
     		
-    		//clinit -> inicializador est‡tico (depois ver se realmente deve tir‡-lo)
+    		//clinit -> inicializador estM-^Gtico (depois ver se realmente deve tirM-^G-lo)
 		//	if (!method.name.contains("<clinit>")){
 				Method m = new Method();
 				m.setDesc(method.desc);

@@ -87,7 +87,7 @@ public class Tools {
 			if (test.contains("RandoopTest")) {
 				FileChannel oriChannel = new FileInputStream(from+Constants.FILE_SEPARATOR+test).getChannel();
 				FileChannel destChannel = new FileOutputStream(to+Constants.FILE_SEPARATOR+test).getChannel();;
-				// Copia conteœdo da origem no destino
+				// Copia conteM-^\do da origem no destino
 				destChannel.transferFrom(oriChannel, 0, oriChannel.size());
 				// Fecha channels
 				oriChannel.close();

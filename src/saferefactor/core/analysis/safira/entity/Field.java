@@ -8,7 +8,7 @@ public class Field extends Entity{
 	String type;
 	
 	/**
-	 * Classe que contém o field, se inherited = false , entao containsCLass = c
+	 * Classe que contÃ©m o field, se inherited = false , entao containsCLass = c
 	 */
 	Class declaringClass;
 	

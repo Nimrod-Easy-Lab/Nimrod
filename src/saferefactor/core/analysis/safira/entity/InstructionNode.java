@@ -269,7 +269,7 @@ public class InstructionNode {
 			if (!(i.getIndex() == this.getIndex())) {
 				return false;
 			}
-			//opa, ver se realmente Ž verdadeiro, pq Ž um array
+			//opa, ver se realmente M-^N verdadeiro, pq M-^N um array
 			if (i.getKeys() != null && this.getKeys() != null && !arrayEquals(i.getKeys(), this.getKeys())) {
 				return false;
 			}

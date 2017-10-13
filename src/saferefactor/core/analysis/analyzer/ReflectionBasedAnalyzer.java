@@ -95,7 +95,7 @@ public class ReflectionBasedAnalyzer implements TransformationAnalyzer {
 							Clazz c4 = mapTargetClasses.get(targetMethod
 									.getDeclaringClass());
 
-							// a classe do target Žé super da classe do source
+							// a classe do target M-^NM-i super da classe do source
 							// nas duas hierarquias
 							// inclui a class do source no allowedclasses
 							if (isSuperClass(c1, c2, mapSourceClasses)

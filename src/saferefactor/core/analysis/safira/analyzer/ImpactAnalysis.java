@@ -53,9 +53,9 @@ public class ImpactAnalysis {
 	
 	//metodos em comum impactados (target)
 	private List<Method> listIntersectionTarget = new ArrayList<Method>();
-	//métodos impactados (target)
+	//mM-^Ntodos impactados (target)
 	private HashMap<String, Method> impactedMethodsTarget = new HashMap<String, Method>();
-	//métodos impactados (source)
+	//mM-^Ntodos impactados (source)
 	private HashMap<String, Method> impactedMethodsSource = new HashMap<String, Method>();
 
 	
@@ -269,7 +269,7 @@ public class ImpactAnalysis {
 		
 		fixMetAndFieldSource();
 		
-		//seta os methodInv que são do tipo This.
+		//seta os methodInv que sM-^Ko do tipo This.
 		for (Class sc : sourceClasses.values()) {
 			List<Method> methods = sc.getMethods();
 			for (Method method : methods) {
@@ -305,7 +305,7 @@ public class ImpactAnalysis {
 		
 		
 		fixMetAndFieldTarget();
-		//seta os methodInv que são do tipo This.
+		//seta os methodInv que sM-^Ko do tipo This.
 		for (Class sc : targetClasses.values()) {
 			List<Method> methods = sc.getMethods();
 			for (Method method : methods) {
@@ -330,16 +330,16 @@ public class ImpactAnalysis {
 	
 	public void fixMetAndFieldSource() {
 		
-		//Ajeitar as chamadas de métodos 
+		//Ajeitar as chamadas de mM-^Ntodos 
 		for (Class sc : sourceClasses.values()) {
 			List<Method> methods = sc.getMethods();
 			for (Method method : methods) {
 				List<Method> methodInvoc = method.getMethodInvoc();
 				for (Method mi : methodInvoc) {
-					//verificar se o método chamado está na mesma classe
+					//verificar se o mM-^Ntodo chamado estM-^G na mesma classe
 				//	if (mi.getClassFullName().equals(method.getContainsClass().getFullName())) {
 					
-						//verificar se a classe contem o método e ele é herdado
+						//verificar se a classe contem o mM-^Ntodo e ele M-^N herdado
 						
 						Class miClass = sourceClasses.get(mi.getClassFullName());
 						if (miClass != null) {
@@ -354,7 +354,7 @@ public class ImpactAnalysis {
 				List<Field> fieldInvoc = method.getFieldInvoc();
 				for (Field fi : fieldInvoc) {
 					//if (fi.getClassFullName().equals(method.getContainsClass().getFullName())) {
-						//verificar se a classe contem o método e ele é herdado
+						//verificar se a classe contem o mM-^Ntodo e ele M-^N herdado
 					
 						Class fiClass = sourceClasses.get(fi.getClassFullName());
 						if (fiClass != null) {
@@ -372,15 +372,15 @@ public class ImpactAnalysis {
 	
 	public void fixMetAndFieldTarget() {
 		
-		//Ajeitar as chamadas de métodos 
+		//Ajeitar as chamadas de mM-^Ntodos 
 		for (Class sc : targetClasses.values()) {
 			List<Method> methods = sc.getMethods();
 			for (Method method : methods) {
 				List<Method> methodInvoc = method.getMethodInvoc();
 				for (Method mi : methodInvoc) {
-					//verificar se o método chamado está na mesma classe
+					//verificar se o mM-^Ntodo chamado estM-^G na mesma classe
 				//	if (mi.getClassFullName().equals(method.getContainsClass().getFullName())) {
-						//verificar se a classe contem o método e ele é herdado
+						//verificar se a classe contem o mM-^Ntodo e ele M-^N herdado
 						Class miClass = targetClasses.get(mi.getClassFullName());
 						if (miClass != null) {
 							Method inheritedMethod = getInheritedMethod(miClass, mi.getFullName());
@@ -394,7 +394,7 @@ public class ImpactAnalysis {
 				List<Field> fieldInvoc = method.getFieldInvoc();
 				for (Field fi : fieldInvoc) {
 					//if (fi.getClassFullName().equals(method.getContainsClass().getFullName())) {
-						//verificar se a classe contem o método e ele é herdado
+						//verificar se a classe contem o mM-^Ntodo e ele M-^N herdado
 						Class fiClass = targetClasses.get(fi.getClassFullName());
 						if (fiClass != null) {
 							Field inheritedField = getInheritedField(fiClass, fi.getFullName());
@@ -608,7 +608,7 @@ private void getTargetMethods() {
 				mi.addMethodThatCall(m);
 				list.put(mi.getFullName(), mi);
 				
-				//também chama os métodos herdados
+				//tambM-^Nm chama os mM-^Ntodos herdados
 				for (Method sm : subMethods) {
 					sm.addMethodThatCall(m);
 					list.put(sm.getFullName(), sm);
@@ -904,7 +904,7 @@ private void getTargetMethods() {
 //
 //			//			List<Method> methodThatCall = makeGraph(sourceMethods, m);
 //			//m.addAllMethodThatCall(methodThatCall);
-//			//pq eu nao considero os herdados? e no caso de uma mudança de hierarquia? (ver paper de chianti)
+//			//pq eu nao considero os herdados? e no caso de uma mudanM-^Ma de hierarquia? (ver paper de chianti)
 //			if (!m.isInherited()) {
 //				if (containsMethodNotInherited(targetMethods, m) == null) {
 //					removedMethods.add(m);
@@ -1315,7 +1315,7 @@ private void getChangesInFieldAssignment(Method methodSource, Method methodTarge
 						fileIntersectionAux.put(m.getFullName(),m);
 //						fileIntersection.add((m.getSignatureRandoop()));
 				}
-			//se o retorno não for um objeto do projeto, e sim um tipo primitivo ou objeto de um jar:
+			//se o retorno nM-^Ko for um objeto do projeto, e sim um tipo primitivo ou objeto de um jar:
 			}else {
 				if (isSafeMethod(m))
 					fileIntersectionAux.put(m.getFullName(),m);
@@ -1478,7 +1478,7 @@ private void getChangesInFieldAssignment(Method methodSource, Method methodTarge
 		List<Method> dependecies = new ArrayList<Method>();
 		List<String> parameters = m.getParameters();
 		
-		//o tipo de retorno também é uma dependência para o Randoop gerar testes
+		//o tipo de retorno tambM-^Nm M-^N uma dependM-^Pncia para o Randoop gerar testes
 		parameters.add(m.getType());
 	
 		for (String p : parameters) {
@@ -1535,7 +1535,7 @@ private void getChangesInFieldAssignment(Method methodSource, Method methodTarge
 					constructorsResult.add(constructor);
 				}
 				//descomentar
-				//se nao tiver construtor é pq é interface
+				//se nao tiver construtor M-^N pq M-^N interface
 				if (constructors.size() == 0) {
 					List<Class> subClasses = c.getSubClasses();
 					for (Class subClass : subClasses) {
@@ -1619,7 +1619,7 @@ private void getChangesInFieldAssignment(Method methodSource, Method methodTarge
 	}
 	
 	public void print() {
-		System.out.println("Métodos impactados");
+		System.out.println("MM-^Ntodos impactados");
 		System.out.println("Source");
 		for (Method impS: impactedMethodsSource.values()) {
 			System.out.println(impS.toString());
@@ -1631,17 +1631,17 @@ private void getChangesInFieldAssignment(Method methodSource, Method methodTarge
 //			}
 		}
 		System.out.println();
-		System.out.println("Métodos adicionados");
+		System.out.println("MM-^Ntodos adicionados");
 		for (Method method : newMethods) {
 			System.out.println(method.toString());
 		}
 		System.out.println();
-		System.out.println("Métodos removidos");
+		System.out.println("MM-^Ntodos removidos");
 		for (Method method : removedMethods) {
 			System.out.println(method.toString());
 		}
 		System.out.println();
-		System.out.println("Métodos modificados");
+		System.out.println("MM-^Ntodos modificados");
 		for (Method method : changedMethods) {
 			System.out.println(method.toString());
 		}

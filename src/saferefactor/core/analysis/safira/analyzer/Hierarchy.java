@@ -6,8 +6,7 @@ import java.util.List;
 import java.util.Map;
 
 import saferefactor.core.analysis.safira.entity.*;
-import saferefactor.core.analysis.safira.entity.Class;;
-
+import saferefactor.core.analysis.safira.entity.Class;
 
 public class Hierarchy {
 
@@ -21,7 +20,7 @@ public class Hierarchy {
 		//this.c = c;
 	}
 	
-	public Class addInheritedMetodsAndFields(Class c, Class superC) {
+	public Class addInheritedetodsAndFields(Class c, Class superC) {
 		
 		
 		//mutante-----------
@@ -35,14 +34,14 @@ public class Hierarchy {
 		List<Method> m = c.getMethods();
 		for (Method method : superm) {
 			boolean containsClassIsInterface = false;
-			Method containsMethod = containsMethod(m, method); 
-			if (containsMethod != null) {
-				Class containsClass = containsMethod.getDeclaringClass();
+			Method containsethod = containsMethod(m, method); 
+			if (containsethod != null) {
+				Class containsClass = containsethod.getDeclaringClass();
 				if (interfaces.get(containsClass.getFullName()) != null) {
 					containsClassIsInterface= true;
 				}
 			}
-			if ((((containsMethod != null) && containsClassIsInterface) || (containsMethod == null)) && !method.isConstructor()) {
+			if ((((containsethod != null) && containsClassIsInterface) || (containsethod == null)) && !method.isConstructor()) {
 //			if ((containsMethod != null) && !method.isConstructor()) {
 				Method newMethod = new Method();
 				newMethod.setInherited(true);
@@ -84,13 +83,13 @@ public class Hierarchy {
 				}
 				
 				newField.setFullName(c.getFullName()+"."+field.getSimpleName());
-		//		newMethod.setPackageName(c.getPackagePath());
+		//		newethod.setPackageName(c.getPackagePath());
 				//no lugar do package colocar o classFullName?
 				newField.setClassFullName(c.getFullName());
-//				newMethod.setParameters_randoop(method.getParameters_randoop());
+//				newethod.setParameters_randoop(method.getParameters_randoop());
 				newField.setType(field.getType());
 				newField.setSimpleName(field.getSimpleName());
-//				newMethod.setStatements(method.getStatements());
+//				newethod.setStatements(method.getStatements());
 				newField.setVisibility(field.getVisibility());
 				c.addField(newField);
 			}
@@ -139,7 +138,7 @@ public class Hierarchy {
 	
 	//colocar todos os filhos de uma classe e vai descendo na hierarquia
 	public void putChildrenInTheCLass( Class c) {
-		//o que o método procura eh: algum typeVisitor é filho de c?
+		//o que o m-itodo procura eh: algum typeVisitor -i filho de c?
 		for (Class typeVisitor : classes.values()) {
 			if (typeVisitor.hasSuperClass()) {
 				if (typeVisitor.getSuperClass().equals(c.getFullName())) {
@@ -147,7 +146,7 @@ public class Hierarchy {
 						this.c.addSubClass(typeVisitor);
 						c.addSubClass(typeVisitor);
 					}
-						Class cc = addInheritedMetodsAndFields(typeVisitor, c);
+						Class cc = addInheritedetodsAndFields(typeVisitor, c);
 						typeVisitor.setMethods(cc.getMethods());
 						putChildrenInTheCLass( typeVisitor);
 					
@@ -160,7 +159,7 @@ public class Hierarchy {
 				//mutante-------------
 				List<String> interfaces = new ArrayList<String>();
 				interfaces.addAll(typeVisitor.getInterfaces());
-				//------------ desfazer e colocar diretamente no loop o typeVisitor.getInterfaces() ao invŽs de interfaces
+				//------------ desfazer e colocar diretamente no loop o typeVisitor.getInterfaces() ao inv-Ns de interfaces
 				
 				for (String interf : interfaces) {
 					if (interf.equals(c.getFullName())) {
@@ -168,7 +167,7 @@ public class Hierarchy {
 							this.c.addSubClass(typeVisitor);
 							c.addSubClass(typeVisitor);
 						}
-							Class cc = addInheritedMetodsAndFields(typeVisitor, c);
+							Class cc = addInheritedetodsAndFields(typeVisitor, c);
 							typeVisitor.setMethods(cc.getMethods());
 							putChildrenInTheCLass(typeVisitor);
 					}
