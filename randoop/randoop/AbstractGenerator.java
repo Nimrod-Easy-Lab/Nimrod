@@ -195,7 +195,7 @@ public abstract class AbstractGenerator {
 	 * Creates and executes new sequences in a loop.
 	 */
 	public void explore() {
-		System.out.println("Começo!!");
+		System.out.println("ComeM-^Mo!!");
 
 		Log.log(this.statements);
 

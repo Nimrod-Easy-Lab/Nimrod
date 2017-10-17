@@ -1,0 +1,2 @@
+null
+RandoopTest1.test144 in source is SUCCESS while in target is ERROR

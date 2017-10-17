@@ -5,7 +5,11 @@ import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.PrintStream;
 import java.net.MalformedURLException;
+import java.net.URI;
+import java.net.URISyntaxException;
 import java.net.URL;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
@@ -46,7 +50,8 @@ public class RandoopAntAdapter extends AbstractTestGeneratorAdapter {
 
 	public void generateTestsForMethodList(List<Method> methods,
 			double timeLimit, List<String> additionalParameters, String impactedList)
-			throws FileNotFoundException {
+			throws FileNotFoundException
+	{
 
 		this.timeLimit = timeLimit;
 		this.additionalParameters = additionalParameters;
@@ -59,19 +64,11 @@ public class RandoopAntAdapter extends AbstractTestGeneratorAdapter {
 
 	private void runRandoopThroughAnt() throws FileNotFoundException {
 
-//		URL buildFile = RandoopAntAdapter.class
-//				.getResource("/build_generator.xml");
-		// File buildFile = new File("ant" + "/" + "build_generator.xml");
-		
 		String path = System.getProperty("user.dir");
-		 URL buildFile = null;
-			try {
-				buildFile = new File(path
-						+ "/src/" + "build_generator.xml").toURL();
-			} catch (MalformedURLException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
+		File buildFile = null;
+		
+		String apath = path + "/src/" + "build_generator.xml";
+		buildFile = new File(apath);
 			
 		org.apache.tools.ant.Project p = new org.apache.tools.ant.Project();
 

@@ -1,22 +1,15 @@
 package saferefactor.core.generation;
 
 import static org.junit.Assert.*;
-
-
 import java.io.File;
 import java.io.FileNotFoundException;
-import java.net.MalformedURLException;
-import java.net.URL;
+import java.nio.file.Files;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
-
 import org.junit.Test;
-
 import saferefactor.core.generation.AbstractTestGeneratorAdapter;
-import saferefactor.core.generation.RandoopAdapter;
 import saferefactor.core.generation.RandoopAntAdapter;
-import saferefactor.core.util.Constants;
 import saferefactor.core.util.Project;
 import saferefactor.core.util.ast.Method;
 import saferefactor.core.util.ast.ConstructorImp;
@@ -24,7 +17,7 @@ import saferefactor.core.util.ast.MethodImp;
 
 public class RandoopAdapterTest {
 
-	@Test
+/*	@Test
 	public void testGenerateTestsForMethodList() throws FileNotFoundException {
 
 		Project projectToTest = new Project();
@@ -40,12 +33,11 @@ public class RandoopAdapterTest {
 		List<String> additionalParameters = new ArrayList<String>();
 		randoopGen.generateTestsForMethodList(methods, timelimit,
 				additionalParameters, "");
-
 		File testGenerated = new File(tmpFolder
 				+ "/RandoopTest0.java");
 
 		assertTrue(testGenerated.exists());
-	}
+	} */
 	
 	@Test(expected = RuntimeException.class)
 	public void testGenerateTestsIncorrectPath() throws FileNotFoundException {

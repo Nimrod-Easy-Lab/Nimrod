@@ -15,8 +15,6 @@ import saferefactor.util.SRImpact;
 public class Bugs extends TestCase{
 	
 	String path = System.getProperty("user.dir");
-	
-	//A versão anterior estava considerando construtores não comuns às duas versões do programa
 	@Test
 	public void testConstructors() {
 		
@@ -35,8 +33,6 @@ public class Bugs extends TestCase{
 		
 	}
 	
-	//identificar atributos modificados quando seu valor é alterado diferentemente nas duas versões do programa, 
-	//ou é alterado apenas em uma versão. 
 	@Test
 	public void testModifiedFields()  {
 		
@@ -57,8 +53,6 @@ public class Bugs extends TestCase{
 		
 	}
 	
-	//Ao adicionar as dependências de um método, quando esta era uma interface ou classe abstrata, 
-	//apenas uma classe que implementa a dependência estava sendo considerada 
 	@Test
 	public void testImplementerClasses() throws IOException {
 		String source = path + "/test/subjects/bugImplementerClassesS";
@@ -79,8 +73,6 @@ public class Bugs extends TestCase{
 		
 	}
 	
-	//Se um metodo chama uma interface, é necessario considerar que este metodo possa chamar todos 
-	// os metodos cujas classes implementam a interface
 	@Test
 	public void testCallInheritedMethods() throws IOException {
 		String source = path + "/test/subjects/mutantS";
@@ -100,7 +92,6 @@ public class Bugs extends TestCase{
 		
 	}
 	
-	//SR novo não pega (1.2.2) (a versão que usa design wizard)
 	@Test
 	public void testBugSR() throws IOException {
 		String source = path + "/test/subjects/bugSRS";
@@ -119,13 +110,6 @@ public class Bugs extends TestCase{
 		
 	}
 	
-	//bug introduzido ao refatorar o código (v1.0 -> v.1.1), modificando o algoritmo para 
-	//diminuir a complexidade e melhorar o tempo de analise:
-	//criar o grafo de chamadas dentro do loop de identificar métodos adicionados e removidos.
-	//Ao identificar um método adicionado/removido, os métodos que chamam ele também são identificados e 
-	//para isso é necessária as informações dos grafos (que não estavam completas). 
-	//Na versão anterior era feito de forma diferente. Os grafos não eram construídos.
-	//Quando havia o bug era identificado apenas o método A.m() como impactado
 	@Test
 	public void testBugRefactoring() throws IOException {
 		String source = path + "/test/subjects/bugRefactS";
@@ -148,14 +132,6 @@ public class Bugs extends TestCase{
 		
 	}
 	
-	//bug descoberto ao gerar uma nova versão  (v1.0 -> v.1.1). Uma das modificações foi trocar ArrayList por HashMap
-	//nas listas de armazenar metodos, atributos e classes.
-	//O bug foi descoberto porque com essa modificação a ordem de análise dos metodos mudou, pois na lista fica em ordem de insercao e no map nao.
-	//Seja: - uma interface I com um metodo m.
-	//- Uma clase A que implementa I e o metodo m
-	//- Uma classe B que implementa I e estende A 
-	//- Um meetodo C.z que que chama o metodo m
-	//Supondo que A.m foi modificado, com o bug, não era identificado que C.z chamava A.m, pois antes disso, era identificado que C.z chamava I.m
 	@Test
 	public void testBugExercisedMethods() throws IOException {
 		String source = path + "/test/subjects/bugExercisedMethodsS";
@@ -176,9 +152,6 @@ public class Bugs extends TestCase{
 		
 	}
 	
-	//O atributo modificado diferentemente no source e target dentro de um certo método deve ser considerado impactado.
-	//Antes (antes da versão 1.0) apenas o método modificado estava sendo impactado. 
-	//Os demais métodos que exercitam o atributo também devem ser considerados impactados
 	@Test
 	public void testBugModifiedFields() throws IOException {
 		String source = path + "/test/subjects/bugModifiedFieldsS";
@@ -199,7 +172,6 @@ public class Bugs extends TestCase{
 	}
 	
 	
-	//bug existente. Limitação da ferramenta: não faz análise de fluxo de dados
 	@Test
 	public void testBugDataFlow() throws IOException {
 		String source = path + "/test/subjects/bugDataFlowS";
@@ -219,7 +191,6 @@ public class Bugs extends TestCase{
 		
 	}
 	
-	//bug existente. Limitação da ferramenta: não faz análise de bibliotecas
 	@Test
 	public void testBugLibary() throws IOException {
 		String source = path + "/test/subjects/bugLibraryS";
@@ -240,13 +211,10 @@ public class Bugs extends TestCase{
 		
 	}
 	
-	//bug existente. Limitação da ferramenta: não analisa classes anônimas
 	@Test
 	public void testBugAnonymousClass() throws IOException {
 		String source = path + "/test/subjects/bugAnonymousClassS";
 		String target = path + "/test/subjects/bugAnonymousClassT";
-
-		
 		SRImpact c = new SRImpact("", source, target, "", "1");
 		
 		assertEquals(false, c.isRefactoring());

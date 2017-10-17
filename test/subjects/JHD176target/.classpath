@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<classpath>
+	<classpathentry kind="src" path="src"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/JavaSE-1.6"/>
+	<classpathentry kind="lib" path="lib/batik-awt-util-1.6.jar"/>
+	<classpathentry kind="lib" path="lib/batik-awt-util358022.jar"/>
+	<classpathentry kind="lib" path="lib/batik-dom-1.6-1.jar"/>
+	<classpathentry kind="lib" path="lib/batik-dom-1.6.jar"/>
+	<classpathentry kind="lib" path="lib/batik-rasterizer.jar"/>
+	<classpathentry kind="lib" path="lib/batik-slideshow.jar"/>
+	<classpathentry kind="lib" path="lib/batik-squiggle.jar"/>
+	<classpathentry kind="lib" path="lib/batik-svggen-1.6-1.jar"/>
+	<classpathentry kind="lib" path="lib/batik-svggen-1.6.jar"/>
+	<classpathentry kind="lib" path="lib/batik-svgpp.jar"/>
+	<classpathentry kind="lib" path="lib/batik-ttf2svg.jar"/>
+	<classpathentry kind="lib" path="lib/batik.jar"/>
+	<classpathentry kind="lib" path="lib/btree.jar"/>
+	<classpathentry kind="lib" path="lib/jai_codec.jar"/>
+	<classpathentry kind="lib" path="lib/jai_core.jar"/>
+	<classpathentry kind="lib" path="lib/java_30.zip"/>
+	<classpathentry kind="lib" path="lib/jdo-api-3.0.1.jar"/>
+	<classpathentry kind="lib" path="lib/jdo.jar"/>
+	<classpathentry kind="lib" path="lib/jdo2-api-2.1.jar"/>
+	<classpathentry kind="lib" path="lib/jdori-enhancer.jar"/>
+	<classpathentry kind="lib" path="lib/jdori.jar"/>
+	<classpathentry kind="lib" path="lib/junit-4.3.jar"/>
+	<classpathentry kind="lib" path="lib/libquaqua.jnilib"/>
+	<classpathentry kind="lib" path="lib/mlibwrapper_jai.jar"/>
+	<classpathentry kind="lib" path="lib/MRJAdapter.jar"/>
+	<classpathentry kind="lib" path="lib/quaqua.jar"/>
+	<classpathentry kind="lib" path="lib/randoop.jar"/>
+	<classpathentry kind="lib" path="lib/swing-layout.jar"/>
+	<classpathentry kind="lib" path="lib/swing-worker.jar"/>
+	<classpathentry kind="output" path="bin"/>
+</classpath>
