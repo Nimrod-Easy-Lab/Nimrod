@@ -47,7 +47,6 @@ public class ClassFileConstants {
 
     public String toString() {
       ByteArrayOutputStream baos = new ByteArrayOutputStream();
-      PrintStream ps = new PrintStream(baos);
 
       System.out.printf("START CLASSLITERALS%n");
       System.out.printf("%nCLASSNAME%n%s%n%nLITERALS%n", classname);
