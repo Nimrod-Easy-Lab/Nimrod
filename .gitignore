@@ -11,3 +11,4 @@ local.properties
 filewriter
 target/
 ajcore*
+.settings/
