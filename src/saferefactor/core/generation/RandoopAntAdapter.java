@@ -42,9 +42,6 @@ public class RandoopAntAdapter extends AbstractTestGeneratorAdapter {
 
 	}
 
-	// public static String TESTS_FOLDER = System.getProperty("java.io.tmpdir")
-	// + "/safeRefactorAJ/tests";
-
 	private List<String> additionalParameters;
 	private double timeLimit;
 
@@ -126,14 +123,7 @@ public class RandoopAntAdapter extends AbstractTestGeneratorAdapter {
 	private void generateMethodListFile(List<Method> methods) {
 
 		Random random = new Random();
-//		int choice = random.nextInt(2);		
 		StringBuffer lines = new StringBuffer();
-//		if (choice == 0) {
-//			for (Method method : methods) {
-//				lines.append(method + "\n");
-//			}
-//		} 
-//		else {
 			for (Method method : methods) {
 				if (method instanceof ConstructorImp)
 					lines.append(method + "\n");
@@ -142,9 +132,6 @@ public class RandoopAntAdapter extends AbstractTestGeneratorAdapter {
 				if (method instanceof MethodImp)
 					lines.append(method + "\n");
 			}
-
-//		}
-
 		FileUtil.makeFile(tmpDir + Constants.SEPARATOR + methodsToTest, lines.toString());
 
 	}
@@ -184,44 +171,15 @@ public class RandoopAntAdapter extends AbstractTestGeneratorAdapter {
 						listRandoopParameters);
 
 		}
-		
 		ArrayList<String> impactedMethods = new ArrayList<String>();
 		String[] split = impactedList.split(" ");
 		for (String string : split) {
 			if (!string.equals("")) {
-//				System.out.println(string.trim());
 				impactedMethods.add(string);
 				System.out.println("impacted Method "+string);
 			}
 		}
-		
-		
-//		main2.nonStaticMain(argsRandoop);
 		main2.nonStaticMainAJ(argsRandoop, impactedMethods);
-		
-//		ThreadGroup rootGroup = Thread.currentThread( ).getThreadGroup( );
-//		ThreadGroup parentGroup;
-//		while ( ( parentGroup = rootGroup.getParent() ) != null ) {
-//		    rootGroup = parentGroup;
-//		    Thread[] threads = new Thread[ rootGroup.activeCount() ];
-//		    while ( rootGroup.enumerate( threads, true ) == threads.length ) {
-//		        threads = new Thread[ threads.length * 2 ];
-//		        for (Thread thread : threads) {
-//		        	System.out.println("matando threads");
-//					thread.interrupt();
-//				}
-//		    }
-//
-//		}
-//		Set<Thread> threadSet = Thread.getAllStackTraces().keySet();
-//		for (Thread thread : threadSet) {
-//			System.out.println("matando threads");
-//			thread.interrupt();
-//			
-//		}
-
-
-		
 		System.exit(0);
 	}
 
