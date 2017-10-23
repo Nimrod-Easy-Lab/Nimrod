@@ -1,9 +1,5 @@
 <project name="saferefactor" default="generate" basedir=".">
 
-	<!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
-
-
-
 	<path id="classpath_source">
 		<fileset dir="${sourceLib}/" includes="*.jar,*.zip" />
 	</path>
@@ -36,11 +32,9 @@
 			
 			<classpath>
 				<pathelement path="${projectBin}" />
-				<pathelement path="${java.class.path}" />
+				<pathelement path="." />
 				<pathelement path="${extra.jars}" />
 			</classpath>
-
-
 			<classpath refid="classpath_source" />
 		</java>
 	</target>

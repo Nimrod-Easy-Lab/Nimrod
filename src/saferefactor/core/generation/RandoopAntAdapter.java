@@ -71,11 +71,13 @@ public class RandoopAntAdapter extends AbstractTestGeneratorAdapter {
 
 		p.setProperty("projectBin", project.getBuildFolder().getAbsolutePath());
 
-		if (project.getLibFolder() != null)
+		if (project.getLibFolder() != null) {
 			p.setProperty("sourceLib", project.getLibFolder().getAbsolutePath());
-		else
+		}
+		else {
 			p.setProperty("sourceLib", project.getProjectFolder()
 					.getAbsolutePath());
+		}
 		p.setProperty("timeout", String.valueOf(timeLimit));
 		
 		impactedList = "";
