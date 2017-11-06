@@ -5,13 +5,23 @@
 	<artifactId>Nimrod</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<build>
-		<sourceDirectory>src</sourceDirectory>
-		<testSourceDirectory>test/main/java</testSourceDirectory>
+		<sourceDirectory>src/main/java/core</sourceDirectory>
+		<testSourceDirectory>src/test/main/java</testSourceDirectory>
 		<resources>
+			<resource>
+				<directory>src/main/java/aspect</directory>
+			</resource>
+			<resource>
+				<directory>src/main/java/randoop</directory>
+			</resource>
+			<resource>
+				<directory>src/main/java/asm</directory>
+			</resource>
 			<resource>
 				<directory>src</directory>
 				<excludes>
-					<exclude>**/*.java</exclude>
+					<exclude>main/java/</exclude>
+					<exclude>test/</exclude>
 				</excludes>
 			</resource>
 	</resources>

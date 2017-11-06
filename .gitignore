@@ -12,3 +12,4 @@ filewriter
 target/
 ajcore*
 .settings/
+/Nimrod/
