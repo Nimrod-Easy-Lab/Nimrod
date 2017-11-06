@@ -1,11 +1,22 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <classpath>
-	<classpathentry including="**/*.java" kind="src" path="src/main/java/core"/>
-	<classpathentry excluding="main/|test/" including="*.xml" kind="src" path="src"/>
-	<classpathentry kind="src" output="Nimrod/target/test-classes" path="src/test/main/java"/>
-	<classpathentry kind="src" path="src/main/java/aspect"/>
-	<classpathentry including="**/*.java" kind="src" output="Nimrod/target/test-classes" path="src/main/java/randoop"/>
-	<classpathentry including="**/*.java" kind="src" path="src/main/java/asm"/>
+	<classpathentry kind="src" output="target/classes" path="src/main/java/core">
+		<attributes>
+			<attribute name="optional" value="true"/>
+			<attribute name="maven.pomderived" value="true"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry excluding="main/|test/main/java|test/subjects" including="*.xml" kind="src" output="target/classes" path="src">
+		<attributes>
+			<attribute name="maven.pomderived" value="true"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry including="**/*.java" kind="src" output="target/test-classes" path="src/test/main/java">
+		<attributes>
+			<attribute name="optional" value="true"/>
+			<attribute name="maven.pomderived" value="true"/>
+		</attributes>
+	</classpathentry>
 	<classpathentry kind="con" path="org.eclipse.jdt.junit.JUNIT_CONTAINER/4"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/JavaSE-1.8">
 		<attributes>

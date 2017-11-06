@@ -9,42 +9,14 @@
 		<testSourceDirectory>src/test/main/java</testSourceDirectory>
 		<resources>
 			<resource>
-				<directory>src/main/java/aspect</directory>
-			</resource>
-			<resource>
-				<directory>src/main/java/randoop</directory>
-			</resource>
-			<resource>
-				<directory>src/main/java/asm</directory>
-			</resource>
-			<resource>
 				<directory>src</directory>
 				<excludes>
-					<exclude>main/java/</exclude>
+					<exclude>main/</exclude>
 					<exclude>test/</exclude>
 				</excludes>
 			</resource>
 	</resources>
 		<plugins>
-			<plugin>
-				<artifactId>maven-compiler-plugin</artifactId>
-				<version>3.5.1</version>
-				<configuration>
-					<source>1.8</source>
-					<target>1.8</target>
-				</configuration>
-				<executions>
-					<execution>
-						<id>default-compile</id>
-						<configuration>
-							<compilerArguments>
-								<d>${project.basedir}/aspect</d>
-							</compilerArguments>
-						</configuration>
-					</execution>
-				</executions>
-			</plugin>
-
 			<!-- use this goal to weave all your main classes -->
 			<plugin>
 				<groupId>org.codehaus.mojo</groupId>
@@ -57,19 +29,15 @@
 						<version>1.6.1</version>
 					</dependency>
 				</dependencies>
-				<configuration>
-					<weaveDirectories>
-						<weaveDirectory>
-							${project.basedir}/aspect
-						</weaveDirectory>
-					</weaveDirectories>
-				</configuration>
 				<executions>
 					<execution>
-						<phase>process-classes</phase>
 						<goals>
 							<goal>compile</goal>
 						</goals>
+						<configuration>
+							<source>${project.build.source}</source> 
+							<target>${project.build.target}</target> 
+						</configuration>
 					</execution>
 				</executions>
 			</plugin>
@@ -93,27 +61,6 @@
 						<goals>
 							<goal>single</goal>
 						</goals>
-					</execution>
-				</executions>
-			</plugin>
-
-			<plugin>
-				<groupId>org.codehaus.mojo</groupId>
-				<artifactId>build-helper-maven-plugin</artifactId>
-				<version>1.7</version>
-				<executions>
-					<execution>
-						<id>add-source</id>
-						<phase>generate-sources</phase>
-						<goals>
-							<goal>add-source</goal>
-						</goals>
-						<configuration>
-							<sources>
-								<source>${project.basedir}/asm</source>
-								<source>${project.basedir}/randoop</source>
-							</sources>
-						</configuration>
 					</execution>
 				</executions>
 			</plugin>
