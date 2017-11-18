@@ -17,9 +17,7 @@ public class Main {
 	private static String binPath = "";
 	private static String libPath = "";
 	private static String source = "";
-	// private static String target = "";
 	private static List<String> targets;
-
 	private static String timeout = "10";
 	private static boolean quiet = false;
 
@@ -28,25 +26,14 @@ public class Main {
 		parseArguments(args);
 
 		File sourceFile = new File(source);
-		// File targetFile = new File(target);
 
 		try {
 			if (!sourceFile.exists())
 				throw new Throwable("Directory not found:" + sourceFile.getAbsolutePath());
-			// if (!targetFile.exists())
-			// throw new Throwable("Directory not found:"
-			// + targetFile.getAbsolutePath());
-
-			// Saferefactor sr = new Saferefactor(sourceFile.getAbsolutePath(),
-			// targetFile.getAbsolutePath(), binPath, srcPath, libPath);
 
 			File binSource = new File(sourceFile, binPath);
 			File srcSource = new File(sourceFile, srcPath);
 			File libSource = new File(sourceFile, libPath);
-
-			// File binTarget = new File(targetFile,binPath);
-			// File srcTarget = new File(targetFile,srcPath);
-			// File libTarget = new File(targetFile,libPath);
 
 			Project sourceProject = new Project();
 			sourceProject.setProjectFolder(sourceFile.getAbsoluteFile());
@@ -69,27 +56,15 @@ public class Main {
 				targetProjects.add(targetProject);
 			}
 
-			// Project targetProject = new Project();
-			// targetProject.setProjectFolder(targetFile);
-			// targetProject.setBuildFolder(binTarget);
-			// targetProject.setSrcFolder(srcTarget);
-			// targetProject.setLibFolder(libTarget);
-
 			Parameters parameters = new Parameters();
-			// parameters.setKind_of_analysis(Parameters.SAFIRA_ANALYSIS);
-			// //Ativando a análise de impacto
-			// Leo adicionou esta linha
 			parameters.setTimeLimit(Integer.parseInt(timeout));
 			parameters.setCompileProjects(true); // Caso eu queira executar
 													// apenas com .class
 
-			// SafeRefactor sr = new SafeRefactorImp(sourceProject ,
-			// targetProject, parameters );
 			NimrodImpl sr = new NimrodImpl(sourceProject, targetProjects, parameters);
 			if(parameters.isCompileProjects()){
 				sr.compileTargets();
 			}
-			// sr.checkTransformation();
 			sr.checkTransformations(targetProjects);
 			sr.printMutantsListInfo();
 
@@ -121,7 +96,6 @@ public class Main {
 				targetProjectDup.setLibFolder(libTargetDup);
 
 				Parameters parametersDup = new Parameters();
-				// parameters.setKind_of_analysis(Parameters.SAFIRA_ANALYSIS);
 				parametersDup.setTimeLimit(Integer.parseInt(timeout));
 				parametersDup.setCompileProjects(true);
 
@@ -134,26 +108,6 @@ public class Main {
 				}
 			}
 			System.out.println("Total duplicateds after re-analysis: " + totalDuplicateds);
-
-			// Report report = sr.getReport();
-			//
-			// if (report.isRefactoring())
-			// System.out.println("SafeRefactor found no behavioral changes");
-			// else {
-			// System.out.println("SafeRefactor found behavioral changes");
-			// System.out.println("Different test results:\n" +
-			// report.getChanges());
-			// System.out.println("Tests' dir:" + sr.getTmpFolder());
-			// }
-			//
-			// System.out.println("Testes: " + report.getNumberTests());
-			// System.out.println("Métodos Testados: " +
-			// report.getTotalMethodsToTest());
-			// for (saferefactor.core.util.ast.Method method :
-			// report.getMethodsToTest()) {
-			// System.out.println("Metodo: "+ method.getSimpleName() + " ->
-			// Classe: " + method.getDeclaringClass());
-			// }
 
 		} catch (Throwable e) {
 			System.err.println(e.getMessage());
@@ -210,9 +164,6 @@ public class Main {
 			targets.add(args[j]);
 
 		}
-		// target = args[i + 1];
 	}
-
-
 
 }

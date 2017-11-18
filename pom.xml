@@ -1,116 +1,142 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
-	<groupId>EasyLab</groupId>
-	<artifactId>Nimrod</artifactId>
+	<groupId>easy.nimrod</groupId>
+	<artifactId>nimrod</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
+
+	<properties>
+		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+		<aspectj.version>1.6.12</aspectj.version>
+		<maven.compiler.source>1.5</maven.compiler.source>
+		<maven.compiler.target>1.5</maven.compiler.target>
+	</properties>
+
+	<name>Nimrod</name>
 	<build>
-		<sourceDirectory>src</sourceDirectory>
-		<testSourceDirectory>test/main/java</testSourceDirectory>
+		<sourceDirectory>src/main/java/core</sourceDirectory>
+		<testSourceDirectory>src/test/main/java</testSourceDirectory>
 		<resources>
+			<resource>
+				<directory>src/main/java/core</directory>
+			</resource>
 			<resource>
 				<directory>src</directory>
 				<excludes>
 					<exclude>**/*.java</exclude>
 				</excludes>
 			</resource>
-			<resource>
-				<directory>randoop</directory>
-				<excludes>
-					<exclude>**/*.java</exclude>
-				</excludes>
-			</resource>
-			<resource>
-				<directory>asm</directory>
-				<excludes>
-					<exclude>**/*.java</exclude>
-				</excludes>
-			</resource>
-			<resource>
-				<directory>aspect</directory>
-				<excludes>
-					<exclude>**/*.java</exclude>
-				</excludes>
-			</resource>
 		</resources>
-		<pluginManagement>
-			<plugins>
+		<plugins>
 
-				<plugin>
-					<artifactId>maven-compiler-plugin</artifactId>
-					<version>3.5.1</version>
-					<configuration>
-						<source>1.8</source>
-						<target>1.8</target>
-					</configuration>
-				</plugin>
+			<!--> Maven compiler plugin <-->
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-compiler-plugin</artifactId>
+				<version>2.5.1</version>
+				<configuration>
+					<!--<source>${project.build.source}</source>
+					<target>${project.build.target}</target> -->
 
-				<!-- use this goal to weave all your main classes -->
-				<plugin>
-					<groupId>org.codehaus.mojo</groupId>
-					<artifactId>aspectj-maven-plugin</artifactId>
-					<version>1.6</version>
-					<dependencies>
-						<dependency>
-							<groupId>org.aspectj</groupId>
-							<artifactId>aspectjtools</artifactId>
-							<version>1.6.1</version>
-						</dependency>
-					</dependencies>
-					<executions>
-						<execution>
-							<phase>process-sources</phase>
-							<goals>
-								<goal>compile</goal>
-								<goal>test-compile</goal>
-							</goals>
-							<configuration>
-								<source>${project.build.source}</source>
-								<target>${project.build.target}</target>
-							</configuration>
-						</execution>
-					</executions>
-				</plugin>
+					<source>1.5</source>
+					<target>1.5</target> 
 
-					<artifactId>maven-assembly-plugin</artifactId>
-					<configuration>
-						<archive>
-							<manifest>
-								<mainClass>saferefactor.ui.Main</mainClass>
-							</manifest>
-						</archive>
-						<descriptorRefs>
-							<descriptorRef>jar-with-dependencies</descriptorRef>
-						</descriptorRefs>
-					</configuration>
-					<executions>
-						<execution>
-							<id>make-assembly</id>
-							<phase>package</phase>
-							<goals>
-								<goal>single</goal>
-							</goals>
-						</execution>
-					</executions>
-				</plugin>
+					<!--<useIncrementalCompilation>
+						false
+					</useIncrementalCompilation> -->
 
-			</plugins>
-		</pluginManagement>
+				</configuration>
+				<!--<executions>
+					<execution>
+						<id>default-testCompile</id>
+						<phase>none</phase>
+					</execution>
+					<execution>
+						<id>default-compile</id>
+						<phase>none</phase>
+					</execution>
+				</executions>-->
+			</plugin>
+
+			<plugin>
+				<groupId>org.codehaus.mojo</groupId>
+				<artifactId>exec-maven-plugin</artifactId>
+				<version>1.6.0</version>
+				<executions>
+					<execution>
+						<phase>package</phase>
+						<goals>
+							<goal>java</goal>
+						</goals>
+					</execution>
+				</executions>
+				<configuration>
+					<mainClass>saferefactor.ui.Main</mainClass>
+				</configuration>
+			</plugin>
+
+			<!-- use this goal to weave all your main classes -->
+			<plugin>
+				<groupId>org.codehaus.mojo</groupId>
+				<artifactId>aspectj-maven-plugin</artifactId>
+				<version>1.6</version>
+
+				<dependencies>
+					<dependency>
+						<groupId>org.aspectj</groupId>
+						<artifactId>aspectjtools</artifactId>
+						<version>${aspectj.version}</version>
+					</dependency>
+
+					<dependency>
+						<groupId>org.aspectj</groupId>
+						<artifactId>aspectjrt</artifactId>
+						<version>${aspectj.version}</version>
+					</dependency>
+
+					<dependency>
+						<groupId>org.aspectj</groupId>
+						<artifactId>aspectjweaver</artifactId>
+						<version>${aspectj.version}</version>
+					</dependency>
+				</dependencies>
+
+				<executions>
+					<execution>
+						<phase>
+							process-sources
+						</phase>
+						<goals>
+							<goal>compile</goal>
+							<goal>test-compile</goal>
+						</goals>
+					</execution>
+				</executions>
+
+				<configuration>
+
+					<source>1.6</source>
+					<target>1.6</target>
+					<complianceLevel>1.6</complianceLevel>
+					<verbose></verbose>
+					
+					<!--<sources>
+						<source>
+							<basedir>src/main/java/core/</basedir>
+							<includes>
+								<include>**/*.java</include>
+								<include>Aspect.aj</include>
+							</includes>
+						</source>
+					</sources>-->
+					
+					<target>${project.build.target}</target>
+				</configuration>
+			</plugin>
+
+		</plugins>
 	</build>
-
-    <dependencyManagement>
-        <dependencies>
-            <dependency>
-                <groupId>org.aspectj</groupId>
-                <artifactId>aspectjrt</artifactId>
-                <version>1.6.1</version>
-                <scope>runtime</scope>
-            </dependency>
-        </dependencies>
-    </dependencyManagement>
-
 	<dependencies>
-
 		<!-- https://mvnrepository.com/artifact/org.apache.ant/ant -->
 		<dependency>
 			<groupId>org.apache.ant</groupId>
@@ -144,13 +170,14 @@
 		<dependency>
 			<groupId>org.aspectj</groupId>
 			<artifactId>aspectjrt</artifactId>
-			</dependency>
+			<version>1.6.12</version>
+		</dependency>
 
 		<!-- https://mvnrepository.com/artifact/org.aspectj/aspectjtools -->
 		<dependency>
 			<groupId>org.aspectj</groupId>
 			<artifactId>aspectjtools</artifactId>
-			<version>1.6.1</version>
+			<version>1.6.12</version>
 		</dependency>
 
 		<!-- https://mvnrepository.com/artifact/org.apache.bcel/bcel -->
@@ -214,8 +241,16 @@
 		<dependency>
 			<groupId>junit</groupId>
 			<artifactId>junit</artifactId>
-			<version>4.5</version>
+			<version>4.8.2</version>
 			<scope>test</scope>
+		</dependency>
+
+		<dependency>
+			<groupId>junit</groupId>
+			<artifactId>junit</artifactId>
+			<version>4.8.2</version>
+			<scope>system</scope>
+			<systemPath>${project.basedir}/lib/junit-4.8.2.jar</systemPath>
 		</dependency>
 
 		<!-- https://mvnrepository.com/artifact/org.tinyjee.jgraphx/jgraphx -->
@@ -247,5 +282,32 @@
 			<version>3.10.0</version>
 		</dependency>
 
+		<!--plume -->
+		<dependency>
+			<groupId>plume</groupId>
+			<artifactId>plume</artifactId>
+			<version>1.0</version>
+			<scope>system</scope>
+			<systemPath>${project.basedir}/lib/plume.jar</systemPath>
+		</dependency>
+
+		<!--aspectjrt -->
+		<!--
+		<dependency>
+			<groupId>aspectjrt</groupId>
+			<artifactId>aspectjrt</artifactId>
+			<version>1.6.13</version>
+			<scope>system</scope>
+			<systemPath>${project.basedir}/lib/aspectjrt.jar</systemPath>
+		</dependency>
+
+		<dependency>
+			<groupId>aspectjtools</groupId>
+			<artifactId>aspectjtools</artifactId>
+			<version>1.6.13</version>
+			<scope>system</scope>
+			<systemPath>${project.basedir}/lib/aspectjtools.jar</systemPath>
+		</dependency>
+		-->
 	</dependencies>
 </project>
