@@ -9,15 +9,16 @@ import java.net.URL;
 import java.net.URLClassLoader;
 import java.util.HashMap;
 import java.util.List;
+
 import org.objectweb.asm.ClassReader;
 import org.objectweb.asm.util.TraceClassVisitor;
 import org.objectweb.asm.util.TraceFieldVisitor;
 import org.objectweb.asm.util.TraceMethodVisitor;
 
-import saferefactor.core.analysis.safira.visitor.ClassNode;
 import saferefactor.core.analysis.safira.entity.Class;
 import saferefactor.core.analysis.safira.entity.Field;
 import saferefactor.core.analysis.safira.entity.Method;
+import saferefactor.core.analysis.safira.visitor.ClassNode;
 
 public class ClassExtractor {
 	

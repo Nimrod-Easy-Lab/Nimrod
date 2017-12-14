@@ -7,15 +7,13 @@ import java.io.PrintStream;
 import java.net.MalformedURLException;
 import java.net.URL;
 
-import org.apache.tools.ant.DefaultLogger;
 import org.apache.tools.ant.ProjectHelper;
+import org.apache.tools.ant.DefaultLogger;
 
 public class AntJavaCompiler implements Compiler {
 
 	private String binClasspath = "";
 	private String libClasspath = "";
-	// private String path = System.getProperty("java.home") + "/bin/javac";
-	// private String buildPath;
 	private final String tmpDir;
 
 	public AntJavaCompiler(String tmpDir) {
@@ -24,9 +22,6 @@ public class AntJavaCompiler implements Compiler {
 	}
 
 	public void compile(String src, String dest) throws FileNotFoundException {
-
-		// URL buildFile =
-		// AntJavaCompiler.class.getResource("/build_compile.xml");
 
 		String path = System.getProperty("user.dir");
 		URL buildFile = null;
@@ -83,14 +78,5 @@ public class AntJavaCompiler implements Compiler {
 	public void setBinClasspath(String binClasspath) {
 		this.binClasspath = binClasspath;
 	}
-
-	// public void setCompilerPath(String path) {
-	// this.path = path;
-	// }
-
-	// public void setBuildPath(String buildPath) {
-	// this.buildPath = buildPath;
-	//
-	// }
 
 }
