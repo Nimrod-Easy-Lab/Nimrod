@@ -8,6 +8,8 @@
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<aspectj.version>1.6.12</aspectj.version>
+        <maven.compiler.target>1.7</maven.compiler.target>
+        <maven.compiler.source>1.7</maven.compiler.source>
 	</properties>
 
 	<name>Nimrod</name>
@@ -48,6 +50,10 @@
 				</executions>
 				<configuration>
 					<mainClass>saferefactor.ui.Main</mainClass>
+                     <compilerArguments>
+                        <source>${maven.compiler.target}</source>
+                        <target>${maven.compiler.source}</target>
+                     </compilerArguments>
 				</configuration>
 			</plugin>
 
