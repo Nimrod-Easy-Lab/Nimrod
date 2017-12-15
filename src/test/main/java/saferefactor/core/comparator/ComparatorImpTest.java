@@ -13,7 +13,7 @@ public class ComparatorImpTest {
 
 	@Test
 	public void test1() {
-		TestComparator comparator = new ComparatorImp("test/subjects/subject14source/fixedReport", "test/subjects/subject14target/fixedReport");
+		TestComparator comparator = new ComparatorImp("src/test/subjects/subject14source/fixedReport", "src/test/subjects/subject14target/fixedReport");
 		comparator.compare();
 		Report report = comparator.getReport();
 		assertFalse(report.isRefactoring());		
