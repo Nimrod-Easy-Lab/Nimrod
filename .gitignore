@@ -1,3 +1,7 @@
+ajcore*
+TEST-RandoopTest.xml
+dependency-reduced-pom.xml
+log_coverage.txt
 tmp/
 filewriter
 target/
