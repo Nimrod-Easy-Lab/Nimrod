@@ -7,7 +7,7 @@
 
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-		<aspectj.version>1.6.12</aspectj.version>
+		<aspectj.version>1.8.1</aspectj.version>
 		<maven.compiler.target>1.7</maven.compiler.target>
 		<maven.compiler.source>1.7</maven.compiler.source>
 		<maven.compiler.testTarget>1.8</maven.compiler.testTarget>
@@ -111,7 +111,7 @@
 			<plugin>
 				<groupId>org.codehaus.mojo</groupId>
 				<artifactId>aspectj-maven-plugin</artifactId>
-				<version>1.6</version>
+				<version>1.7</version>
 
 				<dependencies>
 					<dependency>
@@ -147,9 +147,9 @@
 
 				<configuration>
 
-					<!--					<source>1.7</source>
-					<target>1.7</target> -->
-					<complianceLevel>1.6</complianceLevel>
+					<source>1.8</source>
+					<target>1.8</target> -->
+					<complianceLevel>1.8</complianceLevel>
 					<verbose></verbose>
 
 					<target>${project.build.target}</target>
@@ -192,14 +192,14 @@
 		<dependency>
 			<groupId>org.aspectj</groupId>
 			<artifactId>aspectjrt</artifactId>
-			<version>1.6.12</version>
+			<version>${aspectj.version}</version>
 		</dependency>
 
 		<!-- https://mvnrepository.com/artifact/org.aspectj/aspectjtools -->
 		<dependency>
 			<groupId>org.aspectj</groupId>
 			<artifactId>aspectjtools</artifactId>
-			<version>1.6.12</version>
+			<version>${aspectj.version}</version>
 		</dependency>
 
 		<!-- https://mvnrepository.com/artifact/org.apache.bcel/bcel -->
