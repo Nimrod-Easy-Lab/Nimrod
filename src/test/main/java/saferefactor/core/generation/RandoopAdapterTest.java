@@ -21,9 +21,9 @@ public class RandoopAdapterTest {
 	public void testGenerateTestsForMethodList() throws FileNotFoundException {
 
 		Project projectToTest = new Project();
-		projectToTest.setProjectFolder(new File("test/subjects/subject14source"));
-		projectToTest.setBuildFolder(new File("test/subjects/subject14source/bin"));
-		projectToTest.setSrcFolder(new File("test/subjects/subject14source/src"));
+		projectToTest.setProjectFolder(new File("src/test/subjects/subject14source"));
+		projectToTest.setBuildFolder(new File("src/test/subjects/subject14source/bin"));
+		projectToTest.setSrcFolder(new File("src/test/subjects/subject14source/src"));
 		int timelimit = 1;
 		String tmpFolder = System
 				.getProperty("java.io.tmpdir");
@@ -43,9 +43,9 @@ public class RandoopAdapterTest {
 	public void testGenerateTestsIncorrectPath() throws FileNotFoundException {
 
 		Project projectToTest = new Project();
-		projectToTest.setProjectFolder(new File("test/subjects/subject14source"));
-		projectToTest.setBuildFolder(new File("test/subjects/subject14source/bin2"));
-		projectToTest.setSrcFolder(new File("test/subjects/subject14source/src"));
+		projectToTest.setProjectFolder(new File("src/test/subjects/subject14source"));
+		projectToTest.setBuildFolder(new File("src/test/subjects/subject14source/bin2"));
+		projectToTest.setSrcFolder(new File("src/test/subjects/subject14source/src"));
 
 		int timelimit = 1;
 		String tmpFolder = System
@@ -97,7 +97,7 @@ public class RandoopAdapterTest {
 		method3AllowedClasses.add("C");
 		method3.setAllowedClasses(method3AllowedClasses);
 		method3.setDeclaringClass("C");
-		method3.setSimpleName("test");
+		method3.setSimpleName("src/test");
 		method3.setParameterList(new ArrayList<String>());
 
 		Method method4 = new MethodImp();
