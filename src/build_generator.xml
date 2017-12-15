@@ -1,9 +1,5 @@
 <project name="saferefactor" default="generate" basedir=".">
 
-	<!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
-
-
-
 	<path id="classpath_source">
 		<fileset dir="${sourceLib}/" includes="*.jar,*.zip" />
 	</path>
@@ -18,13 +14,14 @@
 		</delete>
 	</target>
 
+    <echo>
+		projet bin ${projectBin}
+		source lib ${sourceLib}
+		${java.class.path}
+    </echo>
 
 	<target name="generate" depends="clean">
-		<echo>
-			Generating tests for ${projectBin}
-			Fork ${fork}
-		</echo>
-		<java classname="saferefactor.core.generation.RandoopAntAdapter" logerror="true" failonerror="true"  fork="${fork}" maxmemory="1024m">
+	<java classname="saferefactor.core.generation.RandoopAntAdapter" logerror="true" failonerror="true"  fork="${fork}" maxmemory="1024m">
 
 
 			<jvmarg value="-Xms512m" />
@@ -37,11 +34,10 @@
 			<classpath>
 				<pathelement path="${projectBin}" />
 				<pathelement path="${java.class.path}" />
+				<pathelement path="." />
 				<pathelement path="${extra.jars}" />
 			</classpath>
-
-
 			<classpath refid="classpath_source" />
-		</java>
+	</java>
 	</target>
 </project>

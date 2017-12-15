@@ -1,0 +1,5 @@
+method : A.k(int) : A
+method : A.k(int) : B
+method : B.test() : B
+cons : A.<init>()
+cons : B.<init>()

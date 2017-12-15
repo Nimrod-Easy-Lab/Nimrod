@@ -1,0 +1,5 @@
+method : A.m() : A
+method : B.test() : B
+method : A.m() : B
+cons : A.<init>()
+cons : B.<init>()
