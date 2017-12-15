@@ -65,8 +65,8 @@ public class SRImpact {
 		target.setSrcFolder(new File(targetSub+Constants.FILE_SEPARATOR +"/src"));
 
 		if (!lib.equals("")) {
-			source.setLibFolder(new File("test/subjects/"+sourceSub+"/"+lib));
-			target.setLibFolder(new File("test/subjects/"+targetSub+"/"+lib));
+			source.setLibFolder(new File("src/test/subjects/"+sourceSub+"/"+lib));
+			target.setLibFolder(new File("src/test/subjects/"+targetSub+"/"+lib));
 		}
 		
 		Parameters parameters = new Parameters();
