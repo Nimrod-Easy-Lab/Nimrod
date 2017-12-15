@@ -4,6 +4,6 @@ init:
 clean:
 
 run_tests:
-     [echo] Running JUnit to test on /home/pedro/Documents/Nimrod/src/test/subjects/subject14source/bin
+     [echo] Running JUnit to test on /home/pedro/Documents/Nimrod/test/subjects/subject14source/bin
     [junit] Running RandoopTest0
-    [junit] Tests run: 136, Failures: 0, Errors: 0, Time elapsed: 0,101 sec
+    [junit] Tests run: 136, Failures: 0, Errors: 0, Time elapsed: 0,207 sec

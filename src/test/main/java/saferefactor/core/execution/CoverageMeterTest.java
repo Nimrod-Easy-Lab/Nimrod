@@ -24,10 +24,10 @@ public class CoverageMeterTest {
 	@Test
 	public void testCheckCoverage() throws FileNotFoundException {
 		Project project = new Project();
-		project.setProjectFolder(new File("src/test/subjects/subject14target"));
-		project.setBuildFolder(new File("src/test/subjects/subject14target/bin"));
-		project.setSrcFolder(new File("src/test/subjects/subject14target/src"));
-		String tests = "src/test/subjects/subject14source/test";
+		project.setProjectFolder(new File("test/subjects/subject14target"));
+		project.setBuildFolder(new File("test/subjects/subject14target/bin"));
+		project.setSrcFolder(new File("test/subjects/subject14target/src"));
+		String tests = "test/subjects/subject14source/test";
 
 		CoverageMeter meter = new CoverageMeter(project, tests);
 		meter.checkTestCoverage();
@@ -49,10 +49,10 @@ public class CoverageMeterTest {
 	public void testCheckCoverageImpactedMethod() throws JDOMException,
 			IOException {
 		Project project = new Project();
-		project.setProjectFolder(new File("src/test/subjects/subject14target"));
-		project.setBuildFolder(new File("src/test/subjects/subject14target/bin"));
-		project.setSrcFolder(new File("src/test/subjects/subject14target/src"));
-		String tests = "src/test/subjects/subject14source/test";
+		project.setProjectFolder(new File("test/subjects/subject14target"));
+		project.setBuildFolder(new File("test/subjects/subject14target/bin"));
+		project.setSrcFolder(new File("test/subjects/subject14target/src"));
+		String tests = "test/subjects/subject14source/test";
 
 		CoverageMeter meter = new CoverageMeter(project, tests);
 		Method methodK = new MethodImp();
