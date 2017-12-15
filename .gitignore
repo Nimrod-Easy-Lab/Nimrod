@@ -2,7 +2,8 @@ tmp/
 filewriter
 target/
 *.class
-
+.idea/
+nimrod.iml
 .metadata
 bin/
 tmp/
