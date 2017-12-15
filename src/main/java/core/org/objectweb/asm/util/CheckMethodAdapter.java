@@ -1179,11 +1179,13 @@ public class CheckMethodAdapter extends MethodVisitor {
                 checkIdentifier(name, begin, slash, null);
                 begin = slash + 1;
             } while (slash != max);
-        } catch (IllegalArgumentException _) {
-            throw new IllegalArgumentException("Invalid "
+        } catch (IllegalArgumentException e) {
+/*            throw new IllegalArgumentException("Invalid "
                     + msg
                     + " (must be a fully qualified class name in internal form): "
                     + name);
+					*/
+			throw e;
         }
     }
 
@@ -1253,9 +1255,12 @@ public class CheckMethodAdapter extends MethodVisitor {
                 }
                 try {
                     checkInternalName(desc, start + 1, index, null);
-                } catch (IllegalArgumentException _) {
+                }catch (IllegalArgumentException e) {
+					/*
                     throw new IllegalArgumentException("Invalid descriptor: "
                             + desc);
+							*/
+					throw e;
                 }
                 return index + 1;
             default:
