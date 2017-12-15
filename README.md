@@ -2,12 +2,11 @@
 
 ### How to use:
 
-Download Nimrod.jar from https://github.com/Nimrod-Easy-Lab/Nimrod/releases/tag/0.1 \
-Clone https://github.com/Nimrod-Easy-Lab/examples \
-Then, at command line:
+Instructions:
 
-`
-java -jar Nimrod.jar examples/original/ examples/AOIS_1 examples/AOIS_10 examples/(...) 
+Have jdk+jre 8 and 7 installed.
+
+`mvn package
+java -cp $(pwd)/lib/*:$(pwd)/target/nimrod-0.0.1-SNAPSHOT.jar saferefactor.ui.Main args
 `
 
-JDK and JRE >= 8 are required.
