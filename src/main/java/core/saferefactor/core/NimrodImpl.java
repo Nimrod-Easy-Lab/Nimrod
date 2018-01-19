@@ -155,6 +155,7 @@ public class NimrodImpl extends SafeRefactor {
 		mList.printDominants();
 		mList.printDSMG();
 	}
+	
 
 	public List<String> getEquivalents() {
 		return mList.getEquivalents();
