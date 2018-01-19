@@ -181,7 +181,8 @@ public class RandoopAntAdapter extends AbstractTestGeneratorAdapter {
 				System.out.println("impacted Method "+string);
 			}
 		}
-		main2.nonStaticMainAJ(argsRandoop, impactedMethods);
+		//main2.nonStaticMainAJ(argsRandoop, impactedMethods);
+		main2.nonStaticMain(argsRandoop);
 		System.exit(0);
 	}
 
