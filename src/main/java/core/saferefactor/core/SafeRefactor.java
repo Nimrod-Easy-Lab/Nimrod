@@ -28,7 +28,7 @@ import saferefactor.core.execution.AntJunitRunner;
 import saferefactor.core.execution.CoverageMeter;
 import saferefactor.core.execution.TestExecutor;
 import saferefactor.core.generation.AbstractTestGeneratorAdapter;
-import saferefactor.core.generation.RandoopAntAdapter;
+import saferefactor.core.generation.EvoSuiteAdapter;
 import saferefactor.core.util.Compiler;
 import saferefactor.core.util.Constants;
 import saferefactor.core.util.EclipseCompiler;
@@ -326,7 +326,8 @@ public abstract class SafeRefactor {
 	private void reInitTarget() throws Exception {
 		analyzer = AnalyzerFactory.getFactory().createAnalyzer(this.source, this.target, this.tmpFolder);
 
-		generator = new RandoopAntAdapter(this.source, this.getTestPath().getAbsolutePath());
+		//generator = new RandoopAntAdapter(this.source, this.getTestPath().getAbsolutePath());
+		generator = new EvoSuiteAdapter(this.source, this.getTestPath().getAbsolutePath());
 
 //		targetCompiler = new AntJavaCompiler(this.tmpFolder);
 //		targetTestCompiler = new AntJavaCompiler(this.tmpFolder);
