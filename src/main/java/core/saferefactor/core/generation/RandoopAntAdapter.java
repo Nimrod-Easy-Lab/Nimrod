@@ -33,7 +33,10 @@ public class RandoopAntAdapter extends AbstractTestGeneratorAdapter {
 
 	public static String methodsToTest = "methodToTest.txt";
 	private final String tmpDir;
+	private List<String> additionalParameters;
+	private double timeLimit;
 	protected String impactedList = "";
+	
 
 	public RandoopAntAdapter(Project projectToTest, String tmpDir) {
 		super(projectToTest);
@@ -42,8 +45,6 @@ public class RandoopAntAdapter extends AbstractTestGeneratorAdapter {
 
 	}
 
-	private List<String> additionalParameters;
-	private double timeLimit;
 
 	public void generateTestsForMethodList(List<Method> methods,
 			double timeLimit, List<String> additionalParameters, String impactedList)

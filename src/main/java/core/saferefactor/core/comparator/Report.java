@@ -4,13 +4,13 @@ import java.util.HashSet;
 import java.util.Set;
 
 public class Report {
-	
+
 	private boolean isRefactoring;
-	
+
 	private int totalTests;
-	
+
 	private Set<Failure> changedTests = new HashSet<Failure>();
-	
+
 	private String changes;
 
 	public boolean isRefactoring() {
@@ -29,6 +29,14 @@ public class Report {
 		this.changes = changes;
 	}
 
+	public void addChanges(String changes) {
+		if (this.changedTests != null) {
+			this.changes += changes;
+		} else {
+			setChanges(changes);
+		}
+	}
+
 	public Set<Failure> getChangedTests() {
 		return changedTests;
 	}
@@ -44,7 +52,5 @@ public class Report {
 	public void setTotalTests(int totalTests) {
 		this.totalTests = totalTests;
 	}
-
-	
 
 }

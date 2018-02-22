@@ -6,22 +6,50 @@ import java.util.Set;
 
 public class Mutant {
 
+	private final String MUJAVA = "mujava";
+	private final String MAJOR = "major";
+	private final String PIT = "pitest";
+	
 	private String name;
+	private String tool;
 	private File folder;
 	private Set<String> testFailures;
+	// redundant fields
+	private Set<Mutant> brothers;
+	private Set<Mutant> children;
+	private Set<Mutant> parents;
+	private Set<Mutant> noRelation;
+	private double dominatorStrength;
 
 	public Mutant(String name, File folder) {
-		super();
-		this.name = name;
-		this.folder = folder;
-		this.testFailures = new HashSet<String>();
+		this(name, folder, new HashSet<String>());
 	}
 
 	public Mutant(String name, File folder, Set<String> failures) {
 		super();
 		this.name = name;
 		this.folder = folder;
+		this.setTool(folder.getAbsolutePath());
 		this.testFailures = failures;
+		this.children = new HashSet<Mutant>();
+		this.parents = new HashSet<Mutant>();
+		this.brothers = new HashSet<Mutant>();
+		this.noRelation = new HashSet<Mutant>();
+	}
+	
+	private void setTool(String folder) {
+		if(folder != null && !folder.trim().equals("")) {
+			if(folder.contains(MUJAVA)) {
+				this.tool = MUJAVA;
+				return;
+			} else if (folder.contains(MAJOR)) {
+				this.tool = MAJOR;
+				return;
+			} else if(folder.contains(PIT)) {
+				this.tool = PIT;
+				return;
+			}
+		} 
 	}
 
 	public String getName() {
@@ -34,6 +62,10 @@ public class Mutant {
 
 	public Set<String> getTestFailures() {
 		return testFailures;
+	}
+
+	public void setTestFailures(Set<String> testSet) {
+		this.testFailures.addAll(testSet);
 	}
 
 	public void addTestFailures(String testFailure) {
@@ -54,10 +86,10 @@ public class Mutant {
 
 	@Override
 	public String toString() {
-//		String result = getFolder().getAbsolutePath() + "\n";
-//		for (String failure : testFailures) {
-//			result += failure + "\n";
-//		}
+		// String result = getFolder().getAbsolutePath() + "\n";
+		// for (String failure : testFailures) {
+		// result += failure + "\n";
+		// }
 		String result = getFolder().getAbsolutePath();
 		return result;
 	}
@@ -90,4 +122,62 @@ public class Mutant {
 		return tmp;
 	}
 
+	public Set<Mutant> getChildren() {
+		return children;
+	}
+
+	public void addChildren(Mutant child) {
+		this.children.add(child);
+	}
+
+	public Set<Mutant> getParents() {
+		return parents;
+	}
+
+	public void addParents(Mutant parent) {
+		this.parents.add(parent);
+	}
+
+	public Set<Mutant> getBrothers() {
+		return brothers;
+	}
+
+	public void addBrother(Mutant brother) {
+		this.brothers.add(brother);
+	}
+	
+	public Set<Mutant> getNoRelation() {
+		return noRelation;
+	}
+
+	public void addNoRelationMutant(Mutant brother) {
+		this.noRelation.add(brother);
+	}
+	
+		
+	public String getTool() {
+		return tool;
+	}
+
+	public double getDominatorStrengh() {
+		if (this.dominatorStrength == 0.0) {
+			int numChildren = this.children.size();
+			int numParents = this.parents.size();
+			int sum = numChildren + numParents;
+			if (sum > 0.0) {
+				double r = numChildren / sum;
+				return r;
+			}
+		} 
+		return this.dominatorStrength;
+	}
+
+	public String printDescendents() {
+		String result = "{";
+		for (Mutant mutant : children) {
+			result += mutant.getName() + ",";
+		}
+		result += "}";
+		return result;
+	}
 }

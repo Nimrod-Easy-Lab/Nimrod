@@ -6,10 +6,8 @@ import java.util.List;
 import java.util.Random;
 
 import org.evosuite.EvoSuite;
-import org.evosuite.Properties;
-import org.evosuite.utils.Randomness;
+import org.evosuite.ga.metaheuristics.GeneticAlgorithm;
 
-import randoop.main.Main;
 import saferefactor.core.util.Constants;
 import saferefactor.core.util.FileUtil;
 import saferefactor.core.util.Project;
@@ -39,20 +37,23 @@ public class EvoSuiteAdapter extends AbstractTestGeneratorAdapter {
 		this.timeLimit = timeLimit;
 		this.additionalParameters = additionalParameters;
 		this.impactedList = impactedList;
-//		generateMethodListFile(methods);
-		String[] args = { 
-				"-class", "org.joda.time.LocalDate",
-				"projectCP", "/home/leofernandesmo/workspace/test-data/mutants-benchmark/joda-time-2.4/target/classes"				
+		generateMethodListFile(methods);
+		
+		//String[] command = new String[] { "-generateSuite", "-class", targetClass };
+		String[] command = { 
+				"-target", project.getBuildFolder().getAbsolutePath(),
+				"-projectCP", project.getBuildFolder().getAbsolutePath(),
+				"-base_dir", this.tmpDir,
 				};
 		
 		 try {
 	            EvoSuite evosuite = new EvoSuite();
-	            evosuite.parseCommandLine(args);
+	            evosuite.parseCommandLine(command);
+	            System.out.println("Passou!");
+	            
 	        } catch (Throwable t) {	        
-	            System.out.println("Ver o que acontece e corrigir depois...");
-	        }
-		
-
+	            t.printStackTrace();
+	        }		
 	}
 
 	private void generateMethodListFile(List<Method> methods) {

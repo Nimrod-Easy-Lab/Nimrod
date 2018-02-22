@@ -12,12 +12,14 @@ import java.util.logging.Logger;
 import java.util.logging.SimpleFormatter;
 
 import saferefactor.core.analysis.analyzer.factory.AnalyzerFactory;
+import saferefactor.core.analysis.nimrod.Mutant;
+import saferefactor.core.analysis.nimrod.Utils;
 import saferefactor.core.comparator.ComparatorImp;
 import saferefactor.core.comparator.Report;
 import saferefactor.core.execution.AntJunitRunner;
 import saferefactor.core.execution.CoverageDataReader.CoverageReport;
 import saferefactor.core.execution.CoverageMeter;
-import saferefactor.core.generation.RandoopAntAdapter;
+import saferefactor.core.generation.EvoSuiteAdapter;
 import saferefactor.core.util.AntJavaCompiler;
 import saferefactor.core.util.Constants;
 import saferefactor.core.util.Project;
@@ -61,8 +63,9 @@ public class NimrodImpl extends SafeRefactor {
 
 		analyzer = AnalyzerFactory.getFactory().createAnalyzer(this.source, this.target, this.tmpFolder);
 
-		generator = new RandoopAntAdapter(this.source, this.getTestPath().getAbsolutePath());
-
+//		generator = new RandoopAntAdapter(this.source, this.getTestPath().getAbsolutePath());
+		generator = new EvoSuiteAdapter(this.source, this.getTestPath().getAbsolutePath());
+		
 		sourceCompiler = new AntJavaCompiler(this.tmpFolder);
 		targetCompiler = new AntJavaCompiler(this.tmpFolder);
 		sourceTestCompiler = new AntJavaCompiler(this.tmpFolder);
@@ -186,5 +189,26 @@ public class NimrodImpl extends SafeRefactor {
 		}
 		//Remove os targets com falha.
 		targets.removeAll(targetsWithCompilerError);
+	}
+	
+	@Override
+	public void checkTransformations(List<Project> targets) throws Exception {
+		super.checkTransformations(targets);
+		logRedundantInfo();
+	}
+
+	private void logRedundantInfo() {
+		mList.evaluateRedundants();
+		List<String> lines = new ArrayList<String>();
+		String tool = "";
+		for (Mutant mutant : mList.getMutants()) {
+			lines.add(mutant.getTool() + ":" + mutant.getName() + ":" + mutant.getDominatorStrengh() +  " -> " + mutant.printDescendents());
+			tool = mutant.getTool();
+		}
+		try {
+			Utils.logWrite(super.source.getProjectFolder().getAbsolutePath(), "redundant_" + tool, lines);
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
 	}
 }

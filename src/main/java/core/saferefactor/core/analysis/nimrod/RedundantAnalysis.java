@@ -1,4 +1,4 @@
-package saferefactor.ui;
+package saferefactor.core.analysis.nimrod;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -6,34 +6,25 @@ import java.util.List;
 
 import saferefactor.core.NimrodImpl;
 import saferefactor.core.Parameters;
-import saferefactor.core.Report;
-import saferefactor.core.SafeRefactor;
-import saferefactor.core.SafeRefactorException;
-import saferefactor.core.SafeRefactorImp;
-import saferefactor.core.analysis.nimrod.RedundantAnalysis;
 import saferefactor.core.util.Project;
 
-public class Main {
+public class RedundantAnalysis {
 
 	private static String srcPath = "";
 	private static String binPath = "";
 	private static String libPath = "";
 	private static String source = "";
 	private static List<String> targets;
-	private static String timeout = "10";
+	private static String timeout = "3";
 	private static boolean quiet = false;
 
-	public static void main(String[] args) {
-
-		if(isRedundancyAnalysis(args)) {
-			return;
-		}
-		
+	public static void analysis(String[] args) {
 		parseArguments(args);
-		startAnalysis();
+
+		
 	}
 
-	private static void startAnalysis() {
+	private static void start() {
 		File sourceFile = new File(source);
 
 		try {
@@ -67,80 +58,15 @@ public class Main {
 
 			Parameters parameters = new Parameters();
 			parameters.setTimeLimit(Integer.parseInt(timeout));
-			parameters.setCompileProjects(false); // Caso eu queira executar
-													// apenas com .class
-//			parameters.setKind_of_analysis(Parameters.SAFIRA_ANALYSIS);
-//			parameters.setAnalyzeChangeMethods(true);
-			
-
+			parameters.setCompileProjects(false);
 			NimrodImpl sr = new NimrodImpl(sourceProject, targetProjects, parameters);
-//			SafeRefactor sr = new SafeRefactorImp(sourceProject, targetProjects.get(0), parameters);
-			if(parameters.isCompileProjects()){
-				sr.compileTargets();
-			}
-//			sr.checkTransformation();
+
 			sr.checkTransformations(targetProjects);
 			sr.printMutantsListInfo();
-
-//			reAnalysisDuplicated(sr);
-
 		} catch (Throwable e) {
 			System.err.println(e.getMessage());
 			e.printStackTrace();
 		}
-	}
-
-	private static void reAnalysisDuplicated(NimrodImpl sr) throws Exception, SafeRefactorException {
-		System.out.println("Checking false positives in Duplicated Mutants...");
-		List<String> duplicateds = sr.getDuplicateds();
-		System.out.println("Total duplicateds before re-analysis: " + duplicateds.size());
-		int totalDuplicateds = 0;
-		for (String duplicated : duplicateds) {
-			String[] programs = duplicated.split(":");
-
-			File binSourceDup = new File(programs[0], binPath);
-			File srcSourceDup = new File(programs[0], srcPath);
-			File libSourceDup = new File(programs[0], libPath);
-
-			File binTargetDup = new File(programs[1], binPath);
-			File srcTargetDup = new File(programs[1], srcPath);
-			File libTargetDup = new File(programs[1], libPath);
-
-			Project sourceProjectDup = new Project();
-			sourceProjectDup.setProjectFolder(new File(programs[0]));
-			sourceProjectDup.setSrcFolder(srcSourceDup);
-			sourceProjectDup.setBuildFolder(binSourceDup);
-			sourceProjectDup.setLibFolder(libSourceDup);
-
-			Project targetProjectDup = new Project();
-			targetProjectDup.setProjectFolder(new File(programs[1]));
-			targetProjectDup.setBuildFolder(binTargetDup);
-			targetProjectDup.setSrcFolder(srcTargetDup);
-			targetProjectDup.setLibFolder(libTargetDup);
-
-			Parameters parametersDup = new Parameters();
-			parametersDup.setTimeLimit(Integer.parseInt(timeout));
-			parametersDup.setCompileProjects(true);
-
-			SafeRefactor srDuplicateds = new SafeRefactorImp(sourceProjectDup, targetProjectDup, parametersDup);
-			srDuplicateds.checkTransformation();
-			Report report = srDuplicateds.getReport();
-			if (report.isRefactoring()) {
-				System.out.println(programs[0] + " == " + programs[1]);
-				totalDuplicateds++;
-			}
-		}
-		System.out.println("Total duplicateds after re-analysis: " + totalDuplicateds);
-	}
-
-	private static boolean isRedundancyAnalysis(String[] args) {
-		for (String arg : args) {
-			if(arg.contains("-redundantAnalysis")) {
-				RedundantAnalysis.analysis(args);
-			}
-		}
-		
-		return false;
 	}
 
 	private static void parseArguments(String[] args) {
@@ -178,19 +104,41 @@ public class Main {
 					System.err.println("-timeout requires a time");
 				if (vflag)
 					System.out.println("timeout= " + libPath);
-			}
+			} 
 		}
 
 		if (i == args.length || i + 1 == args.length)
 			System.err.println(
 					"Usage: Main [-src path] [-bin path] [-lib path] [-timeout t] original_project_path refactored_project_path");
 
-		source = args[i];
-		targets = new ArrayList<String>();
-		for (int j = ++i; j < args.length; j++) {
-			targets.add(args[j]);
-
-		}
+//		source = args[i];
+//		targets = new ArrayList<String>();
+//		for (int j = ++i; j < args.length; j++) {
+//			targets.add(args[j]);
+//
+//		}
+		
+		setup(args[i]);
 	}
 
+	private static void setup(String path) {
+		List<File> dirs = Utils.listDirectories(path);
+		for (File testDir : dirs) {
+			System.out.println("Analisando: " + testDir);
+			source = testDir + "/original";
+			String mutantsDir = testDir + "/mujava/mutants/ClassId_0/";
+			List<File> mutants = Utils.listDirectories(mutantsDir);
+			targets = new ArrayList<String>();
+			for (File file : mutants) {
+				targets.add(file.getAbsolutePath());
+			}
+			start();
+//			source = args[i];
+//			targets = new ArrayList<String>();
+//			for (int j = ++i; j < args.length; j++) {
+//				targets.add(args[j]);
+//
+//			}
+		}
+	}
 }
