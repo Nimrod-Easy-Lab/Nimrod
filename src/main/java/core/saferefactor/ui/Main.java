@@ -8,7 +8,9 @@ import saferefactor.core.NimrodImpl;
 import saferefactor.core.Parameters;
 import saferefactor.core.Report;
 import saferefactor.core.SafeRefactor;
+import saferefactor.core.SafeRefactorException;
 import saferefactor.core.SafeRefactorImp;
+import saferefactor.core.analysis.nimrod.RedundantAnalysis;
 import saferefactor.core.util.Project;
 
 public class Main {
@@ -23,8 +25,15 @@ public class Main {
 
 	public static void main(String[] args) {
 
+		if(isRedundancyAnalysis(args)) {
+			return;
+		}
+		
 		parseArguments(args);
+		startAnalysis();
+	}
 
+	private static void startAnalysis() {
 		File sourceFile = new File(source);
 
 		try {
@@ -58,62 +67,80 @@ public class Main {
 
 			Parameters parameters = new Parameters();
 			parameters.setTimeLimit(Integer.parseInt(timeout));
-			parameters.setCompileProjects(true); // Caso eu queira executar
+			parameters.setCompileProjects(false); // Caso eu queira executar
 													// apenas com .class
+//			parameters.setKind_of_analysis(Parameters.SAFIRA_ANALYSIS);
+//			parameters.setAnalyzeChangeMethods(true);
+			
 
 			NimrodImpl sr = new NimrodImpl(sourceProject, targetProjects, parameters);
+//			SafeRefactor sr = new SafeRefactorImp(sourceProject, targetProjects.get(0), parameters);
 			if(parameters.isCompileProjects()){
 				sr.compileTargets();
 			}
+//			sr.checkTransformation();
 			sr.checkTransformations(targetProjects);
 			sr.printMutantsListInfo();
 
-			System.out.println("Checking false positives in Duplicated Mutants...");
-			List<String> duplicateds = sr.getDuplicateds();
-			System.out.println("Total duplicateds before re-analysis: " + duplicateds.size());
-			int totalDuplicateds = 0;
-			for (String duplicated : duplicateds) {
-				String[] programs = duplicated.split(":");
-
-				File binSourceDup = new File(programs[0], binPath);
-				File srcSourceDup = new File(programs[0], srcPath);
-				File libSourceDup = new File(programs[0], libPath);
-
-				File binTargetDup = new File(programs[1], binPath);
-				File srcTargetDup = new File(programs[1], srcPath);
-				File libTargetDup = new File(programs[1], libPath);
-
-				Project sourceProjectDup = new Project();
-				sourceProjectDup.setProjectFolder(new File(programs[0]));
-				sourceProjectDup.setSrcFolder(srcSourceDup);
-				sourceProjectDup.setBuildFolder(binSourceDup);
-				sourceProjectDup.setLibFolder(libSourceDup);
-
-				Project targetProjectDup = new Project();
-				targetProjectDup.setProjectFolder(new File(programs[1]));
-				targetProjectDup.setBuildFolder(binTargetDup);
-				targetProjectDup.setSrcFolder(srcTargetDup);
-				targetProjectDup.setLibFolder(libTargetDup);
-
-				Parameters parametersDup = new Parameters();
-				parametersDup.setTimeLimit(Integer.parseInt(timeout));
-				parametersDup.setCompileProjects(true);
-
-				SafeRefactor srDuplicateds = new SafeRefactorImp(sourceProjectDup, targetProjectDup, parametersDup);
-				srDuplicateds.checkTransformation();
-				Report report = srDuplicateds.getReport();
-				if (report.isRefactoring()) {
-					System.out.println(programs[0] + " == " + programs[1]);
-					totalDuplicateds++;
-				}
-			}
-			System.out.println("Total duplicateds after re-analysis: " + totalDuplicateds);
+//			reAnalysisDuplicated(sr);
 
 		} catch (Throwable e) {
 			System.err.println(e.getMessage());
 			e.printStackTrace();
 		}
+	}
 
+	private static void reAnalysisDuplicated(NimrodImpl sr) throws Exception, SafeRefactorException {
+		System.out.println("Checking false positives in Duplicated Mutants...");
+		List<String> duplicateds = sr.getDuplicateds();
+		System.out.println("Total duplicateds before re-analysis: " + duplicateds.size());
+		int totalDuplicateds = 0;
+		for (String duplicated : duplicateds) {
+			String[] programs = duplicated.split(":");
+
+			File binSourceDup = new File(programs[0], binPath);
+			File srcSourceDup = new File(programs[0], srcPath);
+			File libSourceDup = new File(programs[0], libPath);
+
+			File binTargetDup = new File(programs[1], binPath);
+			File srcTargetDup = new File(programs[1], srcPath);
+			File libTargetDup = new File(programs[1], libPath);
+
+			Project sourceProjectDup = new Project();
+			sourceProjectDup.setProjectFolder(new File(programs[0]));
+			sourceProjectDup.setSrcFolder(srcSourceDup);
+			sourceProjectDup.setBuildFolder(binSourceDup);
+			sourceProjectDup.setLibFolder(libSourceDup);
+
+			Project targetProjectDup = new Project();
+			targetProjectDup.setProjectFolder(new File(programs[1]));
+			targetProjectDup.setBuildFolder(binTargetDup);
+			targetProjectDup.setSrcFolder(srcTargetDup);
+			targetProjectDup.setLibFolder(libTargetDup);
+
+			Parameters parametersDup = new Parameters();
+			parametersDup.setTimeLimit(Integer.parseInt(timeout));
+			parametersDup.setCompileProjects(true);
+
+			SafeRefactor srDuplicateds = new SafeRefactorImp(sourceProjectDup, targetProjectDup, parametersDup);
+			srDuplicateds.checkTransformation();
+			Report report = srDuplicateds.getReport();
+			if (report.isRefactoring()) {
+				System.out.println(programs[0] + " == " + programs[1]);
+				totalDuplicateds++;
+			}
+		}
+		System.out.println("Total duplicateds after re-analysis: " + totalDuplicateds);
+	}
+
+	private static boolean isRedundancyAnalysis(String[] args) {
+		for (String arg : args) {
+			if(arg.contains("-redundantAnalysis")) {
+				RedundantAnalysis.analysis(args);
+			}
+		}
+		
+		return false;
 	}
 
 	private static void parseArguments(String[] args) {

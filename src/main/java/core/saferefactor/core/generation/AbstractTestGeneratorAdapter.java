@@ -7,7 +7,7 @@ import java.util.List;
 import saferefactor.core.util.Project;
 import saferefactor.core.util.ast.Method;
 
-public abstract class AbstractTestGeneratorAdapter {
+public abstract class AbstractTestGeneratorAdapter{
 
 	
 

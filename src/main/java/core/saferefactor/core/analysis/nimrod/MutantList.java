@@ -7,7 +7,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
-import org.jgrapht.experimental.dag.DirectedAcyclicGraph;
+import org.jgrapht.DirectedGraph;
+import org.jgrapht.graph.DefaultDirectedGraph;
 import org.jgrapht.graph.DefaultEdge;
 
 public class MutantList{
@@ -44,21 +45,21 @@ public class MutantList{
 	}
 
 	public void printDominants() {
-		for (int i = 0; i < mutants.size(); i++) {
-			Mutant mi = mutants.get(i);
-			if (!mi.getTestFailures().isEmpty()) {
-				for (int j = i + 1; j < mutants.size(); j++) {
-					Mutant mj = mutants.get(j);
-					if (!mj.getTestFailures().isEmpty()) {
-						if (mi.isSubset(mj.getTestFailures())) {
-							System.out.println("All tests that kill " + mi.getName() + " also kill " + mj.getName());
-						} else if (mj.isSubset(mi.getTestFailures())) {
-							System.out.println("All tests that kill " + mj.getName() + " also kill " + mi.getName());
-						}
-					}
-				}
-			}
-		}
+//		for (int i = 0; i < mutants.size(); i++) {
+//			Mutant mi = mutants.get(i);
+//			if (!mi.getTestFailures().isEmpty()) {
+//				for (int j = i + 1; j < mutants.size(); j++) {
+//					Mutant mj = mutants.get(j);
+//					if (!mj.getTestFailures().isEmpty()) {
+//						if (mi.isSubset(mj.getTestFailures())) {
+//							System.out.println("All tests that kill " + mi.getName() + " also kill " + mj.getName());
+//						} else if (mj.isSubset(mi.getTestFailures())) {
+//							System.out.println("All tests that kill " + mj.getName() + " also kill " + mi.getName());
+//						}
+//					}
+//				}
+//			}
+//		}
 	}
 
 	public void printEquivalents() {
@@ -135,7 +136,7 @@ public class MutantList{
 	}
 
 	public void printDSMG() {
-		DirectedAcyclicGraph<Mutant, DefaultEdge> g = new DirectedAcyclicGraph<Mutant, DefaultEdge>(DefaultEdge.class);
+		DirectedGraph<Mutant, DefaultEdge> g = new DefaultDirectedGraph<Mutant, DefaultEdge>(DefaultEdge.class);
 		Map<Mutant, Set<Mutant>> duplicatedMap = getDuplicatedMap();
 		List<Mutant> keys = new ArrayList<Mutant>();
 		keys.addAll(duplicatedMap.keySet());
@@ -149,28 +150,67 @@ public class MutantList{
 				for (int j = i + 1; j < mutants.size(); j++) {
 					Mutant mj = mutants.get(j);
 					if (!mj.getTestFailures().isEmpty()) {
-						if (mi.isSubset(mj.getTestFailures())) {
+						if (mi.getTestFailures().equals(mj.getTestFailures())) {
+							System.out.println("Duplicated: " + mi + " - " + mj);
+							mi.addBrother(mj);
+						} else if (mi.isSubset(mj.getTestFailures())) {
 							g.addEdge(mi, mj);
+							mi.addChildren(mj);
+							mj.addParents(mi);
 						} else if (mj.isSubset(mi.getTestFailures())) {
 							g.addEdge(mj, mi);
+							mj.addChildren(mi);
+							mi.addParents(mj);
+						} else {
+							System.out.println("Special Cases: " + mi + " - " + mj);
 						}
 					}
 				}
 			}
 		}
 
+		
+	
+//		for (Mutant mutant : mutants) {
+//			Set<DefaultEdge> edges = g.outgoingEdgesOf(mutant);
+//			String descendents = "{ ";
+//			for (DefaultEdge defaultEdge : edges) {
+//				Mutant tempM = g.getEdgeTarget(defaultEdge);
+//				descendents += tempM.getName() + ", ";
+//			}
+//			descendents += "}";
+//			System.out.println("Root: " + mutant.getName() + " -> " + descendents);
+//		}
+
 		for (Mutant mutant : mutants) {
-			Set<Mutant> mySet = g.getDescendants(g, mutant);			
-			String descendents = "{ ";
-			for (Mutant mutant2 : mySet) {
-				descendents += mutant2.getName() + ", ";
-			}
-			descendents += "}";
-			System.out.println("Root: " + mutant.getName() + " -> " + descendents);
+			System.out.println(mutant.getName() + ":" + mutant.getDominatorStrengh() +  " -> " + mutant.printDescendents());
 		}
+		
+	}
 
-//		System.out.println(g.toString());
-
+	public void evaluateRedundants() {
+		for (int i = 0; i < mutants.size(); i++) {
+			Mutant mi = mutants.get(i);
+			if (!mi.getTestFailures().isEmpty()) {
+				for (int j = i + 1; j < mutants.size(); j++) {
+					Mutant mj = mutants.get(j);
+					if (!mj.getTestFailures().isEmpty()) {
+						if (mi.getTestFailures().equals(mj.getTestFailures())) {
+							mi.addBrother(mj);
+						} else if (mi.isSubset(mj.getTestFailures())) {
+							mi.addChildren(mj);
+							mj.addParents(mi);
+						} else if (mj.isSubset(mi.getTestFailures())) {
+							mj.addChildren(mi);
+							mi.addParents(mj);
+						} else {
+							mi.addNoRelationMutant(mj);
+							mj.addNoRelationMutant(mi);
+						}
+					}
+				}
+			}
+		}
 	}
 
 		

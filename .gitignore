@@ -57,3 +57,8 @@ local.properties
 .cache-main
 .scala_dependencies
 .worksheet
+
+#Eclipse nad Java Specific
+.project
+.classpath
+/.settings/ 

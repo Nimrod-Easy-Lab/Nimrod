@@ -28,7 +28,7 @@ import saferefactor.core.execution.AntJunitRunner;
 import saferefactor.core.execution.CoverageMeter;
 import saferefactor.core.execution.TestExecutor;
 import saferefactor.core.generation.AbstractTestGeneratorAdapter;
-import saferefactor.core.generation.RandoopAntAdapter;
+import saferefactor.core.generation.EvoSuiteAdapter;
 import saferefactor.core.util.Compiler;
 import saferefactor.core.util.Constants;
 import saferefactor.core.util.EclipseCompiler;
@@ -172,21 +172,21 @@ public abstract class SafeRefactor {
 		for (Project project : targets) {
 			this.target = project;
 			double start = System.currentTimeMillis();
-//			logger.info("check compilation? " + parameters.isCompileProjects());
-//			if (parameters.isCompileProjects()) {
-//				try {
-//					compileTarget();
-//				} catch (MalformedURLException e) {
-//					throw new SafeRefactorException(e.getMessage());
-//				} catch (FileNotFoundException e) {
-//					throw new SafeRefactorException(e.getMessage());
-//				} catch (CompilationErrorException e) {
-//					target.setCompile(false);
-//				} catch (Exception e) {
-//					e.printStackTrace();
-//					throw new SafeRefactorException(e.getMessage());
-//				}
-//			}
+			// logger.info("check compilation? " + parameters.isCompileProjects());
+			// if (parameters.isCompileProjects()) {
+			// try {
+			// compileTarget();
+			// } catch (MalformedURLException e) {
+			// throw new SafeRefactorException(e.getMessage());
+			// } catch (FileNotFoundException e) {
+			// throw new SafeRefactorException(e.getMessage());
+			// } catch (CompilationErrorException e) {
+			// target.setCompile(false);
+			// } catch (Exception e) {
+			// e.printStackTrace();
+			// throw new SafeRefactorException(e.getMessage());
+			// }
+			// }
 			try {
 
 				if (hasNoCompilationErrors()) {
@@ -216,8 +216,8 @@ public abstract class SafeRefactor {
 	protected MutantList mList = new MutantList();
 
 	/**
-	 * Metodo para salvar o resultado do report do mutante, para depois comparar
-	 * os resultados.
+	 * Metodo para salvar o resultado do report do mutante, para depois comparar os
+	 * resultados.
 	 * 
 	 * @throws IOException
 	 * @author leofernandesmo
@@ -232,14 +232,13 @@ public abstract class SafeRefactor {
 		List<File> testFiles = this.report.getGeneratedTestFiles();
 		for (File generatedTestFile : testFiles) {
 			String newName = generatedTestFile.getName().replace(".java", ".txt");
-			File generatedFileCopy = new File(
-					target.getProjectFolder().getAbsolutePath() + "/" + newName);
+			File generatedFileCopy = new File(target.getProjectFolder().getAbsolutePath() + "/" + newName);
 			FileUtils.copyFile(generatedTestFile, generatedFileCopy);
 		}
 
 		Set<String> testFailures = new HashSet<String>();
 		for (Failure f : comparator.getReport().getChangedTests()) {
-			testFailures.add(f.getTestSimpleName());
+			testFailures.add(f.getFileName() + "." + f.getTestSimpleName());
 		}
 
 		Mutant mutant = new Mutant(target.getProjectFolder().getName(), target.getProjectFolder(), testFailures);
@@ -326,10 +325,11 @@ public abstract class SafeRefactor {
 	private void reInitTarget() throws Exception {
 		analyzer = AnalyzerFactory.getFactory().createAnalyzer(this.source, this.target, this.tmpFolder);
 
-		generator = new RandoopAntAdapter(this.source, this.getTestPath().getAbsolutePath());
+//		generator = new RandoopAntAdapter(this.source, this.getTestPath().getAbsolutePath());
+		 generator = new EvoSuiteAdapter(this.source, this.getTestPath().getAbsolutePath());
 
-//		targetCompiler = new AntJavaCompiler(this.tmpFolder);
-//		targetTestCompiler = new AntJavaCompiler(this.tmpFolder);
+		// targetCompiler = new AntJavaCompiler(this.tmpFolder);
+		// targetTestCompiler = new AntJavaCompiler(this.tmpFolder);
 		targetCompiler = new EclipseCompiler();
 		targetTestCompiler = new EclipseCompiler();
 

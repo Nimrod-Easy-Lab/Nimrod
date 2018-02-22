@@ -124,7 +124,7 @@ public class ComparatorImp implements TestComparator {
 
 				if (!sameBehavior) {
 					report.setRefactoring(sameBehavior);
-					report.setChanges(getChanges(srcDoc, tgtDoc, invalidTests));
+					report.addChanges(getChanges(srcDoc, tgtDoc, invalidTests));
 					report.setChangedTests(getFailingTests(srcDoc, tgtDoc,
 							invalidTests));
 
