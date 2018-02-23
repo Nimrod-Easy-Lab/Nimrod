@@ -20,6 +20,7 @@ import saferefactor.core.execution.AntJunitRunner;
 import saferefactor.core.execution.CoverageDataReader.CoverageReport;
 import saferefactor.core.execution.CoverageMeter;
 import saferefactor.core.generation.EvoSuiteAdapter;
+import saferefactor.core.generation.RandoopAntAdapter;
 import saferefactor.core.util.AntJavaCompiler;
 import saferefactor.core.util.Constants;
 import saferefactor.core.util.Project;
@@ -63,7 +64,7 @@ public class NimrodImpl extends SafeRefactor {
 
 		analyzer = AnalyzerFactory.getFactory().createAnalyzer(this.source, this.target, this.tmpFolder);
 
-//		generator = new RandoopAntAdapter(this.source, this.getTestPath().getAbsolutePath());
+		generator = new RandoopAntAdapter(this.source, this.getTestPath().getAbsolutePath());
 		generator = new EvoSuiteAdapter(this.source, this.getTestPath().getAbsolutePath());
 		
 		sourceCompiler = new AntJavaCompiler(this.tmpFolder);

@@ -38,22 +38,20 @@ public class EvoSuiteAdapter extends AbstractTestGeneratorAdapter {
 		this.additionalParameters = additionalParameters;
 		this.impactedList = impactedList;
 		generateMethodListFile(methods);
-		
-		//String[] command = new String[] { "-generateSuite", "-class", targetClass };
-		String[] command = { 
-				"-target", project.getBuildFolder().getAbsolutePath(),
-				"-projectCP", project.getBuildFolder().getAbsolutePath(),
-				"-base_dir", this.tmpDir,
-				};
-		
-		 try {
-	            EvoSuite evosuite = new EvoSuite();
-	            evosuite.parseCommandLine(command);
-	            System.out.println("Passou!");
-	            
-	        } catch (Throwable t) {	        
-	            t.printStackTrace();
-	        }		
+
+		// String[] command = new String[] { "-generateSuite", "-class", targetClass };
+		String[] command = { "-target", project.getBuildFolder().getAbsolutePath(), "-projectCP",
+				project.getBuildFolder().getAbsolutePath(), "-base_dir", this.tmpDir, "-Dsearch_budget",
+				"" + new Double(timeLimit).intValue(), "-Dlog.level", "OFF", "-Dminimize", "false" };
+
+		try {
+			EvoSuite evosuite = new EvoSuite();
+			evosuite.parseCommandLine(command);
+			System.out.println("Passou!");
+
+		} catch (Throwable t) {
+			t.printStackTrace();
+		}
 	}
 
 	private void generateMethodListFile(List<Method> methods) {
