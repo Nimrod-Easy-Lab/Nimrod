@@ -306,11 +306,6 @@
                   <scope>system</scope>
 	          <systemPath>${project.basedir}/lib/evosuite-1.0.5.jar</systemPath>
                 </dependency>
-        <dependency>
-            <groupId>easy.nimrod</groupId>
-            <artifactId>nimrod</artifactId>
-            <version>0.0.1-SNAPSHOT</version>
-        </dependency>
 
     </dependencies>
 </project>
