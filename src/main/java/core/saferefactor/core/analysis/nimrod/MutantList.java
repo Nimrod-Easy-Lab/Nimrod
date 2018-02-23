@@ -7,9 +7,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
-import org.jgrapht.DirectedGraph;
-import org.jgrapht.graph.DefaultDirectedGraph;
-import org.jgrapht.graph.DefaultEdge;
 
 public class MutantList{
 
@@ -136,38 +133,38 @@ public class MutantList{
 	}
 
 	public void printDSMG() {
-		DirectedGraph<Mutant, DefaultEdge> g = new DefaultDirectedGraph<Mutant, DefaultEdge>(DefaultEdge.class);
-		Map<Mutant, Set<Mutant>> duplicatedMap = getDuplicatedMap();
-		List<Mutant> keys = new ArrayList<Mutant>();
-		keys.addAll(duplicatedMap.keySet());
-		for (int i = 0; i < mutants.size(); i++) {
-			// add the vertices
-			g.addVertex(mutants.get(i));
-		}
-		for (int i = 0; i < mutants.size(); i++) {
-			Mutant mi = mutants.get(i);
-			if (!mi.getTestFailures().isEmpty()) {
-				for (int j = i + 1; j < mutants.size(); j++) {
-					Mutant mj = mutants.get(j);
-					if (!mj.getTestFailures().isEmpty()) {
-						if (mi.getTestFailures().equals(mj.getTestFailures())) {
-							System.out.println("Duplicated: " + mi + " - " + mj);
-							mi.addBrother(mj);
-						} else if (mi.isSubset(mj.getTestFailures())) {
-							g.addEdge(mi, mj);
-							mi.addChildren(mj);
-							mj.addParents(mi);
-						} else if (mj.isSubset(mi.getTestFailures())) {
-							g.addEdge(mj, mi);
-							mj.addChildren(mi);
-							mi.addParents(mj);
-						} else {
-							System.out.println("Special Cases: " + mi + " - " + mj);
-						}
-					}
-				}
-			}
-		}
+//		DirectedGraph<Mutant, DefaultEdge> g = new DefaultDirectedGraph<Mutant, DefaultEdge>(DefaultEdge.class);
+//		Map<Mutant, Set<Mutant>> duplicatedMap = getDuplicatedMap();
+//		List<Mutant> keys = new ArrayList<Mutant>();
+//		keys.addAll(duplicatedMap.keySet());
+//		for (int i = 0; i < mutants.size(); i++) {
+//			// add the vertices
+//			g.addVertex(mutants.get(i));
+//		}
+//		for (int i = 0; i < mutants.size(); i++) {
+//			Mutant mi = mutants.get(i);
+//			if (!mi.getTestFailures().isEmpty()) {
+//				for (int j = i + 1; j < mutants.size(); j++) {
+//					Mutant mj = mutants.get(j);
+//					if (!mj.getTestFailures().isEmpty()) {
+//						if (mi.getTestFailures().equals(mj.getTestFailures())) {
+//							System.out.println("Duplicated: " + mi + " - " + mj);
+//							mi.addBrother(mj);
+//						} else if (mi.isSubset(mj.getTestFailures())) {
+//							g.addEdge(mi, mj);
+//							mi.addChildren(mj);
+//							mj.addParents(mi);
+//						} else if (mj.isSubset(mi.getTestFailures())) {
+//							g.addEdge(mj, mi);
+//							mj.addChildren(mi);
+//							mi.addParents(mj);
+//						} else {
+//							System.out.println("Special Cases: " + mi + " - " + mj);
+//						}
+//					}
+//				}
+//			}
+//		}
 
 		
 	
@@ -182,9 +179,9 @@ public class MutantList{
 //			System.out.println("Root: " + mutant.getName() + " -> " + descendents);
 //		}
 
-		for (Mutant mutant : mutants) {
-			System.out.println(mutant.getName() + ":" + mutant.getDominatorStrengh() +  " -> " + mutant.printDescendents());
-		}
+//		for (Mutant mutant : mutants) {
+//			System.out.println(mutant.getName() + ":" + mutant.getDominatorStrengh() +  " -> " + mutant.printDescendents());
+//		}
 		
 	}
 
