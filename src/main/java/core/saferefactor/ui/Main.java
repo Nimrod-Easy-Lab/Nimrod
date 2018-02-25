@@ -4,32 +4,46 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.apache.commons.cli.CommandLine;
+import org.apache.commons.cli.CommandLineParser;
+import org.apache.commons.cli.DefaultParser;
+import org.apache.commons.cli.HelpFormatter;
+import org.apache.commons.cli.Option;
+import org.apache.commons.cli.Options;
+import org.apache.commons.cli.ParseException;
+import org.evosuite.shaded.org.hibernate.event.internal.DefaultAutoFlushEventListener;
+
 import saferefactor.core.NimrodImpl;
 import saferefactor.core.Parameters;
 import saferefactor.core.Report;
 import saferefactor.core.SafeRefactor;
 import saferefactor.core.SafeRefactorException;
 import saferefactor.core.SafeRefactorImp;
+import saferefactor.core.analysis.nimrod.AnalysisType;
 import saferefactor.core.analysis.nimrod.RedundantAnalysis;
 import saferefactor.core.util.Project;
 
 public class Main {
+
+	public static final String DEFAULT_TIMEOUT = "10";
+	public static final AnalysisType DEFAULT_ANALYSIS_TYPE = AnalysisType.ALL;
 
 	private static String srcPath = "";
 	private static String binPath = "";
 	private static String libPath = "";
 	private static String source = "";
 	private static List<String> targets;
-	private static String timeout = "10";
+	private static String timeout = DEFAULT_TIMEOUT;
+	private static AnalysisType analysisType = DEFAULT_ANALYSIS_TYPE;
 	private static boolean quiet = false;
 
 	public static void main(String[] args) {
 
-		if(isRedundancyAnalysis(args)) {
+		if (isRedundancyAnalysis(args)) {
 			return;
 		}
-		
-		parseArguments(args);
+
+		parseArgs(args);
 		startAnalysis();
 	}
 
@@ -69,20 +83,22 @@ public class Main {
 			parameters.setTimeLimit(Integer.parseInt(timeout));
 			parameters.setCompileProjects(false); // Caso eu queira executar
 													// apenas com .class
-//			parameters.setKind_of_analysis(Parameters.SAFIRA_ANALYSIS);
-//			parameters.setAnalyzeChangeMethods(true);
-			
+			// parameters.setKind_of_analysis(Parameters.SAFIRA_ANALYSIS);
+			// parameters.setAnalyzeChangeMethods(true);
 
 			NimrodImpl sr = new NimrodImpl(sourceProject, targetProjects, parameters);
-//			SafeRefactor sr = new SafeRefactorImp(sourceProject, targetProjects.get(0), parameters);
-			if(parameters.isCompileProjects()){
+			// SafeRefactor sr = new SafeRefactorImp(sourceProject, targetProjects.get(0),
+			// parameters);
+			if (parameters.isCompileProjects()) {
 				sr.compileTargets();
 			}
-//			sr.checkTransformation();
+			// sr.checkTransformation();
 			sr.checkTransformations(targetProjects);
 			sr.printMutantsListInfo();
 
-//			reAnalysisDuplicated(sr);
+			if (analysisType == AnalysisType.DUPLICATED || analysisType == AnalysisType.ALL) {
+				reAnalysisDuplicated(sr);
+			}
 
 		} catch (Throwable e) {
 			System.err.println(e.getMessage());
@@ -135,62 +151,124 @@ public class Main {
 
 	private static boolean isRedundancyAnalysis(String[] args) {
 		for (String arg : args) {
-			if(arg.contains("-redundantAnalysis")) {
+			if (arg.contains("-redundantAnalysis")) {
 				RedundantAnalysis.analysis(args);
 			}
 		}
-		
+
 		return false;
 	}
 
-	private static void parseArguments(String[] args) {
-		boolean vflag = false;
-		String arg;
-		int i = 0;
-		while (i < args.length && args[i].startsWith("-")) {
-			arg = args[i++];
+	private static void parseArgs(String[] args) {
+		Options options = new Options();
+		// PARAMETER: original
+		Option original = new Option("original", true, "original project path");
+		original.setRequired(true);
+		options.addOption(original);
+		// PARAMETER: mutants
+		Option mutants = new Option("mutants", true, "mutants path. Separete each mutant folder with a colon ':'");
+		mutants.setRequired(true);
+		options.addOption(mutants);
+		// PARAMETER: timeout
+		Option optTime = new Option("timeout", true, "timeout to generate the test suite");
+		optTime.setRequired(false);
+		options.addOption(optTime);
+		// PARAMETER: type
+		Option optType = new Option("type", true,
+				"set the type of the analysis: equivalents | dulicated | redundants | ALL");
+		optType.setRequired(false);
+		options.addOption(optType);
 
-			if (arg.equals("-src")) {
-				if (i < args.length)
-					srcPath = args[i++];
-				else
-					System.err.println("-src requires a path");
-				if (vflag)
-					System.out.println("src path= " + srcPath);
-			} else if (arg.equals("-bin")) {
-				if (i < args.length)
-					binPath = args[i++];
-				else
-					System.err.println("-bin requires a path");
-				if (vflag)
-					System.out.println("bin path= " + binPath);
-			} else if (arg.equals("-lib")) {
-				if (i < args.length)
-					libPath = args[i++];
-				else
-					System.err.println("-lib requires a path");
-				if (vflag)
-					System.out.println("lib path= " + libPath);
-			} else if (arg.equals("-timeout")) {
-				if (i < args.length)
-					timeout = args[i++];
-				else
-					System.err.println("-timeout requires a time");
-				if (vflag)
-					System.out.println("timeout= " + libPath);
+		CommandLineParser parser = new DefaultParser();
+		HelpFormatter formatter = new HelpFormatter();
+		CommandLine cmd;
+
+		try {
+			cmd = parser.parse(options, args);
+		} catch (ParseException e) {
+			System.out.println(e.getMessage());
+			formatter.printHelp("utility-name", options);
+			System.exit(1);
+			return;
+		}
+
+		String originalPath = cmd.getOptionValue("original");
+		String mutantsPath = cmd.getOptionValue("mutants");
+
+		if (originalPath != null && !originalPath.equals("")) {
+			source = originalPath;
+		}
+
+		if (mutantsPath != null && !mutantsPath.equals("")) {
+			targets = new ArrayList<String>();
+			if (mutantsPath.contains(":")) {
+				for (String path : mutantsPath.split(":")) {
+					targets.add(path);
+				}
+			} else {
+				targets.add(mutantsPath);
 			}
 		}
 
-		if (i == args.length || i + 1 == args.length)
-			System.err.println(
-					"Usage: Main [-src path] [-bin path] [-lib path] [-timeout t] original_project_path refactored_project_path");
+		timeout = cmd.hasOption("timeout") ? cmd.getOptionValue("timeout") : DEFAULT_TIMEOUT;
+		analysisType = AnalysisType.get(cmd.hasOption("type") ? cmd.getOptionValue("type") : "");
 
-		source = args[i];
-		targets = new ArrayList<String>();
-		for (int j = ++i; j < args.length; j++) {
-			targets.add(args[j]);
+		System.out.println("Original: " + originalPath);
+		System.out.println("Mutants: " + mutantsPath);
+		System.out.println("Timeout: " + timeout);
+		System.out.println("Analysis Type: " + analysisType);
 
-		}
 	}
+
+	// private static void parseArguments(String[] args) {
+	// boolean vflag = false;
+	// String arg;
+	// int i = 0;
+	// while (i < args.length && args[i].startsWith("-")) {
+	// arg = args[i++];
+	//
+	// if (arg.equals("-src")) {
+	// if (i < args.length)
+	// srcPath = args[i++];
+	// else
+	// System.err.println("-src requires a path");
+	// if (vflag)
+	// System.out.println("src path= " + srcPath);
+	// } else if (arg.equals("-bin")) {
+	// if (i < args.length)
+	// binPath = args[i++];
+	// else
+	// System.err.println("-bin requires a path");
+	// if (vflag)
+	// System.out.println("bin path= " + binPath);
+	// } else if (arg.equals("-lib")) {
+	// if (i < args.length)
+	// libPath = args[i++];
+	// else
+	// System.err.println("-lib requires a path");
+	// if (vflag)
+	// System.out.println("lib path= " + libPath);
+	// } else if (arg.equals("-timeout")) {
+	// if (i < args.length)
+	// timeout = args[i++];
+	// else
+	// System.err.println("-timeout requires a time");
+	// if (vflag)
+	// System.out.println("timeout= " + libPath);
+	// }
+	// }
+	//
+	// if (i == args.length || i + 1 == args.length)
+	// System.err.println(
+	// "Usage: Main [-src path] [-bin path] [-lib path] [-timeout t]
+	// original_project_path refactored_project_path");
+	//
+	// source = args[i];
+	// targets = new ArrayList<String>();
+	// for (int j = ++i; j < args.length; j++) {
+	// targets.add(args[j]);
+	//
+	// }
+	// }
 
 }
