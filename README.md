@@ -4,7 +4,7 @@
 
 Instructions:
 
-Have jdk+jre 8 and 7 installed.
+Have jdk-8 and Maven installed.
 
 `mvn package`
 
