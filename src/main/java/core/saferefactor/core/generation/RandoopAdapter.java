@@ -25,7 +25,7 @@ public class RandoopAdapter extends AbstractTestGeneratorAdapter {
 	private List<String> additionalParameters;
 	private double timeLimit;
 
-	public RandoopAdapter(Project projectToTest, String tmpDir) {
+	protected RandoopAdapter(Project projectToTest, String tmpDir) {
 		super(projectToTest);
 		this.tmpDir = tmpDir;
 

@@ -14,6 +14,8 @@ import saferefactor.core.execution.CoverageDataReader.CoverageReport;
 import saferefactor.core.execution.CoverageMeter;
 import saferefactor.core.generation.EvoSuiteAdapter;
 import saferefactor.core.generation.RandoopAntAdapter;
+import saferefactor.core.generation.TestGeneratorFactory;
+import saferefactor.core.generation.TestGeneratorType;
 import saferefactor.core.util.AntJavaCompiler;
 import saferefactor.core.util.Constants;
 import saferefactor.core.util.Project;
@@ -23,13 +25,13 @@ import saferefactor.core.util.ast.MethodImp;
 
 public class SafeRefactorImp extends SafeRefactor {
 
-	public SafeRefactorImp(Project source, Project target) throws Exception {
-		super(source, target);
+	public SafeRefactorImp(Project source, Project target, TestGeneratorType tg) throws Exception {
+		super(source, target, tg);
 		init();
 	}
 
-	public SafeRefactorImp(Project source, Project target, Parameters parameters) throws Exception {
-		super(source, target, parameters);
+	public SafeRefactorImp(Project source, Project target, Parameters parameters, TestGeneratorType tg) throws Exception {
+		super(source, target, parameters, tg);
 		init();
 	}
 
@@ -60,8 +62,7 @@ public class SafeRefactorImp extends SafeRefactor {
 
 		analyzer = AnalyzerFactory.getFactory().createAnalyzer(this.source, this.target, this.tmpFolder);
 
-		generator = new RandoopAntAdapter(this.source, this.getTestPath().getAbsolutePath());
-//		generator = new EvoSuiteAdapter(this.source, this.getTestPath().getAbsolutePath());
+		generator = TestGeneratorFactory.create(this.testGenerator, this.source, this.getTestPath().getAbsolutePath());;
 
 		sourceCompiler = new AntJavaCompiler(this.tmpFolder);
 		targetCompiler = new AntJavaCompiler(this.tmpFolder);

@@ -41,24 +41,6 @@ public class MutantList{
 		}
 	}
 
-	public void printDominants() {
-//		for (int i = 0; i < mutants.size(); i++) {
-//			Mutant mi = mutants.get(i);
-//			if (!mi.getTestFailures().isEmpty()) {
-//				for (int j = i + 1; j < mutants.size(); j++) {
-//					Mutant mj = mutants.get(j);
-//					if (!mj.getTestFailures().isEmpty()) {
-//						if (mi.isSubset(mj.getTestFailures())) {
-//							System.out.println("All tests that kill " + mi.getName() + " also kill " + mj.getName());
-//						} else if (mj.isSubset(mi.getTestFailures())) {
-//							System.out.println("All tests that kill " + mj.getName() + " also kill " + mi.getName());
-//						}
-//					}
-//				}
-//			}
-//		}
-	}
-
 	public void printEquivalents() {
 		for (int i = 0; i < mutants.size(); i++) {
 			Mutant mi = mutants.get(i);
@@ -132,58 +114,58 @@ public class MutantList{
 		return duplicatedMap;
 	}
 
-	public void printDSMG() {
-//		DirectedGraph<Mutant, DefaultEdge> g = new DefaultDirectedGraph<Mutant, DefaultEdge>(DefaultEdge.class);
-//		Map<Mutant, Set<Mutant>> duplicatedMap = getDuplicatedMap();
-//		List<Mutant> keys = new ArrayList<Mutant>();
-//		keys.addAll(duplicatedMap.keySet());
-//		for (int i = 0; i < mutants.size(); i++) {
-//			// add the vertices
-//			g.addVertex(mutants.get(i));
-//		}
-//		for (int i = 0; i < mutants.size(); i++) {
-//			Mutant mi = mutants.get(i);
-//			if (!mi.getTestFailures().isEmpty()) {
-//				for (int j = i + 1; j < mutants.size(); j++) {
-//					Mutant mj = mutants.get(j);
-//					if (!mj.getTestFailures().isEmpty()) {
-//						if (mi.getTestFailures().equals(mj.getTestFailures())) {
-//							System.out.println("Duplicated: " + mi + " - " + mj);
-//							mi.addBrother(mj);
-//						} else if (mi.isSubset(mj.getTestFailures())) {
-//							g.addEdge(mi, mj);
-//							mi.addChildren(mj);
-//							mj.addParents(mi);
-//						} else if (mj.isSubset(mi.getTestFailures())) {
-//							g.addEdge(mj, mi);
-//							mj.addChildren(mi);
-//							mi.addParents(mj);
-//						} else {
-//							System.out.println("Special Cases: " + mi + " - " + mj);
-//						}
-//					}
-//				}
-//			}
-//		}
-
-		
-	
-//		for (Mutant mutant : mutants) {
-//			Set<DefaultEdge> edges = g.outgoingEdgesOf(mutant);
-//			String descendents = "{ ";
-//			for (DefaultEdge defaultEdge : edges) {
-//				Mutant tempM = g.getEdgeTarget(defaultEdge);
-//				descendents += tempM.getName() + ", ";
-//			}
-//			descendents += "}";
-//			System.out.println("Root: " + mutant.getName() + " -> " + descendents);
-//		}
-
-//		for (Mutant mutant : mutants) {
-//			System.out.println(mutant.getName() + ":" + mutant.getDominatorStrengh() +  " -> " + mutant.printDescendents());
-//		}
-		
-	}
+//	public void printDSMG() {
+////		DirectedGraph<Mutant, DefaultEdge> g = new DefaultDirectedGraph<Mutant, DefaultEdge>(DefaultEdge.class);
+////		Map<Mutant, Set<Mutant>> duplicatedMap = getDuplicatedMap();
+////		List<Mutant> keys = new ArrayList<Mutant>();
+////		keys.addAll(duplicatedMap.keySet());
+////		for (int i = 0; i < mutants.size(); i++) {
+////			// add the vertices
+////			g.addVertex(mutants.get(i));
+////		}
+////		for (int i = 0; i < mutants.size(); i++) {
+////			Mutant mi = mutants.get(i);
+////			if (!mi.getTestFailures().isEmpty()) {
+////				for (int j = i + 1; j < mutants.size(); j++) {
+////					Mutant mj = mutants.get(j);
+////					if (!mj.getTestFailures().isEmpty()) {
+////						if (mi.getTestFailures().equals(mj.getTestFailures())) {
+////							System.out.println("Duplicated: " + mi + " - " + mj);
+////							mi.addBrother(mj);
+////						} else if (mi.isSubset(mj.getTestFailures())) {
+////							g.addEdge(mi, mj);
+////							mi.addChildren(mj);
+////							mj.addParents(mi);
+////						} else if (mj.isSubset(mi.getTestFailures())) {
+////							g.addEdge(mj, mi);
+////							mj.addChildren(mi);
+////							mi.addParents(mj);
+////						} else {
+////							System.out.println("Special Cases: " + mi + " - " + mj);
+////						}
+////					}
+////				}
+////			}
+////		}
+//
+//		
+//	
+////		for (Mutant mutant : mutants) {
+////			Set<DefaultEdge> edges = g.outgoingEdgesOf(mutant);
+////			String descendents = "{ ";
+////			for (DefaultEdge defaultEdge : edges) {
+////				Mutant tempM = g.getEdgeTarget(defaultEdge);
+////				descendents += tempM.getName() + ", ";
+////			}
+////			descendents += "}";
+////			System.out.println("Root: " + mutant.getName() + " -> " + descendents);
+////		}
+//
+////		for (Mutant mutant : mutants) {
+////			System.out.println(mutant.getName() + ":" + mutant.getDominatorStrengh() +  " -> " + mutant.printDescendents());
+////		}
+//		
+//	}
 
 	public void evaluateRedundants() {
 		for (int i = 0; i < mutants.size(); i++) {

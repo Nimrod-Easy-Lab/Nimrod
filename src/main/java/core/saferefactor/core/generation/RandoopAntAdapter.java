@@ -38,7 +38,7 @@ public class RandoopAntAdapter extends AbstractTestGeneratorAdapter {
 	protected String impactedList = "";
 	
 
-	public RandoopAntAdapter(Project projectToTest, String tmpDir) {
+	protected RandoopAntAdapter(Project projectToTest, String tmpDir) {
 		super(projectToTest);
 		this.tmpDir = tmpDir;
 		

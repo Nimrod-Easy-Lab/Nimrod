@@ -23,7 +23,7 @@ public class EvoSuiteAdapter extends AbstractTestGeneratorAdapter {
 	private List<String> additionalParameters;
 	protected String impactedList = "";
 
-	public EvoSuiteAdapter(Project projectToTest, String tmpDir) {
+	protected EvoSuiteAdapter(Project projectToTest, String tmpDir) {
 		super(projectToTest);
 		this.tmpDir = tmpDir;
 

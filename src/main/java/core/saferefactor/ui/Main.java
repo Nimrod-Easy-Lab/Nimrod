@@ -19,13 +19,14 @@ import saferefactor.core.SafeRefactor;
 import saferefactor.core.SafeRefactorException;
 import saferefactor.core.SafeRefactorImp;
 import saferefactor.core.analysis.nimrod.AnalysisType;
-import saferefactor.core.analysis.nimrod.RedundantAnalysis;
+import saferefactor.core.generation.TestGeneratorType;
 import saferefactor.core.util.Project;
 
 public class Main {
 
 	public static final String DEFAULT_TIMEOUT = "10";
 	public static final AnalysisType DEFAULT_ANALYSIS_TYPE = AnalysisType.ALL;
+	public static final TestGeneratorType DEFAULT_TEST_GENERATOR_TYPE = TestGeneratorType.RANDOOP_ANT;
 
 	private static String srcPath = "";
 	private static String binPath = "";
@@ -34,14 +35,11 @@ public class Main {
 	private static List<String> targets;
 	private static String timeout = DEFAULT_TIMEOUT;
 	private static AnalysisType analysisType = DEFAULT_ANALYSIS_TYPE;
+	private static TestGeneratorType testGenerator = DEFAULT_TEST_GENERATOR_TYPE;
+
 	private static boolean quiet = false;
 
 	public static void main(String[] args) {
-
-		if (isRedundancyAnalysis(args)) {
-			return;
-		}
-
 		parseArgs(args);
 		startAnalysis();
 	}
@@ -85,7 +83,7 @@ public class Main {
 			// parameters.setKind_of_analysis(Parameters.SAFIRA_ANALYSIS);
 			// parameters.setAnalyzeChangeMethods(true);
 
-			NimrodImpl sr = new NimrodImpl(sourceProject, targetProjects, parameters);
+			NimrodImpl sr = new NimrodImpl(sourceProject, targetProjects, parameters, testGenerator);
 			// SafeRefactor sr = new SafeRefactorImp(sourceProject, targetProjects.get(0),
 			// parameters);
 			if (parameters.isCompileProjects()) {
@@ -93,9 +91,17 @@ public class Main {
 			}
 			// sr.checkTransformation();
 			sr.checkTransformations(targetProjects);
-			sr.printMutantsListInfo();
+			
+			if (analysisType == AnalysisType.EQUIVALENTS || analysisType == AnalysisType.ALL) {
+				sr.printEquivalents();
+			}
 
+			if (analysisType == AnalysisType.REDUNDANTS || analysisType == AnalysisType.ALL) {
+				sr.logRedundantInfo();
+			}
+			
 			if (analysisType == AnalysisType.DUPLICATED || analysisType == AnalysisType.ALL) {
+				sr.printDuplicated();
 				reAnalysisDuplicated(sr);
 			}
 
@@ -137,7 +143,7 @@ public class Main {
 			parametersDup.setTimeLimit(Integer.parseInt(timeout));
 			parametersDup.setCompileProjects(true);
 
-			SafeRefactor srDuplicateds = new SafeRefactorImp(sourceProjectDup, targetProjectDup, parametersDup);
+			SafeRefactor srDuplicateds = new SafeRefactorImp(sourceProjectDup, targetProjectDup, parametersDup, testGenerator);
 			srDuplicateds.checkTransformation();
 			Report report = srDuplicateds.getReport();
 			if (report.isRefactoring()) {
@@ -148,15 +154,7 @@ public class Main {
 		System.out.println("Total duplicateds after re-analysis: " + totalDuplicateds);
 	}
 
-	private static boolean isRedundancyAnalysis(String[] args) {
-		for (String arg : args) {
-			if (arg.contains("-redundantAnalysis")) {
-				RedundantAnalysis.analysis(args);
-			}
-		}
 
-		return false;
-	}
 
 	private static void parseArgs(String[] args) {
 		Options options = new Options();
@@ -174,9 +172,14 @@ public class Main {
 		options.addOption(optTime);
 		// PARAMETER: type
 		Option optType = new Option("type", true,
-				"set the type of the analysis: equivalents | dulicated | redundants | ALL");
+				"set the type of the analysis: equivalents | dulicated | redundants | ALL*");
 		optType.setRequired(false);
 		options.addOption(optType);
+		// PARAMETER: testGenerator
+		Option optTestGenerator = new Option("testGenerator", true,
+				"set the test generator engine: randoop | randoop_ant* | evo_suite");
+		optTestGenerator.setRequired(false);
+		options.addOption(optTestGenerator);
 
 		CommandLineParser parser = new DefaultParser();
 		HelpFormatter formatter = new HelpFormatter();
@@ -186,12 +189,13 @@ public class Main {
 			cmd = parser.parse(options, args);
 		} catch (ParseException e) {
 			System.out.println(e.getMessage());
-			formatter.printHelp("$NIMROD [options]", "Search for Equivalent, Duplicated and Redundant Mutants.\n" + 
-					"Example: $NIMROD -original /path/to/original \n -mutants /path/to/mutant01:/path/to/mutant02 \n\n", options, "Report bugs to: ...");
+			formatter.printHelp("$NIMROD [options]", "Search for Equivalent, Duplicated and Redundant Mutants.\n"
+					+ "Example: $NIMROD -original /path/to/original \n -mutants /path/to/mutant01:/path/to/mutant02 \n\n",
+					options, "Report bugs to: ... \n * Default properties.");
 			System.exit(1);
 			return;
 		}
-		
+
 		String originalPath = cmd.getOptionValue("original");
 		String mutantsPath = cmd.getOptionValue("mutants");
 
@@ -212,12 +216,14 @@ public class Main {
 
 		timeout = cmd.hasOption("timeout") ? cmd.getOptionValue("timeout") : DEFAULT_TIMEOUT;
 		analysisType = AnalysisType.get(cmd.hasOption("type") ? cmd.getOptionValue("type") : "");
+		testGenerator = TestGeneratorType.get(cmd.hasOption("testGenerator") ? cmd.getOptionValue("testGenerator") : "");
 
 		System.out.println("Original: " + originalPath);
 		System.out.println("Mutants: " + mutantsPath);
 		System.out.println("Timeout: " + timeout);
 		System.out.println("Analysis Type: " + analysisType);
-
+		System.out.println("Test Generator: " + testGenerator);
+		
 	}
 
 	// private static void parseArguments(String[] args) {

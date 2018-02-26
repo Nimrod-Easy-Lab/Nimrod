@@ -21,6 +21,8 @@ import saferefactor.core.execution.CoverageDataReader.CoverageReport;
 import saferefactor.core.execution.CoverageMeter;
 import saferefactor.core.generation.EvoSuiteAdapter;
 import saferefactor.core.generation.RandoopAntAdapter;
+import saferefactor.core.generation.TestGeneratorFactory;
+import saferefactor.core.generation.TestGeneratorType;
 import saferefactor.core.util.AntJavaCompiler;
 import saferefactor.core.util.Constants;
 import saferefactor.core.util.Project;
@@ -31,8 +33,8 @@ import saferefactor.core.util.ast.MethodImp;
 public class NimrodImpl extends SafeRefactor {
 	private List<Project> targets;
 
-	public NimrodImpl(Project source, List<Project> targets, Parameters parameters) throws Exception {
-		super(source, source, parameters);
+	public NimrodImpl(Project source, List<Project> targets, Parameters parameters, TestGeneratorType tg) throws Exception {
+		super(source, source, parameters, tg);
 		this.targets = targets;
 		init();
 	}
@@ -64,8 +66,7 @@ public class NimrodImpl extends SafeRefactor {
 
 		analyzer = AnalyzerFactory.getFactory().createAnalyzer(this.source, this.target, this.tmpFolder);
 
-		generator = new RandoopAntAdapter(this.source, this.getTestPath().getAbsolutePath());
-		generator = new EvoSuiteAdapter(this.source, this.getTestPath().getAbsolutePath());
+		generator = TestGeneratorFactory.create(this.testGenerator, this.source, this.getTestPath().getAbsolutePath());
 		
 		sourceCompiler = new AntJavaCompiler(this.tmpFolder);
 		targetCompiler = new AntJavaCompiler(this.tmpFolder);
@@ -152,15 +153,15 @@ public class NimrodImpl extends SafeRefactor {
 		}
 		return methods;
 	}
-
-	public void printMutantsListInfo() {
-		mList.printDuplicateds();
+	
+	public void printEquivalents() {
 		mList.printEquivalents();
-		mList.printDominants();
-		mList.printDSMG();
 	}
 	
-
+	public void printDuplicated() {
+		mList.printDuplicateds();
+	}
+	
 	public List<String> getEquivalents() {
 		return mList.getEquivalents();
 	}
@@ -194,17 +195,17 @@ public class NimrodImpl extends SafeRefactor {
 	
 	@Override
 	public void checkTransformations(List<Project> targets) throws Exception {
-		super.checkTransformations(targets);
-		logRedundantInfo();
+		super.checkTransformations(targets);		
 	}
 
-	private void logRedundantInfo() {
+	public void logRedundantInfo() {
 		mList.evaluateRedundants();
 		List<String> lines = new ArrayList<String>();
 		String tool = "";
 		for (Mutant mutant : mList.getMutants()) {
-			lines.add(mutant.getTool() + ":" + mutant.getName() + ":" + mutant.getDominatorStrengh() +  " -> " + mutant.printDescendents());
+			lines.add(mutant.getTool() + ":" + mutant.getName() + ":" + mutant.getDominatorStrengh() +  " -> " + mutant.printDescendents());			
 			tool = mutant.getTool();
+			System.out.println(mutant.getTool() + ":" + mutant.getName() + ":" + mutant.getDominatorStrengh() +  " -> " + mutant.printDescendents());
 		}
 		try {
 			Utils.logWrite(super.source.getProjectFolder().getAbsolutePath(), "redundant_" + tool, lines);

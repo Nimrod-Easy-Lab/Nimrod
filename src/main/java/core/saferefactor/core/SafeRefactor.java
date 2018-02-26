@@ -30,6 +30,8 @@ import saferefactor.core.execution.TestExecutor;
 import saferefactor.core.generation.AbstractTestGeneratorAdapter;
 import saferefactor.core.generation.EvoSuiteAdapter;
 import saferefactor.core.generation.RandoopAntAdapter;
+import saferefactor.core.generation.TestGeneratorFactory;
+import saferefactor.core.generation.TestGeneratorType;
 import saferefactor.core.util.Compiler;
 import saferefactor.core.util.Constants;
 import saferefactor.core.util.EclipseCompiler;
@@ -41,15 +43,6 @@ public abstract class SafeRefactor {
 	private ImpactAnalysis ia;
 
 	protected String tmpFolder = "";
-
-	public String getTmpFolder() {
-		return tmpFolder;
-	}
-
-	public void setTmpFolder(String tmpFolder) {
-		this.tmpFolder = tmpFolder;
-	}
-
 	protected TransformationAnalyzer analyzer;
 	protected AbstractTestGeneratorAdapter generator;
 	protected Parameters parameters;
@@ -67,6 +60,8 @@ public abstract class SafeRefactor {
 	protected Project source;
 	protected Project target;
 	protected CoverageMeter meter;
+	protected TestGeneratorType testGenerator;
+	
 
 	protected Logger logger;
 	protected File bin_target;
@@ -82,28 +77,32 @@ public abstract class SafeRefactor {
 	protected static final String TESTS_BIN_TARGET = Constants.TESTS_DIR + "/bin_target";
 
 	protected static final String TESTS_BIN_SOURCE = Constants.TESTS_DIR + "/bin_source";
+	
+	
 
 	public SafeRefactor() {
 		super();
 		parameters = new Parameters();
-		report = new Report();
+		report = new Report();		
 	}
 
-	public SafeRefactor(Project source, Parameters parameters) {
+	public SafeRefactor(Project source, Parameters parameters, TestGeneratorType tg) {
 		this();
 		this.source = source;
 		this.parameters = parameters;
+		this.testGenerator = tg;
 	}
 
-	public SafeRefactor(Project source, Project target) {
+	public SafeRefactor(Project source, Project target, TestGeneratorType tg) {
 		this();
 		this.source = source;
 		this.target = target;
+		this.testGenerator = tg;
 	}
 
-	public SafeRefactor(Project source, Project target, Parameters parameters) {
-		this(source, target);
-		this.parameters = parameters;
+	public SafeRefactor(Project source, Project target, Parameters parameters, TestGeneratorType tg) {
+		this(source, target, tg);
+		this.parameters = parameters;		
 
 	}
 
@@ -326,8 +325,7 @@ public abstract class SafeRefactor {
 	private void reInitTarget() throws Exception {
 		analyzer = AnalyzerFactory.getFactory().createAnalyzer(this.source, this.target, this.tmpFolder);
 
-		generator = new RandoopAntAdapter(this.source, this.getTestPath().getAbsolutePath());
-		 generator = new EvoSuiteAdapter(this.source, this.getTestPath().getAbsolutePath());
+		generator = TestGeneratorFactory.create(this.testGenerator, this.source, this.getTestPath().getAbsolutePath());
 
 		// targetCompiler = new AntJavaCompiler(this.tmpFolder);
 		// targetTestCompiler = new AntJavaCompiler(this.tmpFolder);
@@ -506,5 +504,13 @@ public abstract class SafeRefactor {
 
 	public void setIa(ImpactAnalysis ia) {
 		this.ia = ia;
+	}
+	
+	public String getTmpFolder() {
+		return tmpFolder;
+	}
+
+	public void setTmpFolder(String tmpFolder) {
+		this.tmpFolder = tmpFolder;
 	}
 }
