@@ -186,7 +186,7 @@ public class Main {
 			cmd = parser.parse(options, args);
 		} catch (ParseException e) {
 			System.out.println(e.getMessage());
-			formatter.printHelp("$NIMROD [options]", "Search for PATTERN in each FILE.\n" + 
+			formatter.printHelp("$NIMROD [options]", "Search for Equivalent, Duplicated and Redundant Mutants.\n" + 
 					"Example: $NIMROD -original /path/to/original \n -mutants /path/to/mutant01:/path/to/mutant02 \n\n", options, "Report bugs to: ...");
 			System.exit(1);
 			return;
