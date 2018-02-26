@@ -11,7 +11,6 @@ import org.apache.commons.cli.HelpFormatter;
 import org.apache.commons.cli.Option;
 import org.apache.commons.cli.Options;
 import org.apache.commons.cli.ParseException;
-import org.evosuite.shaded.org.hibernate.event.internal.DefaultAutoFlushEventListener;
 
 import saferefactor.core.NimrodImpl;
 import saferefactor.core.Parameters;
