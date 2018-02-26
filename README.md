@@ -6,9 +6,10 @@ Instructions:
 
 Have jdk-8 and Maven installed.
 
-`mvn package`
+`mvn clean`
+`mvn package [-DskipTests]`
 
 
-`java -cp $(pwd)/lib/*:$(pwd)/target/nimrod-0.0.1-SNAPSHOT.jar saferefactor.ui.Main args
-`
+`NIMROD="java -cp $(pwd)/lib/*:$(pwd)/target/nimrod-0.0.1-SNAPSHOT.jar saferefactor.ui.Main"`
+`$NIMROD args`
 
