@@ -186,11 +186,12 @@ public class Main {
 			cmd = parser.parse(options, args);
 		} catch (ParseException e) {
 			System.out.println(e.getMessage());
-			formatter.printHelp("utility-name", options);
+			formatter.printHelp("$NIMROD [options]", "Search for PATTERN in each FILE.\n" + 
+					"Example: $NIMROD -original /path/to/original \n -mutants /path/to/mutant01:/path/to/mutant02 \n\n", options, "Report bugs to: ...");
 			System.exit(1);
 			return;
 		}
-
+		
 		String originalPath = cmd.getOptionValue("original");
 		String mutantsPath = cmd.getOptionValue("mutants");
 
