@@ -9,7 +9,7 @@ public class Mutant {
 	private final String MUJAVA = "mujava";
 	private final String MAJOR = "major";
 	private final String PIT = "pitest";
-	
+
 	private String name;
 	private String tool;
 	private File folder;
@@ -36,20 +36,20 @@ public class Mutant {
 		this.brothers = new HashSet<Mutant>();
 		this.noRelation = new HashSet<Mutant>();
 	}
-	
+
 	private void setTool(String folder) {
-		if(folder != null && !folder.trim().equals("")) {
-			if(folder.contains(MUJAVA)) {
+		if (folder != null && !folder.trim().equals("")) {
+			if (folder.contains(MUJAVA)) {
 				this.tool = MUJAVA;
 				return;
 			} else if (folder.contains(MAJOR)) {
 				this.tool = MAJOR;
 				return;
-			} else if(folder.contains(PIT)) {
+			} else if (folder.contains(PIT)) {
 				this.tool = PIT;
 				return;
 			}
-		} 
+		}
 	}
 
 	public String getName() {
@@ -145,7 +145,7 @@ public class Mutant {
 	public void addBrother(Mutant brother) {
 		this.brothers.add(brother);
 	}
-	
+
 	public Set<Mutant> getNoRelation() {
 		return noRelation;
 	}
@@ -153,8 +153,7 @@ public class Mutant {
 	public void addNoRelationMutant(Mutant brother) {
 		this.noRelation.add(brother);
 	}
-	
-		
+
 	public String getTool() {
 		return tool;
 	}
@@ -168,14 +167,44 @@ public class Mutant {
 				double r = numChildren / sum;
 				return r;
 			}
-		} 
+		}
 		return this.dominatorStrength;
 	}
 
+	public String printLogLine() {
+		StringBuilder result = new StringBuilder("");
+		result.append(this.getTool()).append(":")
+			.append(this.getName()).append(":")
+			.append(this.getDominatorStrengh()).append(":")
+			.append(this.getTestFailures().size()).append(":")
+			.append(this.printBrothers()).append(":")
+			.append(this.printDescendents()).append(":")
+			.append(this.printAscendents());
+		return result.toString();
+	}
+
 	public String printDescendents() {
+		return buildPrintableList(children);
+	}
+
+	public String printAscendents() {
+		return buildPrintableList(parents);
+	}
+
+	public String printBrothers() {
+		return buildPrintableList(brothers);
+	}
+
+	private String buildPrintableList(Set<Mutant> list) {
 		String result = "{";
-		for (Mutant mutant : children) {
-			result += mutant.getName() + ",";
+		int i = 0;
+		for (Mutant mutant : list) {
+			if (i == 0) {
+				result += mutant.getName();
+			} else {
+				result += "," + mutant.getName();
+			}
+			i++;
 		}
 		result += "}";
 		return result;

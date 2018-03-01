@@ -33,7 +33,8 @@ import saferefactor.core.util.ast.MethodImp;
 public class NimrodImpl extends SafeRefactor {
 	private List<Project> targets;
 
-	public NimrodImpl(Project source, List<Project> targets, Parameters parameters, TestGeneratorType tg) throws Exception {
+	public NimrodImpl(Project source, List<Project> targets, Parameters parameters, TestGeneratorType tg)
+			throws Exception {
 		super(source, source, parameters, tg);
 		this.targets = targets;
 		init();
@@ -67,7 +68,7 @@ public class NimrodImpl extends SafeRefactor {
 		analyzer = AnalyzerFactory.getFactory().createAnalyzer(this.source, this.target, this.tmpFolder);
 
 		generator = TestGeneratorFactory.create(this.testGenerator, this.source, this.getTestPath().getAbsolutePath());
-		
+
 		sourceCompiler = new AntJavaCompiler(this.tmpFolder);
 		targetCompiler = new AntJavaCompiler(this.tmpFolder);
 		sourceTestCompiler = new AntJavaCompiler(this.tmpFolder);
@@ -153,15 +154,15 @@ public class NimrodImpl extends SafeRefactor {
 		}
 		return methods;
 	}
-	
+
 	public void printEquivalents() {
 		mList.printEquivalents();
 	}
-	
+
 	public void printDuplicated() {
 		mList.printDuplicateds();
 	}
-	
+
 	public List<String> getEquivalents() {
 		return mList.getEquivalents();
 	}
@@ -189,23 +190,23 @@ public class NimrodImpl extends SafeRefactor {
 			double total = ((stop - start) / 1000);
 			logger.info("time to compile only the target (s): " + total + "->" + target.getProjectFolder());
 		}
-		//Remove os targets com falha.
+		// Remove os targets com falha.
 		targets.removeAll(targetsWithCompilerError);
 	}
-	
+
 	@Override
 	public void checkTransformations(List<Project> targets) throws Exception {
-		super.checkTransformations(targets);		
+		super.checkTransformations(targets);
 	}
 
 	public void logRedundantInfo() {
 		mList.evaluateRedundants();
-		List<String> lines = new ArrayList<String>();
 		String tool = "";
+		List<String> lines = new ArrayList<String>();
 		for (Mutant mutant : mList.getMutants()) {
-			lines.add(mutant.getTool() + ":" + mutant.getName() + ":" + mutant.getDominatorStrengh() +  " -> " + mutant.printDescendents());			
 			tool = mutant.getTool();
-			System.out.println(mutant.getTool() + ":" + mutant.getName() + ":" + mutant.getDominatorStrengh() +  " -> " + mutant.printDescendents());
+			lines.add(mutant.printLogLine());
+			System.out.println(mutant.printLogLine());
 		}
 		try {
 			Utils.logWrite(super.source.getProjectFolder().getAbsolutePath(), "redundant_" + tool, lines);

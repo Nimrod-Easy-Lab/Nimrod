@@ -13,6 +13,12 @@
 		<maven.compiler.testTarget>1.8</maven.compiler.testTarget>
 		<maven.compiler.testSource>1.8</maven.compiler.testSource>
 	</properties>
+	<repositories>
+    <repository>
+        <id>maven-repository</id>
+        <url>file:///${project.basedir}/maven-repository</url>
+    </repository>
+  </repositories>
 
 	<name>Nimrod</name>
 	<build>
@@ -287,9 +293,7 @@
 		<dependency>
 			<groupId>evosuite</groupId>
 			<artifactId>evosuite</artifactId>
-			<version>1.0.5</version>
-			<scope>system</scope>
-			<systemPath>${project.basedir}/lib/evosuite-1.0.5.jar</systemPath>
+			<version>1.0.5</version>			
 		</dependency>
 		<dependency>
 			<groupId>commons-cli</groupId>

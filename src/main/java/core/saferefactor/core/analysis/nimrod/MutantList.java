@@ -176,6 +176,7 @@ public class MutantList{
 					if (!mj.getTestFailures().isEmpty()) {
 						if (mi.getTestFailures().equals(mj.getTestFailures())) {
 							mi.addBrother(mj);
+							mj.addBrother(mi);
 						} else if (mi.isSubset(mj.getTestFailures())) {
 							mi.addChildren(mj);
 							mj.addParents(mi);
