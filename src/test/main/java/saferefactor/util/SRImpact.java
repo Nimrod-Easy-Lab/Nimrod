@@ -10,6 +10,7 @@ import saferefactor.core.SafeRefactorImp;
 import saferefactor.core.util.Project;
 import saferefactor.core.analysis.safira.Constants;
 import saferefactor.core.analysis.safira.analyzer.ImpactAnalysis;
+import saferefactor.core.generation.TestGeneratorType;
 
 
 
@@ -75,7 +76,7 @@ public class SRImpact {
 		parameters.setCompileProjects(false);
 		parameters.setKind_of_analysis(Parameters.SAFIRA_ANALYSIS);
 		SafeRefactor saferefactor = new SafeRefactorImp(source, target,
-				parameters);
+				parameters, TestGeneratorType.RANDOOP_ANT);
 
 		saferefactor.checkTransformation();
 		ia = saferefactor.getIa();
