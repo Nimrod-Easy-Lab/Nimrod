@@ -36,49 +36,38 @@ public class Main {
 	private static String timeout = DEFAULT_TIMEOUT;
 	private static AnalysisType analysisType = DEFAULT_ANALYSIS_TYPE;
 	private static TestGeneratorType testGenerator = DEFAULT_TEST_GENERATOR_TYPE;
-
+	private static boolean needCompile = false;
+	
 	private static boolean quiet = false;
 
 	public static void main(String[] args) {
 		parseArgs(args);
 		startAnalysis();
 	}
+	
+	public static SafeRefactor startAnalysis(String[] args) {
+		parseArgs(args);
+		return startAnalysis();
+	}
 
-	private static void startAnalysis() {
+	private static SafeRefactor startAnalysis() {
 		File sourceFile = new File(source);
 
 		try {
 			if (!sourceFile.exists())
 				throw new Throwable("Directory not found:" + sourceFile.getAbsolutePath());
 
-			File binSource = new File(sourceFile, binPath);
-			File srcSource = new File(sourceFile, srcPath);
-			File libSource = new File(sourceFile, libPath);
-
-			Project sourceProject = new Project();
-			sourceProject.setProjectFolder(sourceFile.getAbsoluteFile());
-			sourceProject.setSrcFolder(srcSource);
-			sourceProject.setBuildFolder(binSource);
-			sourceProject.setLibFolder(libSource);
+			Project sourceProject = getProject(sourceFile);
 
 			List<Project> targetProjects = new ArrayList<Project>();
 			for (String target : targets) {
 				File targetFile = new File(target);
-				File binTarget = new File(targetFile, binPath);
-				File srcTarget = new File(targetFile, srcPath);
-				File libTarget = new File(targetFile, libPath);
-
-				Project targetProject = new Project();
-				targetProject.setProjectFolder(targetFile);
-				targetProject.setBuildFolder(binTarget);
-				targetProject.setSrcFolder(srcTarget);
-				targetProject.setLibFolder(libTarget);
-				targetProjects.add(targetProject);
+				targetProjects.add(getProject(targetFile));
 			}
 
 			Parameters parameters = new Parameters();
 			parameters.setTimeLimit(Integer.parseInt(timeout));
-			parameters.setCompileProjects(false); // Caso eu queira executar
+			parameters.setCompileProjects(needCompile); // Caso eu queira executar
 													// apenas com .class
 			// parameters.setKind_of_analysis(Parameters.SAFIRA_ANALYSIS);
 			// parameters.setAnalyzeChangeMethods(true);
@@ -91,7 +80,6 @@ public class Main {
 			}
 			// sr.checkTransformation();
 			sr.checkTransformations(targetProjects);
-			
 			if (analysisType == AnalysisType.EQUIVALENTS || analysisType == AnalysisType.ALL) {
 				sr.printEquivalents();
 			}
@@ -99,19 +87,35 @@ public class Main {
 			if (analysisType == AnalysisType.REDUNDANTS || analysisType == AnalysisType.ALL) {
 				sr.logRedundantInfo();
 			}
-			
+
 			if (analysisType == AnalysisType.DUPLICATED || analysisType == AnalysisType.ALL) {
 				sr.printDuplicated();
-				reAnalysisDuplicated(sr);
+//				reAnalysisDuplicated(sr);
 			}
+			
+			return sr;
 
 		} catch (Throwable e) {
 			System.err.println(e.getMessage());
 			e.printStackTrace();
+			return null;
 		}
 	}
 
-	private static void reAnalysisDuplicated(NimrodImpl sr) throws Exception, SafeRefactorException {
+	private static Project getProject(File sourceFile) {
+		File binSource = new File(sourceFile, binPath);
+		File srcSource = new File(sourceFile, srcPath);
+		File libSource = new File(sourceFile, libPath);
+
+		Project sourceProject = new Project();
+		sourceProject.setProjectFolder(sourceFile.getAbsoluteFile());
+		sourceProject.setSrcFolder(srcSource);
+		sourceProject.setBuildFolder(binSource);
+		sourceProject.setLibFolder(libSource);
+		return sourceProject;
+	}
+
+	public static void reAnalysisDuplicated(NimrodImpl sr) throws Exception, SafeRefactorException {
 		System.out.println("Checking false positives in Duplicated Mutants...");
 		List<String> duplicateds = sr.getDuplicateds();
 		System.out.println("Total duplicateds before re-analysis: " + duplicateds.size());
@@ -141,9 +145,10 @@ public class Main {
 
 			Parameters parametersDup = new Parameters();
 			parametersDup.setTimeLimit(Integer.parseInt(timeout));
-			parametersDup.setCompileProjects(true);
+			parametersDup.setCompileProjects(needCompile);
 
-			SafeRefactor srDuplicateds = new SafeRefactorImp(sourceProjectDup, targetProjectDup, parametersDup, testGenerator);
+			SafeRefactor srDuplicateds = new SafeRefactorImp(sourceProjectDup, targetProjectDup, parametersDup,
+					testGenerator);
 			srDuplicateds.checkTransformation();
 			Report report = srDuplicateds.getReport();
 			if (report.isRefactoring()) {
@@ -153,8 +158,6 @@ public class Main {
 		}
 		System.out.println("Total duplicateds after re-analysis: " + totalDuplicateds);
 	}
-
-
 
 	private static void parseArgs(String[] args) {
 		Options options = new Options();
@@ -180,6 +183,10 @@ public class Main {
 				"set the test generator engine: randoop | randoop_ant* | evo_suite");
 		optTestGenerator.setRequired(false);
 		options.addOption(optTestGenerator);
+		// PARAMETER: testGenerator
+		Option optNeedCompile = new Option("compile", false, "set wether it is nenecessary to compile the projects");
+		optNeedCompile.setRequired(false);
+		options.addOption(optNeedCompile);
 
 		CommandLineParser parser = new DefaultParser();
 		HelpFormatter formatter = new HelpFormatter();
@@ -215,15 +222,17 @@ public class Main {
 		}
 
 		timeout = cmd.hasOption("timeout") ? cmd.getOptionValue("timeout") : DEFAULT_TIMEOUT;
+		needCompile = cmd.hasOption("compile") ? true : false;
 		analysisType = AnalysisType.get(cmd.hasOption("type") ? cmd.getOptionValue("type") : "");
-		testGenerator = TestGeneratorType.get(cmd.hasOption("testGenerator") ? cmd.getOptionValue("testGenerator") : "");
+		testGenerator = TestGeneratorType
+				.get(cmd.hasOption("testGenerator") ? cmd.getOptionValue("testGenerator") : "");
 
 		System.out.println("Original: " + originalPath);
 		System.out.println("Mutants: " + mutantsPath);
 		System.out.println("Timeout: " + timeout);
 		System.out.println("Analysis Type: " + analysisType);
 		System.out.println("Test Generator: " + testGenerator);
-		
+		System.out.println("Compile: " + needCompile);
 	}
 
 	// private static void parseArguments(String[] args) {
