@@ -6,7 +6,6 @@ import java.util.List;
 import java.util.Random;
 
 import org.evosuite.EvoSuite;
-import org.evosuite.ga.metaheuristics.GeneticAlgorithm;
 
 import saferefactor.core.util.Constants;
 import saferefactor.core.util.FileUtil;

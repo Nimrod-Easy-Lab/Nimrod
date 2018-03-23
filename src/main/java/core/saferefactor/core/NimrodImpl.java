@@ -155,12 +155,12 @@ public class NimrodImpl extends SafeRefactor {
 		return methods;
 	}
 
-	public void printEquivalents() {
-		mList.printEquivalents();
+	public void logEquivalents(String path) throws IOException {
+		mList.logEquivalents(path);
 	}
 
-	public void printDuplicated() {
-		mList.printDuplicateds();
+	public void logDuplicated(String path) throws IOException {
+		mList.logDuplicateds(path);
 	}
 
 	public List<String> getEquivalents() {
@@ -199,19 +199,11 @@ public class NimrodImpl extends SafeRefactor {
 		super.checkTransformations(targets);
 	}
 
-	public void logRedundantInfo() {
+	public void logRedundantInfo(String path) throws IOException {
+		mList.logRedundantInfo(path);
+	}
+
+	public void evaluateRedundants() {
 		mList.evaluateRedundants();
-		String tool = "";
-		List<String> lines = new ArrayList<String>();
-		for (Mutant mutant : mList.getMutants()) {
-			tool = mutant.getTool();
-			lines.add(mutant.printLogLine());
-			System.out.println(mutant.printLogLine());
-		}
-		try {
-			Utils.logWrite(super.source.getProjectFolder().getAbsolutePath(), "redundant_" + tool, lines);
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
 	}
 }

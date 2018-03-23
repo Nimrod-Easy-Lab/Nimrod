@@ -11,7 +11,7 @@ public class TestGeneratorFactory {
 	private static AbstractTestGeneratorAdapter testGenerator;
 
 	public static AbstractTestGeneratorAdapter create(TestGeneratorType t, Project projectToTest, String tmpDir) {
-		if (testGenerator == null) {
+//		if (testGenerator == null) {
 			switch (t) {
 			case RANDOOP_ANT:
 				testGenerator = new RandoopAntAdapter(projectToTest, tmpDir);
@@ -26,9 +26,9 @@ public class TestGeneratorFactory {
 				testGenerator = new RandoopAntAdapter(projectToTest, tmpDir);
 				return testGenerator;
 			}
-		} else {
-			return testGenerator;
-		}
+//		} else {
+//			return testGenerator;
+//		}
 	}
 
 }

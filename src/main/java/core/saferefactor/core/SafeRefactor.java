@@ -61,7 +61,6 @@ public abstract class SafeRefactor {
 	protected Project target;
 	protected CoverageMeter meter;
 	protected TestGeneratorType testGenerator;
-	
 
 	protected Logger logger;
 	protected File bin_target;
@@ -77,13 +76,11 @@ public abstract class SafeRefactor {
 	protected static final String TESTS_BIN_TARGET = Constants.TESTS_DIR + "/bin_target";
 
 	protected static final String TESTS_BIN_SOURCE = Constants.TESTS_DIR + "/bin_source";
-	
-	
 
 	public SafeRefactor() {
 		super();
 		parameters = new Parameters();
-		report = new Report();		
+		report = new Report();
 	}
 
 	public SafeRefactor(Project source, Parameters parameters, TestGeneratorType tg) {
@@ -102,7 +99,7 @@ public abstract class SafeRefactor {
 
 	public SafeRefactor(Project source, Project target, Parameters parameters, TestGeneratorType tg) {
 		this(source, target, tg);
-		this.parameters = parameters;		
+		this.parameters = parameters;
 
 	}
 
@@ -198,7 +195,7 @@ public abstract class SafeRefactor {
 
 				double stop = System.currentTimeMillis();
 				double total = ((stop - start) / 1000);
-				logger.info("time to check transformation (s): " + total);
+				logger.info("time to check transformation(s) of " + project.getSrcFolder().getName() + ":-> " + total);
 				report.setTotalTime(total);
 
 				// Salva o report com os testes que mataram o mutante
@@ -505,7 +502,7 @@ public abstract class SafeRefactor {
 	public void setIa(ImpactAnalysis ia) {
 		this.ia = ia;
 	}
-	
+
 	public String getTmpFolder() {
 		return tmpFolder;
 	}

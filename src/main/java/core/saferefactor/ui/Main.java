@@ -19,6 +19,7 @@ import saferefactor.core.SafeRefactor;
 import saferefactor.core.SafeRefactorException;
 import saferefactor.core.SafeRefactorImp;
 import saferefactor.core.analysis.nimrod.AnalysisType;
+import saferefactor.core.analysis.nimrod.Utils;
 import saferefactor.core.generation.TestGeneratorType;
 import saferefactor.core.util.Project;
 
@@ -27,6 +28,8 @@ public class Main {
 	public static final String DEFAULT_TIMEOUT = "10";
 	public static final AnalysisType DEFAULT_ANALYSIS_TYPE = AnalysisType.ALL;
 	public static final TestGeneratorType DEFAULT_TEST_GENERATOR_TYPE = TestGeneratorType.RANDOOP_ANT;
+	public static final String DEFAULT_OUTPUT_FOLDER = System.getProperty("user.dir");;
+	
 
 	private static String srcPath = "";
 	private static String binPath = "";
@@ -37,14 +40,15 @@ public class Main {
 	private static AnalysisType analysisType = DEFAULT_ANALYSIS_TYPE;
 	private static TestGeneratorType testGenerator = DEFAULT_TEST_GENERATOR_TYPE;
 	private static boolean needCompile = false;
-	
+	private static String outputFolder = DEFAULT_OUTPUT_FOLDER;
+
 	private static boolean quiet = false;
 
 	public static void main(String[] args) {
 		parseArgs(args);
 		startAnalysis();
 	}
-	
+
 	public static SafeRefactor startAnalysis(String[] args) {
 		parseArgs(args);
 		return startAnalysis();
@@ -68,7 +72,7 @@ public class Main {
 			Parameters parameters = new Parameters();
 			parameters.setTimeLimit(Integer.parseInt(timeout));
 			parameters.setCompileProjects(needCompile); // Caso eu queira executar
-													// apenas com .class
+			// apenas com .class
 			// parameters.setKind_of_analysis(Parameters.SAFIRA_ANALYSIS);
 			// parameters.setAnalyzeChangeMethods(true);
 
@@ -81,18 +85,19 @@ public class Main {
 			// sr.checkTransformation();
 			sr.checkTransformations(targetProjects);
 			if (analysisType == AnalysisType.EQUIVALENTS || analysisType == AnalysisType.ALL) {
-				sr.printEquivalents();
+				sr.logEquivalents(outputFolder);
 			}
 
 			if (analysisType == AnalysisType.REDUNDANTS || analysisType == AnalysisType.ALL) {
-				sr.logRedundantInfo();
+				sr.evaluateRedundants();
+				sr.logRedundantInfo(outputFolder);
 			}
 
 			if (analysisType == AnalysisType.DUPLICATED || analysisType == AnalysisType.ALL) {
-				sr.printDuplicated();
-//				reAnalysisDuplicated(sr);
+				sr.logDuplicated(outputFolder);
+				reAnalysisDuplicated(sr);
 			}
-			
+
 			return sr;
 
 		} catch (Throwable e) {
@@ -120,6 +125,7 @@ public class Main {
 		List<String> duplicateds = sr.getDuplicateds();
 		System.out.println("Total duplicateds before re-analysis: " + duplicateds.size());
 		int totalDuplicateds = 0;
+		List<String> duplicated_lines_reanalysis = new ArrayList<String>();
 		for (String duplicated : duplicateds) {
 			String[] programs = duplicated.split(":");
 
@@ -153,9 +159,16 @@ public class Main {
 			Report report = srDuplicateds.getReport();
 			if (report.isRefactoring()) {
 				System.out.println(programs[0] + " == " + programs[1]);
+				totalDuplicateds++;			
 				totalDuplicateds++;
+//				String line = sourceFolder + ":";
+				String line = "";
+				line += sourceProjectDup.getProjectFolder().getAbsolutePath() + ":"
+						+ targetProjectDup.getProjectFolder().getAbsolutePath();
+				duplicated_lines_reanalysis.add(line);
 			}
 		}
+		Utils.logAppend(outputFolder, "duplicated_reanalysis", duplicated_lines_reanalysis);
 		System.out.println("Total duplicateds after re-analysis: " + totalDuplicateds);
 	}
 
@@ -183,10 +196,15 @@ public class Main {
 				"set the test generator engine: randoop | randoop_ant* | evo_suite");
 		optTestGenerator.setRequired(false);
 		options.addOption(optTestGenerator);
-		// PARAMETER: testGenerator
+		// PARAMETER: NeedCompile
 		Option optNeedCompile = new Option("compile", false, "set wether it is nenecessary to compile the projects");
 		optNeedCompile.setRequired(false);
 		options.addOption(optNeedCompile);
+		// PARAMETER: testGenerator
+		Option optOutput = new Option("output", true,
+				"set the output folder to write the log files");
+		optOutput.setRequired(false);
+		options.addOption(optOutput);
 
 		CommandLineParser parser = new DefaultParser();
 		HelpFormatter formatter = new HelpFormatter();
@@ -223,9 +241,12 @@ public class Main {
 
 		timeout = cmd.hasOption("timeout") ? cmd.getOptionValue("timeout") : DEFAULT_TIMEOUT;
 		needCompile = cmd.hasOption("compile") ? true : false;
-		analysisType = AnalysisType.get(cmd.hasOption("type") ? cmd.getOptionValue("type") : "");
-		testGenerator = TestGeneratorType
-				.get(cmd.hasOption("testGenerator") ? cmd.getOptionValue("testGenerator") : "");
+		analysisType = cmd.hasOption("type") ? AnalysisType.get(cmd.getOptionValue("type")) : DEFAULT_ANALYSIS_TYPE;
+		testGenerator = cmd.hasOption("testGenerator") ? TestGeneratorType.get(cmd.getOptionValue("testGenerator"))
+				: DEFAULT_TEST_GENERATOR_TYPE;
+		outputFolder = cmd.hasOption("output") ? cmd.getOptionValue("output")
+				: DEFAULT_OUTPUT_FOLDER;
+		
 
 		System.out.println("Original: " + originalPath);
 		System.out.println("Mutants: " + mutantsPath);
@@ -233,6 +254,7 @@ public class Main {
 		System.out.println("Analysis Type: " + analysisType);
 		System.out.println("Test Generator: " + testGenerator);
 		System.out.println("Compile: " + needCompile);
+		System.out.println("Output folder: " + outputFolder);
 	}
 
 	// private static void parseArguments(String[] args) {
