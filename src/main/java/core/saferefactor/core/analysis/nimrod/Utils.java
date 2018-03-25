@@ -21,6 +21,7 @@ public class Utils {
 	}
 
 	public static void logWrite(String path, String fileName, List<String> lines) throws IOException {
+		new File(path).mkdirs();
 		File f = new File(path + "/" + LOGGER_NAME + "_" + fileName + ".log");
 		Files.write(f.toPath(), lines, UTF_8, WRITE, CREATE);
 	}
