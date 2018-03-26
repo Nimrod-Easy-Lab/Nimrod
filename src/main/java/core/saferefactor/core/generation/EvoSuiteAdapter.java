@@ -6,6 +6,7 @@ import java.util.List;
 import java.util.Random;
 
 import org.evosuite.EvoSuite;
+import org.evosuite.classpath.ResourceList;
 
 import saferefactor.core.util.Constants;
 import saferefactor.core.util.FileUtil;
@@ -39,11 +40,13 @@ public class EvoSuiteAdapter extends AbstractTestGeneratorAdapter {
 		generateMethodListFile(methods);
 
 		// String[] command = new String[] { "-generateSuite", "-class", targetClass };
-		String[] command = { "-target", project.getBuildFolder().getAbsolutePath(), "-projectCP",
-				project.getBuildFolder().getAbsolutePath(), "-base_dir", this.tmpDir, "-Dsearch_budget",
-				"" + new Double(timeLimit).intValue(), "-Dlog.level", "OFF", "-Dminimize", "false" };
+		String[] command = { "-target", project.getBuildFolder().getAbsolutePath(), "-projectCP", project
+				.getBuildFolder().getAbsolutePath(),
+				"-base_dir", this.tmpDir, "-Dsearch_budget", "" + new Double(timeLimit).intValue(), "-Dlog.level",
+				"OFF", "-Dminimize", "false" };
 
 		try {
+			ResourceList.resetAllCaches();
 			EvoSuite evosuite = new EvoSuite();
 			evosuite.parseCommandLine(command);
 			System.out.println("Passou!");
