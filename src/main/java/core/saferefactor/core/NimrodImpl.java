@@ -1,26 +1,26 @@
 package saferefactor.core;
 
 import java.io.File;
-import java.io.FileFilter;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.net.MalformedURLException;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 import java.util.logging.FileHandler;
 import java.util.logging.Logger;
 import java.util.logging.SimpleFormatter;
 
+import org.apache.commons.io.FileUtils;
+import org.apache.commons.io.filefilter.FileFilterUtils;
+import org.apache.commons.io.filefilter.IOFileFilter;
+
 import saferefactor.core.analysis.analyzer.factory.AnalyzerFactory;
-import saferefactor.core.analysis.nimrod.Mutant;
-import saferefactor.core.analysis.nimrod.Utils;
 import saferefactor.core.comparator.ComparatorImp;
 import saferefactor.core.comparator.Report;
 import saferefactor.core.execution.AntJunitRunner;
 import saferefactor.core.execution.CoverageDataReader.CoverageReport;
 import saferefactor.core.execution.CoverageMeter;
-import saferefactor.core.generation.EvoSuiteAdapter;
-import saferefactor.core.generation.RandoopAntAdapter;
 import saferefactor.core.generation.TestGeneratorFactory;
 import saferefactor.core.generation.TestGeneratorType;
 import saferefactor.core.util.AntJavaCompiler;
@@ -110,18 +110,15 @@ public class NimrodImpl extends SafeRefactor {
 			report.setNumberTests(comparatorReport.getTotalTests());
 			report.setMethodsToTest(this.methodsToTest);
 			report.setSourceProject(this.target);
-			File tmp = new File(tmpFolder, "tests/");
-			File[] testFiles = tmp.listFiles(new FileFilter() {
+			File tmp = new File(tmpFolder, "tests");
+			
+			String[] sufix = {"java"};
+			Collection<File> testFiles = FileUtils.listFiles(tmp, sufix, false);
 
-				@Override
-				public boolean accept(File file) {
-					if (file.getName().equals("RandoopTest.java"))
-						return false;
-					if (file.getName().endsWith(".java"))
-						return true;
-					return false;
-				}
-			});
+			if (testFiles == null || testFiles.size() == 0) {
+				testFiles = FileUtils.listFiles(new File(tmp.getAbsolutePath(), "evosuite-tests"), sufix, true);
+			}
+
 			for (File file : testFiles) {
 				if (!report.getGeneratedTestFiles().contains(file))
 					report.getGeneratedTestFiles().add(file);
