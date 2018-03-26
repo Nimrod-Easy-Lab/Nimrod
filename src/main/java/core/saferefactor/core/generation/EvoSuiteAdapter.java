@@ -49,8 +49,6 @@ public class EvoSuiteAdapter extends AbstractTestGeneratorAdapter {
 			ResourceList.resetAllCaches();
 			EvoSuite evosuite = new EvoSuite();
 			evosuite.parseCommandLine(command);
-			System.out.println("Passou!");
-
 		} catch (Throwable t) {
 			t.printStackTrace();
 		}
