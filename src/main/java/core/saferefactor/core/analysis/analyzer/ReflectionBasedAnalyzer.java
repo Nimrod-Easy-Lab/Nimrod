@@ -76,57 +76,39 @@ public class ReflectionBasedAnalyzer implements TransformationAnalyzer {
 
 					// senao, verifica se o method existe na hierarquia
 					for (int j = 0; j < targetClass.getMethods().size(); j++) {
-						Method targetMethod = targetClass.getMethods()
-								.get(j);
+						Method targetMethod = targetClass.getMethods().get(j);
 						// existem um method na classe, porem eles estao
 						// definidos em classes diferentes
-						if (targetMethod.getSimpleName().equals(
-								sourceMethod.getSimpleName())
-								&& sourceMethod.getParameterList().equals(
-										targetMethod.getParameterList())) {
+						if (targetMethod.getSimpleName().equals(sourceMethod.getSimpleName())
+								&& sourceMethod.getParameterList().equals(targetMethod.getParameterList())) {
 
-							Clazz c1 = mapSourceClasses.get(sourceMethod
-									.getDeclaringClass());
-							Clazz c2 = mapSourceClasses.get(targetMethod
-									.getDeclaringClass());
+							Clazz c1 = mapSourceClasses.get(sourceMethod.getDeclaringClass());
+							Clazz c2 = mapSourceClasses.get(targetMethod.getDeclaringClass());
 
-							Clazz c3 = mapTargetClasses.get(sourceMethod
-									.getDeclaringClass());
-							Clazz c4 = mapTargetClasses.get(targetMethod
-									.getDeclaringClass());
+							Clazz c3 = mapTargetClasses.get(sourceMethod.getDeclaringClass());
+							Clazz c4 = mapTargetClasses.get(targetMethod.getDeclaringClass());
 
 							// a classe do target M-^NM-i super da classe do source
 							// nas duas hierarquias
 							// inclui a class do source no allowedclasses
-							if (isSuperClass(c1, c2, mapSourceClasses)
-									&& isSuperClass(c3, c4, mapTargetClasses)) {
+							if (isSuperClass(c1, c2, mapSourceClasses) && isSuperClass(c3, c4, mapTargetClasses)) {
 								if (result.contains(sourceMethod)) {
 									int indexOf = result.indexOf(sourceMethod);
-									result.get(indexOf)
-											.getAllowedClasses()
-											.add(sourceMethod
-													.getDeclaringClass());
+									result.get(indexOf).getAllowedClasses().add(sourceMethod.getDeclaringClass());
 								} else {
-									sourceMethod.getAllowedClasses().add(
-											sourceMethod.getDeclaringClass());
+									sourceMethod.getAllowedClasses().add(sourceMethod.getDeclaringClass());
 									result.add(sourceMethod);
 								}
 							} // o inverso
 								// inclui a classe do target no allowed classes
-							else if (isSuperClass(c2, c1, mapSourceClasses)
-									&& isSuperClass(c4, c3, mapTargetClasses)) {
-								sourceMethod.getAllowedClasses().add(
-										targetMethod.getDeclaringClass());
+							else if (isSuperClass(c2, c1, mapSourceClasses) && isSuperClass(c4, c3, mapTargetClasses)) {
+								sourceMethod.getAllowedClasses().add(targetMethod.getDeclaringClass());
 
 								if (result.contains(sourceMethod)) {
 									int indexOf = result.indexOf(sourceMethod);
-									result.get(indexOf)
-											.getAllowedClasses()
-											.add(targetMethod
-													.getDeclaringClass());
+									result.get(indexOf).getAllowedClasses().add(targetMethod.getDeclaringClass());
 								} else {
-									sourceMethod.getAllowedClasses().add(
-											targetMethod.getDeclaringClass());
+									sourceMethod.getAllowedClasses().add(targetMethod.getDeclaringClass());
 									result.add(sourceMethod);
 								}
 
@@ -138,11 +120,9 @@ public class ReflectionBasedAnalyzer implements TransformationAnalyzer {
 				} else {
 					if (result.contains(sourceMethod)) {
 						int indexOf = result.indexOf(sourceMethod);
-						result.get(indexOf).getAllowedClasses()
-								.add(sourceClass.getFullName());
+						result.get(indexOf).getAllowedClasses().add(sourceClass.getFullName());
 					} else {
-						sourceMethod.getAllowedClasses().add(
-								sourceClass.getFullName());
+						sourceMethod.getAllowedClasses().add(sourceClass.getFullName());
 						result.add(sourceMethod);
 					}
 				}
@@ -169,11 +149,9 @@ public class ReflectionBasedAnalyzer implements TransformationAnalyzer {
 
 	}
 
-	private List<Clazz> deserializeClasses() throws IOException,
-			ClassNotFoundException {
+	private List<Clazz> deserializeClasses() throws IOException, ClassNotFoundException {
 		// Read from disk using FileInputStream
-		FileInputStream f_in = new FileInputStream(
-				ProjectAnalyzer.SERIALIZABLE_CLASSES);
+		FileInputStream f_in = new FileInputStream(ProjectAnalyzer.SERIALIZABLE_CLASSES);
 
 		// Read object using ObjectInputStream
 		ObjectInputStream obj_in = new ObjectInputStream(f_in);
@@ -185,39 +163,35 @@ public class ReflectionBasedAnalyzer implements TransformationAnalyzer {
 	}
 
 	private void loadAndAnalyzeProject(Project source) throws Exception {
-		
-		
-//		URL buildFile = ReflectionBasedAnalyzer.class
-//				.getResource("/build_analyze.xml");
+
+		// URL buildFile = ReflectionBasedAnalyzer.class
+		// .getResource("/build_analyze.xml");
 
 		String path = System.getProperty("user.dir");
-		 URL buildFile = null;
-			try {
-				buildFile = new File(path
-						+ "/src/" + "build_analyze.xml").toURL();
-			} catch (MalformedURLException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-			
+		URL buildFile = null;
+		try {
+			buildFile = new File(path + "/src/" + "build_analyze.xml").toURL();
+		} catch (MalformedURLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
 		org.apache.tools.ant.Project p = new org.apache.tools.ant.Project();
 		p.setProperty("source", source.getProjectFolder().getAbsolutePath());
 		p.setProperty("sourceBin", source.getBuildFolder().getAbsolutePath());
 		if (source.getLibFolder() != null)
 			p.setProperty("sourceLib", source.getLibFolder().getAbsolutePath());
 		else
-			p.setProperty("sourceLib", source.getProjectFolder()
-					.getAbsolutePath());
+			p.setProperty("sourceLib", source.getProjectFolder().getAbsolutePath());
 		p.setProperty("sourceSrc", source.getSrcFolder().getAbsolutePath());
 
 		DefaultLogger consoleLogger = new DefaultLogger();
-		consoleLogger
-				.setMessageOutputLevel(org.apache.tools.ant.Project.MSG_INFO);
-		
-		
-		FileOutputStream fileOutputStream = new FileOutputStream(tmpDir  + Constants.SEPARATOR + 	 "log_saferefactor_analysis.txt");
+		consoleLogger.setMessageOutputLevel(org.apache.tools.ant.Project.MSG_INFO);
+
+		FileOutputStream fileOutputStream = new FileOutputStream(
+				tmpDir + Constants.SEPARATOR + "log_saferefactor_analysis.txt");
 		PrintStream ps = new PrintStream(fileOutputStream);
-		consoleLogger.setOutputPrintStream(ps);		
+		consoleLogger.setOutputPrintStream(ps);
 		consoleLogger.setErrorPrintStream(ps);
 		p.addBuildListener(consoleLogger);
 
@@ -225,7 +199,6 @@ public class ReflectionBasedAnalyzer implements TransformationAnalyzer {
 		ProjectHelper helper = ProjectHelper.getProjectHelper();
 		p.addReference("ant.projectHelper", helper);
 		helper.parse(p, buildFile);
-
 		p.executeTarget(p.getDefaultTarget());
 
 	}
@@ -243,5 +216,4 @@ public class ReflectionBasedAnalyzer implements TransformationAnalyzer {
 		}
 	}
 
-	
 }
