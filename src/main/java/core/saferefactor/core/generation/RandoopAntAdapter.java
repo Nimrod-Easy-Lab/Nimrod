@@ -36,26 +36,21 @@ public class RandoopAntAdapter extends AbstractTestGeneratorAdapter {
 	private List<String> additionalParameters;
 	private double timeLimit;
 	protected String impactedList = "";
-	
 
 	protected RandoopAntAdapter(Project projectToTest, String tmpDir) {
 		super(projectToTest);
 		this.tmpDir = tmpDir;
-		
 
 	}
 
-
-	public void generateTestsForMethodList(List<Method> methods,
-			double timeLimit, List<String> additionalParameters, String impactedList)
-			throws FileNotFoundException
-	{
+	public void generateTestsForMethodList(List<Method> methods, double timeLimit, List<String> additionalParameters,
+			String impactedList) throws FileNotFoundException {
 
 		this.timeLimit = timeLimit;
 		this.additionalParameters = additionalParameters;
 		this.impactedList = impactedList;
 		generateMethodListFile(methods);
-		
+
 		runRandoopThroughAnt();
 
 	}
@@ -64,23 +59,21 @@ public class RandoopAntAdapter extends AbstractTestGeneratorAdapter {
 
 		String path = System.getProperty("user.dir");
 		File buildFile = null;
-		
+
 		String apath = path + "/src/" + "build_generator.xml";
 		buildFile = new File(apath);
-			
+
 		org.apache.tools.ant.Project p = new org.apache.tools.ant.Project();
 
 		p.setProperty("projectBin", project.getBuildFolder().getAbsolutePath());
 
 		if (project.getLibFolder() != null) {
 			p.setProperty("sourceLib", project.getLibFolder().getAbsolutePath());
-		}
-		else {
-			p.setProperty("sourceLib", project.getProjectFolder()
-					.getAbsolutePath());
+		} else {
+			p.setProperty("sourceLib", project.getProjectFolder().getAbsolutePath());
 		}
 		p.setProperty("timeout", String.valueOf(timeLimit));
-		
+
 		impactedList = "";
 		p.setProperty("impactedMethods", this.impactedList);
 
@@ -103,12 +96,11 @@ public class RandoopAntAdapter extends AbstractTestGeneratorAdapter {
 		p.setProperty("randoopParameters", randoopParametersForAnt.toString());
 
 		DefaultLogger consoleLogger = new DefaultLogger();
-		consoleLogger
-				.setMessageOutputLevel(org.apache.tools.ant.Project.MSG_INFO);
+		consoleLogger.setMessageOutputLevel(org.apache.tools.ant.Project.MSG_INFO);
 
-		FileOutputStream fileOutputStream = new FileOutputStream(tmpDir  + Constants.SEPARATOR + 
-				"log_saferefactor_generation.txt");
-		PrintStream ps = new PrintStream(fileOutputStream); 
+		FileOutputStream fileOutputStream = new FileOutputStream(
+				tmpDir + Constants.SEPARATOR + "log_saferefactor_generation.txt");
+		PrintStream ps = new PrintStream(fileOutputStream);
 		consoleLogger.setOutputPrintStream(ps);
 		consoleLogger.setErrorPrintStream(ps);
 
@@ -118,7 +110,6 @@ public class RandoopAntAdapter extends AbstractTestGeneratorAdapter {
 		ProjectHelper helper = ProjectHelper.getProjectHelper();
 		p.addReference("ant.projectHelper", helper);
 		helper.parse(p, buildFile);
-
 		p.executeTarget(p.getDefaultTarget());
 
 	}
@@ -127,14 +118,14 @@ public class RandoopAntAdapter extends AbstractTestGeneratorAdapter {
 
 		Random random = new Random();
 		StringBuffer lines = new StringBuffer();
-			for (Method method : methods) {
-				if (method instanceof ConstructorImp)
-					lines.append(method + "\n");
-			}
-			for (Method method : methods) {
-				if (method instanceof MethodImp)
-					lines.append(method + "\n");
-			}
+		for (Method method : methods) {
+			if (method instanceof ConstructorImp)
+				lines.append(method + "\n");
+		}
+		for (Method method : methods) {
+			if (method instanceof MethodImp)
+				lines.append(method + "\n");
+		}
 		FileUtil.makeFile(tmpDir + Constants.SEPARATOR + methodsToTest, lines.toString());
 
 	}
@@ -148,30 +139,24 @@ public class RandoopAntAdapter extends AbstractTestGeneratorAdapter {
 	}
 
 	public static void main(String[] args) {
-			
+
 		String timeout = args[0];
 		String tmpDir = args[1];
-		
+
 		String randoopParameters = "";
-		if (args.length > 2) randoopParameters = args[2];
-		String impactedList  = args[3];
+		if (args.length > 2)
+			randoopParameters = args[2];
+		String impactedList = args[3];
 
 		Main main2 = new Main();
-		String[] argsRandoop = {
-				"gentests",
-				"--methodlist=" + tmpDir + Constants.SEPARATOR + methodsToTest,
-				"--timelimit=" + timeout,
-				"--log=filewriter",
-				"--junit-output-dir="
-						+ tmpDir,
-				"--output-nonexec=true" };
+		String[] argsRandoop = { "gentests", "--methodlist=" + tmpDir + Constants.SEPARATOR + methodsToTest,
+				"--timelimit=" + timeout, "--log=filewriter", "--junit-output-dir=" + tmpDir, "--output-nonexec=true" };
 
 		if (randoopParameters.length() > 0) {
 			String[] listRandoopParameters = randoopParameters.split(";");
 
 			if (listRandoopParameters.length > 0)
-				argsRandoop = (String[]) ArrayUtils.addAll(argsRandoop,
-						listRandoopParameters);
+				argsRandoop = (String[]) ArrayUtils.addAll(argsRandoop, listRandoopParameters);
 
 		}
 		ArrayList<String> impactedMethods = new ArrayList<String>();
@@ -179,10 +164,10 @@ public class RandoopAntAdapter extends AbstractTestGeneratorAdapter {
 		for (String string : split) {
 			if (!string.equals("")) {
 				impactedMethods.add(string);
-				System.out.println("impacted Method "+string);
+				System.out.println("impacted Method " + string);
 			}
 		}
-		//main2.nonStaticMainAJ(argsRandoop, impactedMethods);
+		// main2.nonStaticMainAJ(argsRandoop, impactedMethods);
 		main2.nonStaticMain(argsRandoop);
 		System.exit(0);
 	}
