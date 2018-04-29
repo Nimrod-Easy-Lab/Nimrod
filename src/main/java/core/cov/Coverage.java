@@ -18,8 +18,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
-import randoop.util.Reflection;
 import plume.Triple;
+import saferefactor.localrandoop.util.Reflection;
 
 /**
  * This class contains utility methods to access the coverage

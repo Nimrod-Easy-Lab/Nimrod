@@ -2,13 +2,8 @@ package saferefactor.core.generation;
 
 import java.io.File;
 import java.io.FileNotFoundException;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
-
-import randoop.main.Main;
-
-import org.apache.commons.lang.ArrayUtils;
 
 import saferefactor.core.util.Constants;
 import saferefactor.core.util.FileUtil;
@@ -16,6 +11,7 @@ import saferefactor.core.util.Project;
 import saferefactor.core.util.ast.ConstructorImp;
 import saferefactor.core.util.ast.Method;
 import saferefactor.core.util.ast.MethodImp;
+import saferefactor.localrandoop.main.Main;
 
 public class RandoopAdapter extends AbstractTestGeneratorAdapter {
 

@@ -15,8 +15,6 @@ import java.util.List;
 import java.util.Random;
 import java.util.Set;
 
-import randoop.main.Main;
-
 import org.apache.commons.lang.ArrayUtils;
 import org.apache.tools.ant.DefaultLogger;
 import org.apache.tools.ant.ProjectHelper;
@@ -28,6 +26,7 @@ import saferefactor.core.util.Project;
 import saferefactor.core.util.ast.Method;
 import saferefactor.core.util.ast.ConstructorImp;
 import saferefactor.core.util.ast.MethodImp;
+import saferefactor.localrandoop.main.Main;
 
 public class RandoopAntAdapter extends AbstractTestGeneratorAdapter {
 

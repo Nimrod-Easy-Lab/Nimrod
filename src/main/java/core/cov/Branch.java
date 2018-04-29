@@ -11,9 +11,8 @@ import java.util.Map;
 import java.util.Set;
 import java.util.TreeSet;
 
-import randoop.util.Files;
-
 import plume.Pair;
+import saferefactor.localrandoop.util.Files;
 
 /**
  * Immutable. Contains the information for a single branch, including:
