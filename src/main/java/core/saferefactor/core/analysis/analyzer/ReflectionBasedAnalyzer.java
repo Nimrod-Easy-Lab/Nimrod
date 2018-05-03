@@ -20,9 +20,9 @@ import saferefactor.core.analysis.Report;
 import saferefactor.core.analysis.naive.NaiveReport;
 import saferefactor.core.util.Constants;
 import saferefactor.core.util.Project;
-import saferefactor.core.util.ast.Method;
 import saferefactor.core.util.ast.Clazz;
 import saferefactor.core.util.ast.ConstructorImp;
+import saferefactor.core.util.ast.Method;
 
 public class ReflectionBasedAnalyzer implements TransformationAnalyzer {
 
@@ -48,8 +48,46 @@ public class ReflectionBasedAnalyzer implements TransformationAnalyzer {
 		List<Method> methodsToTest = getCommonMethods();
 
 		result.setMethodsToTest(methodsToTest);
-
+		//LEO: Add constructors of Types that are in the parameters of the methods.
+		addDependencyMethods(result);
+		addRequiredClassesToTest(result);
+		
 		return result;
+	}
+	
+	private void addRequiredClassesToTest(Report result) {
+		List<String> classesToTest = new ArrayList<String>();
+		for (Clazz clazz : sourceClasses) {
+			classesToTest.add(clazz.getFullName());
+		}
+		result.setRequiredClassesToTest(classesToTest);
+	}
+
+	/* Add constructors from the Types in parameters */
+	private void addDependencyMethods(Report result) {
+		List<Method> methodsToTest = result.getMethodsToTest();
+		ArrayList<String> classes = new ArrayList<String>();
+		for (Method method : methodsToTest) {			
+			for (String parameter : method.getParameterList()) {
+				if (parameter.equals("int") || parameter.equals("byte") || parameter.equals("short")
+						|| parameter.equals("long") || parameter.equals("float") || parameter.equals("double")
+						|| parameter.equals("boolean") || parameter.equals("char")) {
+				} else {
+					classes.add(parameter);
+				}
+			}
+		}
+		try {
+			List<Clazz> classesInfo = ProjectAnalyzer.getClassesInfo(classes);
+			for (Clazz clazz : classesInfo) {
+				for(ConstructorImp c : clazz.getConstructors()) {
+					result.addAMethodToTest(c);
+				}
+			}
+		} catch (ClassNotFoundException e) {
+			e.printStackTrace();
+			System.out.println("We could not recover dependency classes.");
+		}
 	}
 
 	private List<Method> getCommonMethods() {

@@ -115,7 +115,6 @@ public class RandoopAntAdapter extends AbstractTestGeneratorAdapter {
 
 	private void generateMethodListFile(List<Method> methods) {
 
-		Random random = new Random();
 		StringBuffer lines = new StringBuffer();
 		for (Method method : methods) {
 			if (method instanceof ConstructorImp)
@@ -169,6 +168,12 @@ public class RandoopAntAdapter extends AbstractTestGeneratorAdapter {
 		// main2.nonStaticMainAJ(argsRandoop, impactedMethods);
 		main2.nonStaticMain(argsRandoop);
 		System.exit(0);
+	}
+
+	@Override
+	public void generateTestsForMethodList(List<Method> methods, List<String> requiredClassesToTest, double timeLimit,
+			List<String> additionalParameters, String impactedList) throws FileNotFoundException {
+		generateTestsForMethodList(methods, timeLimit, additionalParameters, impactedList);
 	}
 
 }

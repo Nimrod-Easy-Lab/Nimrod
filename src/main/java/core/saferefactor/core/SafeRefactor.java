@@ -57,6 +57,7 @@ public abstract class SafeRefactor {
 	protected TestComparator comparator;
 	private saferefactor.core.analysis.Report analysisReport;
 	protected List<Method> methodsToTest;
+	protected List<String> requiredClassesToTest;
 	protected Project source;
 	protected Project target;
 	protected CoverageMeter meter;
@@ -454,7 +455,7 @@ public abstract class SafeRefactor {
 			impactedList = ia.getImpactedList();
 		}
 
-		generator.generateTestsForMethodList(methodsToTest, parameters.getTimeLimit(),
+		generator.generateTestsForMethodList(methodsToTest, requiredClassesToTest, parameters.getTimeLimit(),
 				parameters.getTestGeneratorParameters(), impactedList);
 
 		double stop = System.currentTimeMillis();
@@ -477,6 +478,7 @@ public abstract class SafeRefactor {
 		}
 
 		methodsToTest = analysisReport.getMethodsToTest();
+		requiredClassesToTest = analysisReport.getRequiredClassesToTest();
 
 		double stop = System.currentTimeMillis();
 		double total = ((stop - start) / 1000);

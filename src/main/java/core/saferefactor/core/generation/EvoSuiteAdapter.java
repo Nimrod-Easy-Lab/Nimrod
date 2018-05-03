@@ -74,4 +74,11 @@ public class EvoSuiteAdapter extends AbstractTestGeneratorAdapter {
 		return null;
 	}
 
+	@Override
+	public void generateTestsForMethodList(List<Method> methods, List<String> requiredClassesToTest, double timeLimit,
+			List<String> additionalParameters, String impactedList) throws FileNotFoundException {
+		generateTestsForMethodList(methods, timeLimit, additionalParameters, impactedList);
+		
+	}
+
 }
